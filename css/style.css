@@ -638,7 +638,9 @@ html {
   display: block;
   margin-right: 2.12766%;
   width: 100%;
+  margin: 0 auto;
   max-width: 1200px;
+  padding: 32px;
 }
 /* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
 .page-container:last-child {
