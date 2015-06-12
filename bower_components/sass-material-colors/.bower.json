@@ -47,6 +47,5 @@
   },
   "_source": "git://github.com/minusfive/sass-material-colors.git",
   "_target": "~0.0.5",
-  "_originalSource": "sass-material-colors",
-  "_direct": true
+  "_originalSource": "sass-material-colors"
 }
