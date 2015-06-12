@@ -3,4 +3,4 @@ node_modules
 bower_components/bitters
 bower_components/bourbon
 bower_components/neat
-bower_components/normalize.css
+css/scss/inc/_normalize.scss
