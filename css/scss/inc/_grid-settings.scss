@@ -1,0 +1,18 @@
+@import "../../../bower_components/neat/app/assets/stylesheets/neat-helpers"; // or "../neat/neat-helpers" when not in Rails
+// $visual-grid: true;
+$visual-grid-color: #333;
+$visual-grid-index: front;
+$visual-grid-opacity: 0.1;
+
+$grid-columns: 12;
+$max-width: em(1280);
+
+// Neat Breakpoints
+$small-screen: em(480);
+$medium-screen: em(960);
+$large-screen: em($max-width);
+
+$small-screen-up: new-breakpoint(max-width $small-screen);
+$medium-screen-up: new-breakpoint(max-width $medium-screen);
+$large-screen-up: new-breakpoint(max-width $large-screen);
+
