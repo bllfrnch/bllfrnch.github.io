@@ -644,7 +644,7 @@ html {
  */
 /* line 1, scss/inc/_typography.scss */
 body {
-  font-family: "source-sans-pro";
+  font-family: "source-sans-pro", sans-serif;
 }
 
 /* line 1, scss/inc/_global.scss */
