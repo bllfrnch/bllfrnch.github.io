@@ -1,0 +1,25 @@
+{
+  "name": "bllfrnch.github.io",
+  "version": "0.0.1",
+  "homepage": "https://github.com/bllfrnch/bllfrnch.github.io",
+  "authors": [
+    "Bill French <bllfrnch@gmail.com>"
+  ],
+  "description": "Bill French's personal website",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize.css": "~3.0.3",
+    "bourbon": "~4.2.3",
+    "neat": "~1.7.2",
+    "bitters": "~1.0.0"
+  }
+}
