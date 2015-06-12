@@ -632,17 +632,104 @@ html {
   box-sizing: inherit;
 }
 
+/**
+ * Retrieves a color value from the $material-colors Sass map
+ * Inspired by https://github.com/nilskaspersson/Google-Material-UI-Color-Palette/
+ *
+ * @function
+ * @param {string} color-name             - quoted, lower-case, dasherized color
+ *                                          name (e.g. 'pink', 'amber')
+ * @param {string} [color-variant='500']  - quoted, lowercase color variant (e.g.
+ *                                          '200', 'a100')
+ */
 /* line 1, scss/inc/_global.scss */
+a {
+  text-decoration: none;
+}
+
+/* line 5, scss/inc/_global.scss */
 .page-container {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 2em;
+}
+/* line 20, ../bower_components/bourbon/app/assets/stylesheets/addons/_clearfix.scss */
+.page-container::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+/* line 11, scss/inc/_global.scss */
+.page-container header, .page-container main, .page-container footer {
+  margin-right: 0;
   float: left;
   display: block;
   margin-right: 2.12766%;
   width: 100%;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 32px;
 }
 /* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
-.page-container:last-child {
+.page-container header:last-child, .page-container main:last-child, .page-container footer:last-child {
+  margin-right: 0;
+}
+/* line 17, scss/inc/_global.scss */
+.page-container header h1 {
+  border-bottom: solid;
+}
+/* line 21, scss/inc/_global.scss */
+.page-container header .internal-nav, .page-container header .external-nav {
+  display: inline-block;
+}
+/* line 25, scss/inc/_global.scss */
+.page-container header .internal-nav {
+  float: left;
+}
+/* line 29, scss/inc/_global.scss */
+.page-container header .external-nav {
+  float: right;
+}
+/* line 33, scss/inc/_global.scss */
+.page-container header li {
+  display: inline-block;
+}
+/* line 38, scss/inc/_global.scss */
+.page-container main {
+  background-color: #f6f6f6;
+  border-radius: .25em;
+  box-shadow: #999 0 2px 6px;
+  margin-top: 2em;
+  padding: 1em;
+}
+/* line 45, scss/inc/_global.scss */
+.page-container main article > div {
+  margin-bottom: 1em;
+}
+/* line 20, ../bower_components/bourbon/app/assets/stylesheets/addons/_clearfix.scss */
+.page-container main article > div::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+/* line 50, scss/inc/_global.scss */
+.page-container main .image {
+  background-attachment: fixed;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+}
+/* line 58, scss/inc/_global.scss */
+.page-container main .image:before {
+  padding-bottom: 75%;
+}
+/* line 63, scss/inc/_global.scss */
+.page-container main .text {
+  float: left;
+  display: block;
+  margin-right: 2.12766%;
+  width: 48.93617%;
+  background-color: white;
+}
+/* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
+.page-container main .text:last-child {
   margin-right: 0;
 }

@@ -5,7 +5,7 @@ $visual-grid-index: front;
 $visual-grid-opacity: 0.1;
 
 $grid-columns: 12;
-$max-width: em(1280);
+$max-width: em(1200);
 
 // Neat Breakpoints
 $small-screen: em(480);
@@ -15,4 +15,3 @@ $large-screen: em($max-width);
 $small-screen-up: new-breakpoint(max-width $small-screen);
 $medium-screen-up: new-breakpoint(max-width $medium-screen);
 $large-screen-up: new-breakpoint(max-width $large-screen);
-

@@ -20,6 +20,7 @@
     "normalize.css": "~3.0.3",
     "bourbon": "~4.2.3",
     "neat": "~1.7.2",
-    "bitters": "~1.0.0"
+    "bitters": "~1.0.0",
+    "sass-material-colors": "~0.0.5"
   }
 }
