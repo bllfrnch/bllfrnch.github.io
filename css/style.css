@@ -631,3 +631,16 @@ html {
 *, *::after, *::before {
   box-sizing: inherit;
 }
+
+/* line 1, scss/inc/_global.scss */
+.page-container {
+  float: left;
+  display: block;
+  margin-right: 2.12766%;
+  width: 100%;
+  max-width: 1200px;
+}
+/* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
+.page-container:last-child {
+  margin-right: 0;
+}
