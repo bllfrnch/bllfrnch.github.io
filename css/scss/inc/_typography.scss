@@ -1,3 +1,18 @@
 body {
   font-family: "source-sans-pro", sans-serif;
+  color: material-color('grey', '600');
 }
+
+h1, h2, h3, h4, h5, h6 {
+  color: material-color('blue-grey', '700');
+}
+
+a {
+  color: material-color('orange');
+  text-decoration: none;
+}
+
+a:active {
+  color: material-color('orange', '400');
+}
+

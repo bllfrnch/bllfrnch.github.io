@@ -645,14 +645,26 @@ html {
 /* line 1, scss/inc/_typography.scss */
 body {
   font-family: "source-sans-pro", sans-serif;
+  color: #757575;
 }
 
-/* line 1, scss/inc/_global.scss */
+/* line 6, scss/inc/_typography.scss */
+h1, h2, h3, h4, h5, h6 {
+  color: #455a64;
+}
+
+/* line 10, scss/inc/_typography.scss */
 a {
+  color: #ff9800;
   text-decoration: none;
 }
 
-/* line 5, scss/inc/_global.scss */
+/* line 15, scss/inc/_typography.scss */
+a:active {
+  color: #ffa726;
+}
+
+/* line 1, scss/inc/_global.scss */
 .page-container {
   margin: 0 auto;
   max-width: 1200px;
@@ -664,8 +676,9 @@ a {
   content: "";
   display: table;
 }
-/* line 11, scss/inc/_global.scss */
-.page-container header, .page-container main, .page-container footer {
+
+/* line 8, scss/inc/_global.scss */
+header, main, footer {
   margin-right: 0;
   float: left;
   display: block;
@@ -673,39 +686,66 @@ a {
   width: 100%;
 }
 /* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
-.page-container header:last-child, .page-container main:last-child, .page-container footer:last-child {
+header:last-child, main:last-child, footer:last-child {
   margin-right: 0;
 }
-/* line 17, scss/inc/_global.scss */
-.page-container header h1 {
+
+/* line 14, scss/inc/_global.scss */
+header h1 {
   border-bottom: solid;
 }
-/* line 21, scss/inc/_global.scss */
-.page-container header .internal-nav, .page-container header .external-nav {
+/* line 18, scss/inc/_global.scss */
+header .internal-nav, header .external-nav {
   display: inline-block;
 }
-/* line 25, scss/inc/_global.scss */
-.page-container header .internal-nav {
+/* line 22, scss/inc/_global.scss */
+header .internal-nav {
   float: left;
 }
-/* line 29, scss/inc/_global.scss */
-.page-container header .external-nav {
+/* line 26, scss/inc/_global.scss */
+header .external-nav {
   float: right;
 }
-/* line 33, scss/inc/_global.scss */
-.page-container header li {
+/* line 28, scss/inc/_global.scss */
+header .external-nav a {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+  height: 24px;
+  width: 24px;
+}
+/* line 35, scss/inc/_global.scss */
+header .external-nav a * {
+  display: none;
+}
+/* line 40, scss/inc/_global.scss */
+header .external-nav a[name='GitHub'] {
+  background-image: url(../img/gh_455a64.png);
+}
+/* line 44, scss/inc/_global.scss */
+header .external-nav a[name='LinkedIn'] {
+  background-image: url(../img/li_455a64.png);
+}
+/* line 48, scss/inc/_global.scss */
+header .external-nav a[name='Instagram'] {
+  background-image: url(../img/ig_455a64.png);
+}
+/* line 53, scss/inc/_global.scss */
+header li {
   display: inline-block;
 }
-/* line 37, scss/inc/_global.scss */
-.page-container header .active {
-  border-bottom: solid;
+/* line 57, scss/inc/_global.scss */
+header .active {
+  border-bottom: solid #ff9800;
 }
-/* line 42, scss/inc/_global.scss */
-.page-container main {
+
+/* line 62, scss/inc/_global.scss */
+main {
   margin-top: 2em;
 }
-/* line 45, scss/inc/_global.scss */
-.page-container main article {
+/* line 65, scss/inc/_global.scss */
+main article {
   margin-left: 8.51064%;
   float: left;
   display: block;
@@ -713,12 +753,12 @@ a {
   width: 82.97872%;
 }
 /* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
-.page-container main article:last-child {
+main article:last-child {
   margin-right: 0;
 }
 @media screen and (max-width: 62.5em) {
-  /* line 45, scss/inc/_global.scss */
-  .page-container main article {
+  /* line 65, scss/inc/_global.scss */
+  main article {
     margin-left: 0%;
     float: left;
     display: block;
@@ -726,18 +766,30 @@ a {
     width: 100%;
   }
   /* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
-  .page-container main article:last-child {
+  main article:last-child {
     margin-right: 0;
   }
 }
-/* line 55, scss/inc/_global.scss */
-.page-container main .image img {
-  border: solid;
+/* line 77, scss/inc/_global.scss */
+main .image img {
+  border: solid #455a64;
   height: 100%;
   width: 100%;
 }
-/* line 63, scss/inc/_global.scss */
-.page-container footer {
+/* line 84, scss/inc/_global.scss */
+main .text {
+  float: left;
+  display: block;
+  margin-right: 2.5641%;
+  width: 100%;
+}
+/* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
+main .text:last-child {
+  margin-right: 0;
+}
+
+/* line 89, scss/inc/_global.scss */
+footer {
   border-top: solid;
   padding: 1em 0;
 }

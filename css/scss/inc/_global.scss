@@ -1,67 +1,92 @@
-a {
-  text-decoration: none;
-}
-
 .page-container {
   @include clearfix;
   margin: 0 auto;
   max-width: 1200px;
   padding: 0 2em;
+}
 
-  header, main, footer {
-    @include omega;
-    @include span-columns(12);
+header, main, footer {
+  @include omega;
+  @include span-columns(12);
+}
+
+header {
+  h1 {
+    border-bottom: solid
   }
 
-  header {
-    h1 {
-      border-bottom: solid
-    }
-
-    .internal-nav, .external-nav {
-        display: inline-block;
-    }
-
-    .internal-nav {
-      float: left;
-    }
-
-    .external-nav {
-      float: right;
-    }
-
-    li {
+  .internal-nav, .external-nav {
       display: inline-block;
-    }
-
-    .active {
-      border-bottom: solid;
-    }
   }
 
-  main {
-    margin-top: 2em;
+  .internal-nav {
+    float: left;
+  }
 
-    article {
-      @include shift(1);
-      @include span-columns(10);
-      @include media($medium-screen-down) {
-        @include shift(0);
-        @include span-columns(12);
+  .external-nav {
+    float: right;
+    a {
+      background-position: center center; 
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: block;
+      height: 24px;
+      width: 24px;
+      * {
+        display: none;
       }
     }
 
-    .image {
-      img {
-        border: solid;
-        height: 100%;
-        width: 100%;
-      }
+    a[name='GitHub'] {
+      background-image: url(../img/gh_455a64.png);
+    }
+
+    a[name='LinkedIn'] {
+      background-image: url(../img/li_455a64.png);
+    }
+
+    a[name='Instagram'] {
+      background-image: url(../img/ig_455a64.png);
     }
   }
 
-  footer {
-    border-top: solid;
-    padding: 1em 0;
+  li {
+    display: inline-block;
   }
+
+  .active {
+    border-bottom: solid material-color('orange');
+  }
+}
+
+main {
+  margin-top: 2em;
+
+  article {
+    @include shift(1);
+    @include span-columns(10);
+    @include media($medium-screen-down) {
+      @include shift(0);
+      @include span-columns(12);
+    }
+  }
+
+  .image {
+    // @include shift(1);
+    // @include span-columns(8 of 10);
+    img {
+      border: solid material-color('blue-grey', '700');
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .text {
+    @include span-columns(10 of 10);
+  }
+}
+
+footer {
+  border-top: solid;
+  padding: 1em 0;
 }
