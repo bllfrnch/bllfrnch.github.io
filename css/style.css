@@ -694,19 +694,27 @@ header:last-child, main:last-child, footer:last-child {
 header h1 {
   border-bottom: solid;
 }
-/* line 18, scss/inc/_global.scss */
+/* line 20, ../bower_components/bourbon/app/assets/stylesheets/addons/_clearfix.scss */
+header nav::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+/* line 22, scss/inc/_global.scss */
 header .internal-nav, header .external-nav {
   display: inline-block;
 }
-/* line 22, scss/inc/_global.scss */
+/* line 26, scss/inc/_global.scss */
 header .internal-nav {
   float: left;
 }
-/* line 26, scss/inc/_global.scss */
+/* line 30, scss/inc/_global.scss */
 header .external-nav {
   float: right;
+  position: relative;
+  top: -2px;
 }
-/* line 28, scss/inc/_global.scss */
+/* line 35, scss/inc/_global.scss */
 header .external-nav a {
   background-position: center center;
   background-repeat: no-repeat;
@@ -715,36 +723,36 @@ header .external-nav a {
   height: 24px;
   width: 24px;
 }
-/* line 35, scss/inc/_global.scss */
+/* line 42, scss/inc/_global.scss */
 header .external-nav a * {
   display: none;
 }
-/* line 40, scss/inc/_global.scss */
+/* line 47, scss/inc/_global.scss */
 header .external-nav a[name='GitHub'] {
   background-image: url(../img/gh_455a64.png);
 }
-/* line 44, scss/inc/_global.scss */
+/* line 51, scss/inc/_global.scss */
 header .external-nav a[name='LinkedIn'] {
   background-image: url(../img/li_455a64.png);
 }
-/* line 48, scss/inc/_global.scss */
+/* line 55, scss/inc/_global.scss */
 header .external-nav a[name='Instagram'] {
   background-image: url(../img/ig_455a64.png);
 }
-/* line 53, scss/inc/_global.scss */
+/* line 60, scss/inc/_global.scss */
 header li {
   display: inline-block;
 }
-/* line 57, scss/inc/_global.scss */
+/* line 64, scss/inc/_global.scss */
 header .active {
   border-bottom: solid #ff9800;
 }
 
-/* line 62, scss/inc/_global.scss */
+/* line 69, scss/inc/_global.scss */
 main {
   margin-top: 2em;
 }
-/* line 65, scss/inc/_global.scss */
+/* line 72, scss/inc/_global.scss */
 main article {
   margin-left: 8.51064%;
   float: left;
@@ -757,7 +765,7 @@ main article:last-child {
   margin-right: 0;
 }
 @media screen and (max-width: 62.5em) {
-  /* line 65, scss/inc/_global.scss */
+  /* line 72, scss/inc/_global.scss */
   main article {
     margin-left: 0%;
     float: left;
@@ -770,13 +778,13 @@ main article:last-child {
     margin-right: 0;
   }
 }
-/* line 77, scss/inc/_global.scss */
+/* line 84, scss/inc/_global.scss */
 main .image img {
   border: solid #455a64;
   height: 100%;
   width: 100%;
 }
-/* line 84, scss/inc/_global.scss */
+/* line 91, scss/inc/_global.scss */
 main .text {
   float: left;
   display: block;
@@ -788,7 +796,7 @@ main .text:last-child {
   margin-right: 0;
 }
 
-/* line 89, scss/inc/_global.scss */
+/* line 96, scss/inc/_global.scss */
 footer {
   border-top: solid;
   padding: 1em 0;
