@@ -1,0 +1,54 @@
+.portfolio {
+  h2 {
+    margin: 0;
+
+  }
+
+  article {
+    margin-bottom: 2em;
+  }
+
+  figure {
+    @include clearfix;
+    margin: 0;
+
+    h2 {
+      @include link-hover;
+    }
+
+    .image, .video {
+      @include span-columns(5 of 10);
+      @include media($small-screen-down) {
+        @include span-columns(12 of 12);
+      }
+    }
+
+    .video {
+      position: relative;
+      padding-bottom: 33%; /* 16:9 */
+      height: 0;
+      @include media($small-screen-down) {
+        padding-bottom: 62.5%;
+      }
+    }
+
+    .video iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    figcaption {
+      @include span-columns(5 of 10);
+      @include media($small-screen-down) {
+        @include span-columns(12 of 12);
+      }
+    }
+  }
+}

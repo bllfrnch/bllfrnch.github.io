@@ -1,3 +1,15 @@
+@mixin link-hover {
+  a {
+    color: material-color('grey', '600');
+    transition: all 0.3s;
+  }
+
+  a:hover { 
+    color: material-color('orange');
+    transition: color 0.2s;
+  }
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,6 +21,7 @@ body {
 
 .page-container {
   @include clearfix;
+  box-sizing: border-box;
   margin: 0 auto;
   max-width: 1200px;
   padding: 0 2em;
@@ -26,19 +39,12 @@ header {
 
   nav {
     @include clearfix;
+    font-weight: bold;
   }
 
   .internal-nav, .external-nav {
+    @include link-hover;
     display: inline-block;
-    a {
-      color: material-color('grey', '600');
-      transition: all 0.3s;
-    }
-
-    a:hover { 
-      color: material-color('orange');
-      transition: color 0.2s;
-    }
   }
 
   .internal-nav {
@@ -79,7 +85,7 @@ main {
   article {
     @include shift(1);
     @include span-columns(10);
-    @include media($medium-screen-down) {
+    @include media($small-screen-down) {
       @include shift(0);
       @include span-columns(12);
     }

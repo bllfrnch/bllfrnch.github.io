@@ -7,6 +7,10 @@ h1, h2, h3, h4, h5, h6 {
   color: material-color('blue-grey', '700');
 }
 
+h2 {
+  font-size: 1.25em;
+}
+
 a {
   color: material-color('orange');
   text-decoration: none;
@@ -16,5 +20,9 @@ a:active {
   color: material-color('orange', '400');
 }
 
+a.huge {
+  color: #ec008c;
+  font-weight: bold;
+}
 
 
