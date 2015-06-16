@@ -1,6 +1,5 @@
 @mixin link-hover {
   a {
-    color: material-color('grey', '600');
     transition: all 0.3s;
   }
 
@@ -52,6 +51,9 @@ header {
   .internal-nav, .external-nav {
     @include link-hover;
     display: inline-block;
+    a {
+      color: material-color('grey', '600');
+    }
   }
 
   .internal-nav {
