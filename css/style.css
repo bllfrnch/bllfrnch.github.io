@@ -699,8 +699,14 @@ body {
   content: "";
   display: table;
 }
+@media screen and (max-width: 37.5em) {
+  /* line 22, scss/inc/_global.scss */
+  .page-container {
+    padding: 0 1em;
+  }
+}
 
-/* line 30, scss/inc/_global.scss */
+/* line 34, scss/inc/_global.scss */
 header, main, footer {
   margin-right: 0;
   float: left;
@@ -713,11 +719,11 @@ header:last-child, main:last-child, footer:last-child {
   margin-right: 0;
 }
 
-/* line 36, scss/inc/_global.scss */
+/* line 40, scss/inc/_global.scss */
 header h1 {
   border-bottom: solid;
 }
-/* line 40, scss/inc/_global.scss */
+/* line 44, scss/inc/_global.scss */
 header nav {
   font-weight: bold;
 }
@@ -727,7 +733,13 @@ header nav::after {
   content: "";
   display: table;
 }
-/* line 45, scss/inc/_global.scss */
+@media screen and (max-width: 37.5em) {
+  /* line 44, scss/inc/_global.scss */
+  header nav {
+    text-align: center;
+  }
+}
+/* line 52, scss/inc/_global.scss */
 header .internal-nav, header .external-nav {
   display: inline-block;
 }
@@ -741,43 +753,58 @@ header .internal-nav a:hover, header .external-nav a:hover {
   color: #ff9800;
   transition: color 0.2s;
 }
-/* line 50, scss/inc/_global.scss */
+/* line 57, scss/inc/_global.scss */
 header .internal-nav {
   float: left;
 }
-/* line 53, scss/inc/_global.scss */
+@media screen and (max-width: 37.5em) {
+  /* line 57, scss/inc/_global.scss */
+  header .internal-nav {
+    float: none;
+    margin: 0 auto;
+  }
+}
+/* line 65, scss/inc/_global.scss */
 header .internal-nav li {
   margin-right: 8px;
 }
-/* line 58, scss/inc/_global.scss */
+/* line 70, scss/inc/_global.scss */
 header .external-nav {
   float: right;
   font-size: 125%;
   position: relative;
   top: -6px;
 }
-/* line 64, scss/inc/_global.scss */
+@media screen and (max-width: 37.5em) {
+  /* line 70, scss/inc/_global.scss */
+  header .external-nav {
+    float: none;
+    margin: 0 auto;
+    top: 0;
+  }
+}
+/* line 83, scss/inc/_global.scss */
 header .external-nav li {
   margin-left: 8px;
 }
-/* line 68, scss/inc/_global.scss */
+/* line 87, scss/inc/_global.scss */
 header .external-nav a * {
   display: none;
 }
-/* line 73, scss/inc/_global.scss */
+/* line 92, scss/inc/_global.scss */
 header li {
   display: inline-block;
 }
-/* line 77, scss/inc/_global.scss */
+/* line 96, scss/inc/_global.scss */
 header .active {
   border-bottom: solid #ff9800;
 }
 
-/* line 82, scss/inc/_global.scss */
+/* line 101, scss/inc/_global.scss */
 main {
   margin-top: 2em;
 }
-/* line 85, scss/inc/_global.scss */
+/* line 104, scss/inc/_global.scss */
 main article {
   margin-left: 8.51064%;
   float: left;
@@ -790,7 +817,7 @@ main article:last-child {
   margin-right: 0;
 }
 @media screen and (max-width: 37.5em) {
-  /* line 85, scss/inc/_global.scss */
+  /* line 104, scss/inc/_global.scss */
   main article {
     margin-left: 0%;
     float: left;
@@ -803,13 +830,13 @@ main article:last-child {
     margin-right: 0;
   }
 }
-/* line 95, scss/inc/_global.scss */
+/* line 114, scss/inc/_global.scss */
 main .image img {
   border: solid #455a64;
   height: 100%;
   width: 100%;
 }
-/* line 102, scss/inc/_global.scss */
+/* line 121, scss/inc/_global.scss */
 main .text {
   float: left;
   display: block;
@@ -821,7 +848,7 @@ main .text:last-child {
   margin-right: 0;
 }
 
-/* line 107, scss/inc/_global.scss */
+/* line 126, scss/inc/_global.scss */
 footer {
   border-top: solid;
   margin-top: 2em;
