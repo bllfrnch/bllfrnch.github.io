@@ -1,7 +1,6 @@
 .portfolio {
   h2 {
     margin: 0;
-
   }
 
   article {
@@ -18,6 +17,7 @@
 
     .image, .video {
       @include span-columns(5 of 10);
+      margin-bottom: 1em;
       @include media($small-screen-down) {
         @include span-columns(12 of 12);
       }

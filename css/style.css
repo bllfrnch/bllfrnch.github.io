@@ -802,13 +802,13 @@ main article:last-child {
     margin-right: 0;
   }
 }
-/* line 97, scss/inc/_global.scss */
+/* line 95, scss/inc/_global.scss */
 main .image img {
   border: solid #455a64;
   height: 100%;
   width: 100%;
 }
-/* line 104, scss/inc/_global.scss */
+/* line 102, scss/inc/_global.scss */
 main .text {
   float: left;
   display: block;
@@ -820,9 +820,10 @@ main .text:last-child {
   margin-right: 0;
 }
 
-/* line 109, scss/inc/_global.scss */
+/* line 107, scss/inc/_global.scss */
 footer {
   border-top: solid;
+  margin-top: 2em;
   padding: 1em 0;
 }
 
@@ -830,11 +831,11 @@ footer {
 .portfolio h2 {
   margin: 0;
 }
-/* line 7, scss/inc/_portfolio.scss */
+/* line 6, scss/inc/_portfolio.scss */
 .portfolio article {
   margin-bottom: 2em;
 }
-/* line 11, scss/inc/_portfolio.scss */
+/* line 10, scss/inc/_portfolio.scss */
 .portfolio figure {
   margin: 0;
 }
@@ -854,19 +855,20 @@ footer {
   color: #ff9800;
   transition: color 0.2s;
 }
-/* line 19, scss/inc/_portfolio.scss */
+/* line 18, scss/inc/_portfolio.scss */
 .portfolio figure .image, .portfolio figure .video {
   float: left;
   display: block;
   margin-right: 2.5641%;
   width: 48.71795%;
+  margin-bottom: 1em;
 }
 /* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
 .portfolio figure .image:last-child, .portfolio figure .video:last-child {
   margin-right: 0;
 }
 @media screen and (max-width: 37.5em) {
-  /* line 19, scss/inc/_portfolio.scss */
+  /* line 18, scss/inc/_portfolio.scss */
   .portfolio figure .image, .portfolio figure .video {
     float: left;
     display: block;
@@ -926,4 +928,21 @@ footer {
   .portfolio figure figcaption:last-child {
     margin-right: 0;
   }
+}
+
+/* line 2, scss/inc/_music.scss */
+.music article {
+  margin-left: 17.02128%;
+  float: left;
+  display: block;
+  margin-right: 2.12766%;
+  width: 65.95745%;
+}
+/* line 89, ../bower_components/neat/app/assets/stylesheets/grid/_span-columns.scss */
+.music article:last-child {
+  margin-right: 0;
+}
+/* line 6, scss/inc/_music.scss */
+.music article figcaption {
+  font-style: italic;
 }

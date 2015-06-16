@@ -92,8 +92,6 @@ main {
   }
 
   .image {
-    // @include shift(1);
-    // @include span-columns(8 of 10);
     img {
       border: solid material-color('blue-grey', '700');
       height: 100%;
@@ -108,5 +106,6 @@ main {
 
 footer {
   border-top: solid;
+  margin-top: 2em;
   padding: 1em 0;
 }
