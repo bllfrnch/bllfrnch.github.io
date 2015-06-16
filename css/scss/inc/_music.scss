@@ -1,0 +1,10 @@
+.music {
+  article {
+    @include shift(2);
+    @include span-columns(8);
+
+    figcaption {
+      font-style: italic;
+    }
+  }
+}
