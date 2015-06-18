@@ -1,6 +1,5 @@
 @mixin link-hover {
   a {
-    color: material-color('grey', '600');
     transition: all 0.3s;
   }
 
@@ -25,6 +24,10 @@ body {
   margin: 0 auto;
   max-width: 1200px;
   padding: 0 2em;
+
+  @include media($small-screen-down) {
+    padding: 0 1em;
+  }
 }
 
 header, main, footer {
@@ -40,15 +43,26 @@ header {
   nav {
     @include clearfix;
     font-weight: bold;
+    @include media($small-screen-down) {
+      text-align: center;
+    }
   }
 
   .internal-nav, .external-nav {
     @include link-hover;
     display: inline-block;
+    a {
+      color: material-color('grey', '600');
+    }
   }
 
   .internal-nav {
     float: left;
+
+    @include media($small-screen-down) {
+      float: none;
+      margin: 0 auto;
+    }
 
     li {
       margin-right: 8px;
@@ -60,6 +74,13 @@ header {
     font-size: 125%;
     position: relative;
     top: -6px;
+
+    @include media($small-screen-down) {
+      float: none;
+      margin: 0 auto;
+      top: 0;
+    }
+
     
     li {
       margin-left: 8px;
