@@ -1,9 +1,5 @@
 .sass-cache
 _site
 node_modules
-bower_components/bitters
-bower_components/bourbon
-bower_components/neat
-bower_components/normalize.css
-bower_components/sass-material-colors
+bower_components
 css/scss/inc/_normalize.scss
