@@ -4,9 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bill French</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/style.css" type="text/css"></link>
+  <style type="text/css">
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,header,main,nav,section{display:block}a{background-color:transparent}h1{font-size:2em;margin:0.67em 0}img{border:0}ul{list-style-type:none;margin:0;padding:0}html{box-sizing:border-box}*,*::after,*::before{box-sizing:inherit}body{font-family:"source-sans-pro", sans-serif;color:#757575}h1{color:#455a64}a{color:#ff9800;text-decoration:none}header .internal-nav a.active{color:#ff9800}body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background-color:#fff;font-size:1em;line-height:1.6;text-rendering:optimizeLegibility}.page-container{box-sizing:border-box;margin:0 auto;max-width:1200px;padding:0 2em}.page-container::after{clear:both;content:"";display:table}@media screen and (max-width: 37.5em){.page-container{padding:0 1em}}header,main{margin-right:0;float:left;display:block;margin-right:2.1276595745%;width:100%}header h1{border-bottom:solid}header nav{font-weight:bold}header nav::after{clear:both;content:"";display:table}@media screen and (max-width: 37.5em){header nav{text-align:center}}header .internal-nav,header .external-nav{display:inline-block}header .internal-nav a,header .external-nav a{transition:all 0.3s}header .internal-nav a,header .external-nav a{color:#757575}header .internal-nav{float:left}@media screen and (max-width: 37.5em){header .internal-nav{float:none;margin:0 auto}}header .internal-nav li{margin-right:8px}header .external-nav{float:right;font-size:125%;position:relative;top:-6px}@media screen and (max-width: 37.5em){header .external-nav{float:none;margin:0 auto;top:0}}header .external-nav li{margin-left:8px}header .external-nav a *{display:none}header li{display:inline-block}header .active{border-bottom:solid #ff9800}main{margin-top:2em}main article{margin-left:8.5106382979%;float:left;display:block;margin-right:2.1276595745%;width:82.9787234043%}main article:last-child{margin-right:0}@media screen and (max-width: 37.5em){main article{margin-left:0%;float:left;display:block;margin-right:2.1276595745%;width:100%}main article:last-child{margin-right:0}}main .image img{border:solid #455a64;height:100%;width:100%}
+</style>
+<script>
+(function(u){function loadCSS(e,t,n){"use strict";function r(){for(var t,i=0;i<d.length;i++)d[i].href&&d[i].href.indexOf(e)>-1&&(t=!0);t?o.media=n||"all":setTimeout(r)}var o=window.document.createElement("link"),i=t||window.document.getElementsByTagName("script")[0],d=window.document.styleSheets;return o.rel="stylesheet",o.href=e,o.media="only x",i.parentNode.insertBefore(o,i),r(),o}for(var i in u){loadCSS(u[i]);}}(['//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css','css/style.css']));
+</script>
+<noscript>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+</noscript>
+
   <script type="text/javascript" src="//use.typekit.net/wec1uwe.js"></script>
+  <script type="text/javascript" src="bower_components/picturefill/dist/picturefill.min.js" async></script>
   <script type="text/javascript">
   // ADOBE TYPEKIT
   (function(d) {
@@ -36,7 +46,13 @@
         <article>
           <div>
             <div class="image">
-              <img src="/img/me-and-alf.jpg">
+              <picture>
+                <!--[if IE 9]><video style="display: none;"><![endif]-->
+                <source srcset="/img/alf-and-me-1200x887.jpg" media="(min-width: 1200px)">
+                <source srcset="/img/alf-and-me-1000x739.jpg" media="(min-width: 1000px)">
+                <!--[if IE 9]></video><![endif]-->
+                <img srcset="/img/alf-and-me-600x443.jpg" alt="…">
+              </picture>
             </div>
             <div class="text">
               <h2>Hey Willy!</h2>
@@ -45,7 +61,14 @@
           </div>
           <div>
             <div class="image">
-              <img src="/img/bedbugs.jpg">
+              <picture>
+                <!--[if IE 9]><video style="display: none;"><![endif]-->
+                <source srcset="/img/bedbugz-1200x1600.jpg" media="(min-width: 1200px)">
+                <source srcset="/img/budbugz-1000x1333.jpg" media="(min-width: 1000px)">
+                <!--[if IE 9]></video><![endif]-->
+
+                <img srcset="/img/bedbugz-600x800.jpg" alt="…">
+              </picture>
             </div>
             <div class="text">
               <h2>Loves to Doodle</h2>
@@ -70,7 +93,6 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
-</script>
   </script>
 </body>
 </html>
