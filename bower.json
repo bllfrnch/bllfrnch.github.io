@@ -21,10 +21,10 @@
     "bourbon": "~4.2.3",
     "neat": "~1.7.2",
     "bitters": "~1.0.0",
-    "sass-material-colors": "~0.0.5"
+    "sass-material-colors": "~0.0.5",
+    "picturefill": "~2.3.1"
   },
   "devDependencies": {
     "sass-material-colors": "~0.0.5"
   }
 }
-
