@@ -15,11 +15,17 @@ h2 {
 }
 
 a {
-  color: material-color('orange');
+  color: material-color('grey', '600');
   text-decoration: none;
+  transition: all 0.3s;
+
+  &:hover {
+    color: material-color('orange');
+    transition: color 0.2s;
+  }
 }
 
-header .internal-nav, 
+header .internal-nav,
 header .external-nav {
   a.active {
     color: material-color('orange');
@@ -29,6 +35,14 @@ header .external-nav {
 a.huge {
   color: #ec008c;
   font-weight: bold;
+}
+
+.small {
+  font-size: 0.83em;
+}
+
+.tiny {
+
 }
 
 

@@ -4,9 +4,6 @@
 @import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
 @import "../../bower_components/bitters/app/assets/stylesheets/variables";
 
-// overrides variables
-@import "inc/variables";
-
 // baseline
 @import "../../bower_components/bitters/app/assets/stylesheets/buttons";
 @import "../../bower_components/bitters/app/assets/stylesheets/forms";
@@ -20,8 +17,11 @@
 // MATERIAL
 @import "../../bower_components/sass-material-colors/sass/sass-material-colors";
 
+@import "inc/variables";
 @import "inc/typography";
 @import "inc/global";
-@import "inc/portfolio";
-@import "inc/music";
-@import "inc/blog";
+
+@import "home";
+@import "portfolio";
+@import "music";
+@import "blog";
