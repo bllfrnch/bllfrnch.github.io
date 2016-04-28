@@ -62,7 +62,6 @@ header {
       top: 0;
     }
 
-
     li {
       margin-left: 8px;
     }
@@ -88,31 +87,24 @@ header {
     @include clearfix();
     background-color: material-color('grey', '50');
     box-shadow: 0 4px 8px material-color('grey', '300');
+    display: table;
     margin-bottom: 2em;
 
-    .image {
+    .media-wrapper {
+      @include clearfix;
       background-color: material-color('blue-grey', '50');
     }
   }
 
   .feature:nth-child(2n) {
-    .image {
+    .media-wrapper {
       background-color: material-color('blue-grey', '100');
     }
   }
 
   .media-wrapper {
-    margin: 0;
-    padding: 2em;
-
-    @include media($small-screen-down) {
-      padding: 1em;
-    }
-  }
-
-  .image,
-  .video {
-    @include span-columns(5);
+    @include span-columns(5, table);
+    vertical-align: top;
 
     img {
       border: solid material-color('blue-grey', '700');
@@ -121,25 +113,29 @@ header {
     }
 
     @include media($medium-screen-down) {
-      @include span-columns(6);
-      &.image-small,
-      &.image-large {
-        @include span-columns(6);
-      }
+      @include span-columns(6, table);
     }
 
     @include media($small-screen-down) {
       @include span-columns(12);
-      &.image-small,
-      &.image-large {
-        @include span-columns(12);
-      }
     }
   }
 
+  .media {
+    margin: 0;
+    padding: 2em;
+
+    @include media($small-screen-down) {
+      padding: 1em;
+    }
+  }
+
+
   .text {
-    @include span-columns(7);
-    padding: 1em 1em 1em 0;
+    @include span-columns(7, table);
+    margin: 0;
+    padding: 1em 2em;
+    vertical-align: top;
 
     @include media($small-screen-down) {
       padding: 1em;
@@ -147,17 +143,13 @@ header {
   }
 
   @include media($medium-screen-down) {
-    .text,
-    .image-small + .text,
-    .image-large + .text {
-      @include span-columns(6);
+    .text {
+      @include span-columns(6, table);
     }
   }
 
   @include media($small-screen-down) {
-    .text,
-    .image-small + .text,
-    .image-large + .text {
+    .text {
       @include span-columns(12);
     }
   }
