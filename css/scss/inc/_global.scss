@@ -104,6 +104,7 @@ header {
 
   .media-wrapper {
     @include span-columns(5, table);
+    padding: 2em;
     vertical-align: top;
 
     img {
@@ -118,18 +119,17 @@ header {
 
     @include media($small-screen-down) {
       @include span-columns(12);
+      padding: 1em;
     }
   }
 
   .media {
     margin: 0;
-    padding: 2em;
-
-    @include media($small-screen-down) {
-      padding: 1em;
-    }
   }
 
+  .caption {
+    text-shadow: 0px 1px 2px $white;
+  }
 
   .text {
     @include span-columns(7, table);
