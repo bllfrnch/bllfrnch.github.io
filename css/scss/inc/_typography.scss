@@ -1,12 +1,12 @@
 body {
   font-family: "source-sans-pro", sans-serif;
-  color: material-color('grey', '600');
+  color: $primary-text-color;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: material-color('blue-grey', '700');
+  color: $primary-header-color;
   a {
-    color: material-color('blue-grey', '700');
+    color: $primary-header-color;
   }
 }
 
@@ -15,12 +15,13 @@ h2 {
 }
 
 a {
-  color: material-color('grey', '600');
+  color: $primary-link-color;
+  font-weight: bold;
   text-decoration: none;
   transition: all 0.3s;
 
   &:hover {
-    color: material-color('orange');
+    color: $primary-link-color-hover;
     transition: color 0.2s;
   }
 }
@@ -28,7 +29,7 @@ a {
 header .internal-nav,
 header .external-nav {
   a.active {
-    color: material-color('orange');
+    color: $primary-link-color-hover;
   }
 }
 

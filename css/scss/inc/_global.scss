@@ -1,7 +1,7 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: material-color('grey', '100');
+  background-color: $primary-bg-color;
   font-size: 1em;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
@@ -26,7 +26,7 @@ header, main, footer {
 
 header {
   h1 {
-    border-bottom: solid material-color('grey', '500');;
+    border-bottom: solid $secondary-border-color;
   }
 
   nav {
@@ -76,7 +76,7 @@ header {
   }
 
   .active {
-    border-bottom: solid material-color('orange');
+    border-bottom: solid $primary-link-color-hover;
   }
 }
 
@@ -85,20 +85,20 @@ header {
 
   .feature {
     @include clearfix();
-    background-color: material-color('grey', '50');
-    box-shadow: 0 4px 8px material-color('grey', '300');
+    background-color: $secondary-bg-color;
+    box-shadow: 0 4px 8px $primary-shadow-color;
     display: table;
     margin-bottom: 2em;
 
     .media-wrapper {
       @include clearfix;
-      background-color: material-color('blue-grey', '50');
+      background-color: $primary-media-bg-color;
     }
   }
 
   .feature:nth-child(2n) {
     .media-wrapper {
-      background-color: material-color('blue-grey', '100');
+      background-color: $secondary-media-bg-color;
     }
   }
 
@@ -107,7 +107,7 @@ header {
     vertical-align: top;
 
     img {
-      border: solid material-color('blue-grey', '700');
+      border: solid $primary-border-color;
       height: 100%;
       width: 100%;
     }
@@ -156,7 +156,7 @@ header {
 }
 
 footer {
-  border-top: solid material-color('grey', '500');
+  border-top: solid $secondary-border-color;
   margin-top: 2em;
   padding: 1em 0;
 }
