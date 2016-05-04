@@ -107,7 +107,8 @@ header {
     padding: 2em;
     vertical-align: top;
 
-    img {
+    img,
+    iframe {
       border: solid $primary-border-color;
       height: 100%;
       width: 100%;
@@ -120,6 +121,16 @@ header {
     @include media($small-screen-down) {
       @include span-columns(12);
       padding: 1em;
+    }
+
+    .pagination {
+      background-color: $tertiary-media-bg-color;
+      display: inline-block;
+      line-height: 1em;
+      li {
+        display: inline-block;
+        font-size: 2em;
+      }
     }
   }
 

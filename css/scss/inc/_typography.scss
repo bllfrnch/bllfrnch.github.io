@@ -16,7 +16,7 @@ h2 {
 
 a {
   color: $primary-link-color;
-  font-weight: bold;
+  //font-weight: bold;
   text-decoration: none;
   transition: all 0.3s;
 
@@ -34,8 +34,14 @@ header .external-nav {
 }
 
 a.huge {
+  background-color: $white;
   color: #ec008c;
   font-weight: bold;
+
+  &:hover {
+    background-color: #ec008c;
+    color: $white;
+  }
 }
 
 .small {
