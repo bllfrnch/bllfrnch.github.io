@@ -35,11 +35,11 @@ header .external-nav {
 
 a.huge {
   background-color: $white;
-  color: #ec008c;
+  color: $huge-magenta;
   font-weight: bold;
 
   &:hover {
-    background-color: #ec008c;
+    background-color: $huge-magenta;
     color: $white;
   }
 }
@@ -51,5 +51,3 @@ a.huge {
 .tiny {
 
 }
-
-
