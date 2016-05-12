@@ -4,13 +4,19 @@
   "description": "Bill French's personal website",
   "author": "Bill French <bllfrnch@gmail.com>",
   "license": "ISC",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-critical": "^0.1.5",
-    "grunt-sass": "^1.0.0"
-  },
-  "dependencies": {
-    "critical": "^0.6.0"
+  "scripts": {
+    "info": "echo 'billf.org build v 0.0.1'",
+    "compile:css": "sassc --sourcemap css/scss/style.scss css/style-src.css",
+    "compile:js": "browserify app.js > bundled-src.js",
+    "minify:css": "uglifycss css/style-src.css > css/style.css",
+    "minify:js": "uglifyjs js/bundled-src.js > js/bundle.js",
+    "build:css": "npm run compile:css && npm run minify:css",
+    "build:js": "webpack --d ./js/app.js js/bundle.js",
+    "clean:css": "rm css/style-src.css",
+    "build": "npm run build:css && npm run build:js && npm run clean:css",
+    "watch:css": "npm run build:css && fswatch --recursive --follow-links -o css/scss | xargs -n1 -I{} npm run build:css",
+    "watch:js": "",
+    "watch": "npm run watch:css && watch:js",
+    "clean": "npm run clean:css && npm run clean:js"
   }
 }
