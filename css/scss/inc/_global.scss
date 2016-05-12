@@ -20,7 +20,9 @@ body {
   }
 }
 
-header, main, footer {
+header,
+main,
+footer {
   @include span-columns(12);
 }
 
@@ -86,9 +88,11 @@ header {
   .feature {
     @include clearfix();
     background-color: $secondary-bg-color;
+    border-radius: 3px;
     box-shadow: 0 4px 8px $primary-shadow-color;
     display: table;
     margin-bottom: 2em;
+    overflow: hidden;
 
     .media-wrapper {
       @include clearfix;
@@ -121,16 +125,6 @@ header {
     @include media($small-screen-down) {
       @include span-columns(12);
       padding: 1em;
-    }
-
-    .pagination {
-      background-color: $tertiary-media-bg-color;
-      display: inline-block;
-      line-height: 1em;
-      li {
-        display: inline-block;
-        font-size: 2em;
-      }
     }
   }
 
@@ -165,6 +159,56 @@ header {
     }
   }
 }
+
+.pagination {
+  @include clearfix;
+  line-height: 1em;
+  margin: 1em 0 auto;
+  text-align: center;
+
+  ul {
+    background-color: $pagination-bg-color;
+    border-radius: 3px;
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  li {
+    display: block;
+    float: left;
+    font-size: 2em;
+    padding: 0;
+  }
+
+  a {
+    background-color: $pagination-bg-color;
+    display: block;
+    line-height: 1em;
+
+    &:hover {
+      background-color: $pagination-bg-color-hover;
+    }
+
+    &:before {
+      content: '•';
+      display: block;
+      font-family: sans-serif;
+    }
+
+    &:first-child {
+      padding-left: .25em;
+    }
+
+    &:last-child {
+      padding-right: .25em;
+    }
+
+    span {
+      display: none;
+    }
+  }
+}
+
 
 footer {
   border-top: solid $secondary-border-color;

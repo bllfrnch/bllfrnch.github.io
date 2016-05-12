@@ -3,7 +3,30 @@ body {
   color: $primary-text-color;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.wf-loading {
+  .page-container {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    .text,
+    figcaption,
+    p,
+     {
+      visibility: hidden;
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $primary-header-color;
   a {
     color: $primary-header-color;

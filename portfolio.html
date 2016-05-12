@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bill French</title>
-  <script src="//use.typekit.net/wec1uwe.js"></script>
-  <script>try{Typekit.load();}catch(e){}</script>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css" type="text/css"></link>
+  <script src="//use.typekit.net/wec1uwe.js"></script>
+  <script>try{Typekit.load();}catch(e){}</script>
 </head>
 <body>
   <div class="page-container">
@@ -28,15 +28,15 @@
         <section class="feature">
           <div class="media-wrapper">
             <figure class="media media-image">
-              <picture>
-                <img src="/img/livecase-places-landing.jpg">
+              <picture data-component="MultiPic" data-props="">
+                <a href=""><img src="/img/livecase-places-landing.jpg"></a>
               </picture>
               <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">Google Live Case</a> landing page. Use the pagination to see other screens, and click the screenhost itself for a larger view.</figcaption>
-              <nav class="pagination">
+              <nav class="pagination" component="Pagination" props="{}">
                 <ul>
-                  <li><a href="#" title="">•</a></li>
-                  <li><a href="#" title="">•</a></li>
-                  <li><a href="#" title="">•</a></li>
+                  <li><a href="#" title=""><span>LiveCase home page</span></a></li>
+                  <li><a href="#" title=""><span>LiveCase whatever page</span></a></li>
+                  <li><a href="#" title=""><span>Blah blah page</span></a></li>
                 </ul>
               </nav>
             </figure>
@@ -46,7 +46,7 @@
             <p>Smart, snappy site that allows users to design custom cases for their Nexus phones using either maps or photos from their desktop computer or mobile device.</p>
             <ul>
               <li><strong>Technologies:</strong> Angular 1.3, WebGL, ThreeJS, Browserify, Python-based AppEngine back end.</li>
-              <li><strong>Notable features:</strong>Interactive 3D model, fully responsive design, based heavily on <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> guidelines, several third-party integrations.</li>
+              <li><strong>Notable features:</strong> Interactive 3D model, fully responsive design, based heavily on <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> guidelines, several third-party integrations.</li>
               <li><strong>See it in action:</strong> <a href="https://livecase.withgoogle.com/">Google Live Case</a></li>
             </ul>
           </div>
@@ -103,7 +103,7 @@
           <div class="text">
             <h2>Recommind User Interface Toolkit</h2>
             <ul>
-              <li><strong>Technologies: </strong> Backbone, Marionette, jQuery, Require, Compass.</li>
+              <li><strong>Technologies: </strong> Backbone, Marionette, jQuery, RequireJS, Compass.</li>
               <li><strong>Notable features: </strong> User interface components used across the organization by different engineering departments, including modal dialogs, notifications, hierarchical lists, grid views, tooltips, etc. Components were written in so they were easily extensible.</li>
               <li><strong>See it in action: </strong> The UITK is used extensively in Axcelerate 5, the product featured in the video at left.</li>
             </ul>
@@ -132,6 +132,7 @@
       <p>All content copyright by Bill French, 2015.</p>
     </footer>
   </div>
+  <script src="js/bundle.js"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-50066663-1']);
