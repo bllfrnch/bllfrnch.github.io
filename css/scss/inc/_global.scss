@@ -183,9 +183,14 @@ header {
   a {
     background-color: $pagination-bg-color;
     display: block;
-    line-height: 1em;
+    line-height: .875em;
 
-    &:hover {
+    &:hover,
+    &.selected {
+      color: $primary-link-color-hover;
+    }
+
+    &.selected {
       background-color: $pagination-bg-color-hover;
     }
 

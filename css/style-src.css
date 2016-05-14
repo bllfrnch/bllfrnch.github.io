@@ -543,7 +543,13 @@ h6 {
   h6 a {
     color: #616161; }
 
+h1 {
+  font-size: 2em; }
+
 h2 {
+  font-size: 1.5em; }
+
+h3 {
   font-size: 1.25em; }
 
 a {
@@ -743,8 +749,10 @@ header .active {
   .pagination a {
     background-color: #37474f;
     display: block;
-    line-height: 1em; }
-    .pagination a:hover {
+    line-height: .875em; }
+    .pagination a:hover, .pagination a.selected {
+      color: #90caf9; }
+    .pagination a.selected {
       background-color: #455a64; }
     .pagination a:before {
       content: '•';
