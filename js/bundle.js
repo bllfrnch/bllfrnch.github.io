@@ -42,15 +42,15 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/*!****************!*\
-  !*** ./app.js ***!
-  \****************/
+/*!*******************!*\
+  !*** ./js/app.js ***!
+  \*******************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var Page = __webpack_require__(/*! ./modules/page.js */ 1);
 	
 	function init() {
-	  console.log('init');
+	  var page = new Page();
 	}
 	
 	init();
@@ -58,38 +58,46 @@
 
 /***/ },
 /* 1 */
-/*!*************************!*\
-  !*** ./modules/page.js ***!
-  \*************************/
+/*!****************************!*\
+  !*** ./js/modules/page.js ***!
+  \****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var Pagination = __webpack_require__(/*! ./pagination.js */ 2);
 	var Lightbox = __webpack_require__(/*! ./lightbox.js */ 3);
 	var Slideshow = __webpack_require__(/*! ./slideshow.js */ 4);
+	var Utility = __webpack_require__(/*! ./utility.js */ 5);
 	
-	function init() {
-	  console.log('Page init');
+	var util = Utility.getInstance();
+	var $ = util.$$();
+	
+	function Page() {
+	  var els = $('[data-module]');
+	
+	  els.forEach(function(el) {
+	    var moduleName = el.getAttribute('data-module');
+	
+	
+	  });
+	
+	  return {
+	    els: els
+	  };
 	}
 	
-	init();
-	
-	exports = {
-	  init: init
-	};
+	module.exports = Page;
 
 
 /***/ },
 /* 2 */
-/*!*******************************!*\
-  !*** ./modules/pagination.js ***!
-  \*******************************/
+/*!**********************************!*\
+  !*** ./js/modules/pagination.js ***!
+  \**********************************/
 /***/ function(module, exports) {
 
 	function init() {
 	  console.log('Pagination init');
 	}
-	
-	init();
 	
 	module.exports = {
 	  init: init
@@ -98,16 +106,30 @@
 
 /***/ },
 /* 3 */
-/*!*****************************!*\
-  !*** ./modules/lightbox.js ***!
-  \*****************************/
+/*!********************************!*\
+  !*** ./js/modules/lightbox.js ***!
+  \********************************/
 /***/ function(module, exports) {
 
 	function init() {
 	  console.log('Lightbox init');
 	}
 	
-	init();
+	module.exports = {
+	
+	};
+
+
+/***/ },
+/* 4 */
+/*!*********************************!*\
+  !*** ./js/modules/slideshow.js ***!
+  \*********************************/
+/***/ function(module, exports) {
+
+	function init() {
+	  console.log('Slideshow init');
+	}
 	
 	module.exports = {
 	  init: init
@@ -115,21 +137,67 @@
 
 
 /***/ },
-/* 4 */
-/*!******************************!*\
-  !*** ./modules/slideshow.js ***!
-  \******************************/
+/* 5 */
+/*!*******************************!*\
+  !*** ./js/modules/utility.js ***!
+  \*******************************/
 /***/ function(module, exports) {
 
-	function init() {
-	  console.log('Slideshow init');
-	}
+	module.exports = (function() {
+	  var instance;
 	
-	init();
+	  /**
+	   * [init description]
+	   * @return {[type]} [description]
+	   */
+	  function init() {
+	    return new Utility();
+	  }
 	
-	module.exports = {
-	  init: init
-	};
+	  /**
+	   * [Utility description]
+	   */
+	  function Utility() {};
+	
+	  /**
+	   * [toArray description]
+	   * @param  {[type]} nodeSet [description]
+	   * @return {[type]}         [description]
+	   */
+	  Utility.prototype.toArray = function(nodeSet) {
+	    return Array.prototype.slice.call(nodeSet, 0);
+	  };
+	
+	  /**
+	   * [$ description]
+	   * @param  {[type]} selector [description]
+	   * @param  {[type]} context  [description]
+	   * @return {[type]}          [description]
+	   */
+	  Utility.prototype.$ = function(selector, context) {
+	    if (!context) {
+	      context = document;
+	    }
+	    return this.toArray(context.querySelectorAll(selector));
+	  };
+	
+	  Utility.prototype.$$ = function() {
+	    return this.$.bind(this);
+	  };
+	
+	  return {
+	    /**
+	     * [getInstance description]
+	     * @return {[type]} [description]
+	     */
+	    getInstance: function() {
+	      if (!instance) {
+	        instance = init();
+	      }
+	      return instance;
+	    }
+	  }
+	})();
 
 
 /***/ }

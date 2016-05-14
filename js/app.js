@@ -1,7 +1,7 @@
 var Page = require('./modules/page.js');
 
 function init() {
-  console.log('init');
+  var page = new Page();
 }
 
 init();
