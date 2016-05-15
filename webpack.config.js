@@ -5,6 +5,8 @@ module.exports = {
     filename: "./js/bundle.js"
   },
   module: {
-
+    loaders: [
+      { test: /\.dot$/, loader: "dot-loader" }
+    ]
   }
 };
