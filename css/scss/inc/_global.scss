@@ -130,6 +130,10 @@ header {
 
   .media {
     margin: 0;
+
+    &.media-image > picture > *:nth-child(n + 2) {
+      display: none;
+    }
   }
 
   .caption {
@@ -192,6 +196,7 @@ header {
 
     &.selected {
       background-color: $pagination-bg-color-hover;
+      cursor: default;
     }
 
     &:before {
