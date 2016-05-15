@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bill French</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/style.css" type="text/css"></link>
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <script src="js/bundle.js"></script>
   <script src="//use.typekit.net/wec1uwe.js"></script>
   <script>try{Typekit.load();}catch(e){}</script>
 </head>
@@ -15,7 +16,7 @@
       <h1 role="banner">Bill French</h1>
       <nav>
         <ul class="internal-nav" role="navigation" aria-label="Site navigation">
-          <li><a href="/index.html">Home</a></li><li><a href="#" class="active">Portfolio</a></li><li><a href="/music.html">Music</a></li><li><a href="/blog.html">Blog</a></li>
+          <li><a href="/index.html">Home</a></li><li><a href="#" class="active">Portfolio</a></li><li><a href="/music.html">Music</a></li><li><a href="/blog.html">Blog</a></li><!--li><a href="#snake">Snake</a></li-->
         </ul>
         <ul class="external-nav" role="navigation" aria-label="External navigation">
           <li><a href="https://www.linkedin.com/pub/bill-french/4/28/418" title="LinkedIn profile" class="fa fa-linkedin"><span>LinkedIn</span></a></li><li><a href="https://github.com/bllfrnch/" title="GitHub" class="fa fa-github"><span>GitHub</span></a></li><li><a href="http://instagram.com/billfff" title="Instagram feed" class="fa fa-instagram"><span>Instagram</span></a></li>
@@ -26,18 +27,16 @@
       <article>
         <p>Below are links to some of the major projects I've worked on over the past five years.</p>
         <section class="feature">
-          <div class="media-wrapper">
+          <div class="media-wrapper" data-component="MultiPic" data-params="{}">
             <figure class="media media-image">
-              <picture data-component="MultiPic" data-props="">
-                <a href=""><img src="/img/livecase-places-landing.jpg"></a>
+              <picture>
+                <a href=""><img src="/img/livecase-places-landing.jpg" alt="LiveCase Places landing page"></a>
+                <a href=""><img src="/img/livecase-menu.jpg" alt="LiveCase menu"></a>
+                <a href=""><img src="/img/livecase-photos-style.jpg" alt="LiveCase Photos style page"></a>
               </picture>
-              <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">Google Live Case</a> landing page. Use the pagination to see other screens, and click the screenhost itself for a larger view.</figcaption>
-              <nav class="pagination" component="Pagination" props="{}">
-                <ul>
-                  <li><a href="#" title=""><span>LiveCase home page</span></a></li>
-                  <li><a href="#" title=""><span>LiveCase whatever page</span></a></li>
-                  <li><a href="#" title=""><span>Blah blah page</span></a></li>
-                </ul>
+              <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">Google Live Case</a> screenshots. Use the pagination to see other screens, and click the screenhost itself for a larger view.</figcaption>
+              <nav class="pagination">
+                <ul></ul>
               </nav>
             </figure>
           </div>
@@ -53,10 +52,11 @@
         </section>
 
         <section class="feature">
-          <div class="media-wrapper">
+          <div class="media-wrapper" data-component="MultiPic" data-params="{}">
             <figure class="media media-image">
               <picture>
-                <img src="/img/youtube-playbook-home.jpg">
+                <a href=""><img src="/img/youtube-playbook-home.jpg" alt="YouTube Creator Playbook home page"></a>
+                <a href=""><img src="/img/youtube-playbook-page.jpg" alt="YouTube Creator Playbook home page"></a>
               </picture>
               <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">YouTube Creator Playbook</a> home page.</figcaption>
             </figure>
@@ -82,7 +82,7 @@
             </figure>
           </div>
           <div class="text">
-            <h2>thinkwithgoogle.com</h2>
+            <h2>Think With Google</h2>
             <ul>
               <li><strong>Technologies: </strong> Closure Javascript library, Bourbon, Neat, semantic markup optimized for SEO.</li>
               <li><strong>Notable features: </strong> Localized for three markets, fully responsive design, based heavily on <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> guidelines.</li>
@@ -118,11 +118,12 @@
             </figure>
           </div>
           <div class="text">
-            <h2><a href="//www.recommind.com/products/decisiv-search">Recommind Decisiv Search</a></h2>
+            <h2>Recommind Decisiv Search</h2>
               <ul>
                 <li><strong>Technologies: </strong> XSLT, jQuery, JavascriptMVC, plain ol' CSS. A Java servlet produced XML from a proprietary middle tier and back end.</li>
                 <li><strong>Notable features: </strong> Designed to be fully customizable by professional services staff in the field, targeted IE7+ (yeah, I know), UI embeddable within other products.</li>
                 <li><strong>See it in action: </strong> Video at left walks through all major features, 90% of which I wrote.</li>
+                <li><strong>More info:</strong> <a href="//www.recommind.com/products/decisiv-search">Decisiv Search</a></li>
               </ul>
           </div>
         </section>
@@ -132,7 +133,6 @@
       <p>All content copyright by Bill French, 2015.</p>
     </footer>
   </div>
-  <script src="js/bundle.js"></script>
   <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-50066663-1']);
