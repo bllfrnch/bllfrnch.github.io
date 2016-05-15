@@ -1,12 +1,14 @@
 'use strict';
 
 var Utility = require('../../utility.js');
+var template = require('./template.dot');
 var radio = require('radio');
 var util = Utility.getInstance();
 var $ = util.$;
 
 var SELECTED_CLASS = 'selected';
 var CLICK_EVENT = 'pagination:pageLinkClicked';
+
 
 /**
  * Pagination class. Creates a pagination component. Publishes events when page
@@ -16,9 +18,10 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
  * @param {[type]} params Parameters for the pagination class.
  */
 function Pagination(el, params) {
+  var html = template(params);
   this.el = el;
   this.params = params;
-  this.pageLinks = $('.page-link');
+  this.pageLinks = $('.page-link', this.el);
   this.current = this.toggleSelected(this.pageLinks[0]);
 
   this.pageLinks.forEach(function(link) {
