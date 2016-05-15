@@ -1,9 +1,9 @@
 'use strict';
 
-var Pagination = require('./pagination.js');
-var Lightbox = require('./lightbox.js');
-var Slideshow = require('./slideshow.js');
-var Utility = require('./utility.js');
+var Pagination = require('../pagination/module.js');
+var Lightbox = require('../lightbox/module.js');
+var Slideshow = require('../multipic/module.js');
+var Utility = require('../../utility.js');
 
 function Page() {
   var components = {

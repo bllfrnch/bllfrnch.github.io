@@ -1,6 +1,6 @@
 'use strict';
 
-var Utility = require('./utility.js');
+var Utility = require('../../utility.js');
 var radio = require('radio');
 var util = Utility.getInstance();
 var $ = util.$;
@@ -72,7 +72,5 @@ Pagination.prototype.getRequestedPage = function(el) {
     }
   }
 };
-
-
 
 module.exports = Pagination;

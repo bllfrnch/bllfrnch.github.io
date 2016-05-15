@@ -1,6 +1,6 @@
 'use strict';
 
-var Page = require('./components/page.js');
+var Page = require('./components/page/module.js');
 
 function init() {
   var page = new Page();
