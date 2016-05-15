@@ -5,22 +5,20 @@ var Lightbox = require('./lightbox.js');
 var Slideshow = require('./slideshow.js');
 var Utility = require('./utility.js');
 
-var modules = {
-  pagination: Pagination,
-  lightbox: Lightbox,
-  slideshow: Slideshow
-};
-
-var util = Utility.getInstance();
-var $ = util.$$();
-
 function Page() {
-  var els = $('[data-module]');
+  var components = {
+      pagination: Pagination,
+      lightbox: Lightbox,
+      slideshow: Slideshow
+    },
+    util = Utility.getInstance(),
+    $ = util.$,
+    els = $('[data-component]');
 
   els.forEach(function(el) {
-    var key = el.getAttribute('data-module').toLowerCase(),
+    var key = el.getAttribute('data-component').toLowerCase(),
         params = JSON.parse(el.getAttribute('data-params').replace(/'/, '"')),
-        constructor = modules[key],
+        constructor = components[key],
         instance;
 
     if (constructor) {

@@ -3,7 +3,7 @@
 var Utility = require('./utility.js');
 var radio = require('radio');
 var util = Utility.getInstance();
-var $ = util.$$();
+var $ = util.$;
 
 var SELECTED_CLASS = 'selected';
 var CLICK_EVENT = 'pagination:pageLinkClicked';
@@ -47,10 +47,7 @@ Pagination.prototype.clickHandler = function(event) {
 
   this.current = el;
 
-  radio(CLICK_EVENT).broadcast({
-    el: el,
-    page: page
-  });
+  radio(CLICK_EVENT).broadcast({ el: el, page: page });
 };
 
 /**
