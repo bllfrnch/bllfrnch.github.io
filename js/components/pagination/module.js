@@ -1,7 +1,7 @@
 'use strict';
 
 var Utility = require('../../utility.js');
-var template = require('./template.dot');
+var render = require('./template.dot');
 var radio = require('radio');
 var util = Utility.getInstance();
 var $ = util.$;
@@ -18,16 +18,24 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
  * @param {[type]} params Parameters for the pagination class.
  */
 function Pagination(el, params) {
-  var html = template(params);
   this.el = el;
   this.params = params;
-  this.pageLinks = $('.page-link', this.el);
+  this.pageLinks = this.createDom();
   this.current = this.toggleSelected(this.pageLinks[0]);
-
   this.pageLinks.forEach(function(link) {
     link.addEventListener('click', this.clickHandler.bind(this));
   }, this);
 }
+
+/**
+ * [createDom description]
+ * @return {[type]} [description]
+ */
+Pagination.prototype.createDom = function() {
+  var html = render(this.params);
+  this.el.innerHTML = html;
+  return $('.page-link', this.el);
+};
 
 /**
  * [clickHandler description]

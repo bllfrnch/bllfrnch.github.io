@@ -49,12 +49,12 @@
 
 	'use strict';
 	
-	var Page = __webpack_require__(/*! ./modules/page.js */ 1);
+	var Page = __webpack_require__(/*! ./components/page/module.js */ 1);
 	
 	function init() {
-	  var page = new Page();
-	
-	  console.log(page);
+	  document.addEventListener('DOMContentLoaded', function(ev) {
+	    var page = new Page();
+	  });
 	}
 	
 	init();
@@ -62,34 +62,32 @@
 
 /***/ },
 /* 1 */
-/*!****************************!*\
-  !*** ./js/modules/page.js ***!
-  \****************************/
+/*!**************************************!*\
+  !*** ./js/components/page/module.js ***!
+  \**************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Pagination = __webpack_require__(/*! ./pagination.js */ 2);
-	var Lightbox = __webpack_require__(/*! ./lightbox.js */ 4);
-	var Slideshow = __webpack_require__(/*! ./slideshow.js */ 5);
-	var Utility = __webpack_require__(/*! ./utility.js */ 3);
-	
-	var modules = {
-	  pagination: Pagination,
-	  lightbox: Lightbox,
-	  slideshow: Slideshow
-	};
-	
-	var util = Utility.getInstance();
-	var $ = util.$$();
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
+	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 5);
+	var MultiPic = __webpack_require__(/*! ../multipic/module.js */ 6);
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
 	
 	function Page() {
-	  var els = $('[data-module]');
+	  var components = {
+	      pagination: Pagination,
+	      lightbox: Lightbox,
+	      multipic: MultiPic
+	    },
+	    util = Utility.getInstance(),
+	    $ = util.$,
+	    els = $('[data-component]');
 	
 	  els.forEach(function(el) {
-	    var key = el.getAttribute('data-module').toLowerCase(),
+	    var key = el.getAttribute('data-component').toLowerCase(),
 	        params = JSON.parse(el.getAttribute('data-params').replace(/'/, '"')),
-	        constructor = modules[key],
+	        constructor = components[key],
 	        instance;
 	
 	    if (constructor) {
@@ -107,20 +105,22 @@
 
 /***/ },
 /* 2 */
-/*!**********************************!*\
-  !*** ./js/modules/pagination.js ***!
-  \**********************************/
+/*!********************************************!*\
+  !*** ./js/components/pagination/module.js ***!
+  \********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Utility = __webpack_require__(/*! ./utility.js */ 3);
-	var radio = __webpack_require__(/*! radio */ 6);
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var render = __webpack_require__(/*! ./template.dot */ 8);
+	var radio = __webpack_require__(/*! radio */ 4);
 	var util = Utility.getInstance();
-	var $ = util.$$();
+	var $ = util.$;
 	
 	var SELECTED_CLASS = 'selected';
 	var CLICK_EVENT = 'pagination:pageLinkClicked';
+	
 	
 	/**
 	 * Pagination class. Creates a pagination component. Publishes events when page
@@ -132,13 +132,22 @@
 	function Pagination(el, params) {
 	  this.el = el;
 	  this.params = params;
-	  this.pageLinks = $('.page-link');
+	  this.pageLinks = this.createDom();
 	  this.current = this.toggleSelected(this.pageLinks[0]);
-	
 	  this.pageLinks.forEach(function(link) {
 	    link.addEventListener('click', this.clickHandler.bind(this));
 	  }, this);
 	}
+	
+	/**
+	 * [createDom description]
+	 * @return {[type]} [description]
+	 */
+	Pagination.prototype.createDom = function() {
+	  var html = render(this.params);
+	  this.el.innerHTML = html;
+	  return $('.page-link', this.el);
+	};
 	
 	/**
 	 * [clickHandler description]
@@ -161,10 +170,7 @@
 	
 	  this.current = el;
 	
-	  radio(CLICK_EVENT).broadcast({
-	    el: el,
-	    page: page
-	  });
+	  radio(CLICK_EVENT).broadcast({ el: el, page: page });
 	};
 	
 	/**
@@ -190,16 +196,14 @@
 	  }
 	};
 	
-	
-	
 	module.exports = Pagination;
 
 
 /***/ },
 /* 3 */
-/*!*******************************!*\
-  !*** ./js/modules/utility.js ***!
-  \*******************************/
+/*!***********************!*\
+  !*** ./js/utility.js ***!
+  \***********************/
 /***/ function(module, exports) {
 
 	'use strict';
@@ -208,48 +212,74 @@
 	  var instance;
 	
 	  /**
-	   * [init description]
-	   * @return {[type]} [description]
+	   * Returns a new Utility object.
+	   * @return {Utility}
 	   */
 	  function init() {
 	    return new Utility();
 	  }
 	
 	  /**
-	   * [Utility description]
+	   * Utility class.
+	   * @constructor
 	   */
 	  function Utility() {};
 	
 	  /**
-	   * [toArray description]
-	   * @param  {[type]} nodeSet [description]
-	   * @return {[type]}         [description]
+	   * Takes an array-like thing, e.g., a node list, and returns it as a proper
+	   * array.
+	   * @param  {Array-like} list The array-like list.
+	   * @return {Array} The resulting array.
 	   */
-	  Utility.prototype.toArray = function(nodeSet) {
-	    return Array.prototype.slice.call(nodeSet, 0);
+	  Utility.prototype.toArray = function(list) {
+	    return Array.prototype.slice.call(list, 0);
 	  };
 	
 	  /**
-	   * [$ description]
-	   * @param  {[type]} selector [description]
-	   * @param  {[type]} context  [description]
-	   * @return {[type]}          [description]
+	   * General purpose query selector function.
+	   * @param  {String} selector A string with one or more selectors separated by
+	   * commas.
+	   * @param  {[type]} context The context elements from which to begin searching
+	   * for child elements. Defaults to the document element if nothing is passed.
+	   * @return {Array<Element>} Returns an array of element nodes.
 	   */
 	  Utility.prototype.$ = function(selector, context) {
+	    var u = Utility.prototype;
 	    if (!context) {
 	      context = document;
 	    }
-	    return this.toArray(context.querySelectorAll(selector));
+	    // use the prototype so util.$ can be aliased.
+	    // TODO: clean this up.
+	    return u.toArray(context.querySelectorAll(selector));
 	  };
 	
-	  Utility.prototype.$$ = function() {
-	    return this.$.bind(this);
+	  /**
+	   * Extend an object.
+	   * @param  {Object} )    {               var obj [description]
+	   * @param  {[type]} args [description]
+	   * @return {[type]}      [description]
+	   */
+	  Utility.prototype.extend = function() {
+	    var obj = {},
+	      args = this.toArray(arguments).reverse();
+	
+	    if (args.length == 1) {
+	      return args[0];
+	    } else if (args.length > 1) {
+	      return args.forEach(function(arg) {
+	        for (var key in arg) {
+	          obj[key] = arg[key];
+	        }
+	      });
+	    }
 	  };
 	
+	  // Module is implemented as a singleton with no public access to the Utility
+	  // class istself, only a pre-existing instance.
 	  return {
 	    /**
-	     * [getInstance description]
-	     * @return {[type]} [description]
+	     * Return a singleton instance of the Utility class.
+	     * @return {Utility} Utility object.
 	     */
 	    getInstance: function() {
 	      if (!instance) {
@@ -263,42 +293,6 @@
 
 /***/ },
 /* 4 */
-/*!********************************!*\
-  !*** ./js/modules/lightbox.js ***!
-  \********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	function init() {
-	  console.log('Lightbox init');
-	}
-	
-	module.exports = {
-	
-	};
-
-
-/***/ },
-/* 5 */
-/*!*********************************!*\
-  !*** ./js/modules/slideshow.js ***!
-  \*********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	function init() {
-	  console.log('Slideshow init');
-	}
-	
-	module.exports = {
-	  init: init
-	};
-
-
-/***/ },
-/* 6 */
 /*!**************************!*\
   !*** ./~/radio/radio.js ***!
   \**************************/
@@ -470,6 +464,111 @@
 		return radio;
 	});
 
+
+/***/ },
+/* 5 */
+/*!******************************************!*\
+  !*** ./js/components/lightbox/module.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	function init() {
+	  console.log('Lightbox init');
+	}
+	
+	module.exports = {
+	
+	};
+
+
+/***/ },
+/* 6 */
+/*!******************************************!*\
+  !*** ./js/components/multipic/module.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var radio = __webpack_require__(/*! radio */ 4);
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var util = Utility.getInstance();
+	var $ = util.$;
+	
+	var CLICK_EVENT = 'pagination:pageLinkClicked';
+	
+	/**
+	 * MultiPic class. Creates a multipic component. Listens for events from the
+	 * a pagination instance and responds accordingly.
+	 * @constructor
+	 * @param {Element} el     The container element for the pagination.
+	 * @param {[type]} params Parameters for the pagination class.
+	 */
+	function MultiPic(el, params) {
+	  var pagination,
+	      paginationEl;
+	
+	  this.el = el;
+	  this.params = params;
+	  this.pics = $('picture img', this.el);
+	  this.current = this.pics[0];
+	
+	  paginationEl = $('.pagination ul', this.el)[0];
+	  pagination = new Pagination(paginationEl, {
+	    imgs: this.pics.map(function(img){ return img.src })
+	  });
+	
+	  this.bindEvents()
+	}
+	
+	/**
+	 * [bindEvents description]
+	 * @public
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.bindEvents = function() {
+	  radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+	};
+	
+	/**
+	 * [pageChangeRequested description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.picChangeRequested = function() {
+	  var picIndex = arguments[0].page;
+	  console.log('picChangeRequested');
+	  this.changePic(picIndex);
+	};
+	
+	/**
+	 * [changePic description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.changePic = function(idx) {
+	  console.log('changePic');
+	  this.current.parentNode.style.display = 'none';
+	  this.current = this.pics[idx];
+	  this.current.parentNode.style.display = 'block';
+	}
+	
+	module.exports = MultiPic;
+
+
+/***/ },
+/* 7 */,
+/* 8 */
+/*!***********************************************!*\
+  !*** ./js/components/pagination/template.dot ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	module.exports = function anonymous(it
+	/**/) {
+	var out='';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a></li>';} } return out;
+	}
 
 /***/ }
 /******/ ]);

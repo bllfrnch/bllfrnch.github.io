@@ -29,9 +29,37 @@ function MultiPic(el, params) {
     imgs: this.pics.map(function(img){ return img.src })
   });
 
-  this.pageLinks.forEach(function(link) {
-    link.addEventListener('click', this.clickHandler.bind(this));
-  }, this);
+  this.bindEvents()
+}
+
+/**
+ * [bindEvents description]
+ * @public
+ * @return {[type]} [description]
+ */
+MultiPic.prototype.bindEvents = function() {
+  radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+};
+
+/**
+ * [pageChangeRequested description]
+ * @return {[type]} [description]
+ */
+MultiPic.prototype.picChangeRequested = function() {
+  var picIndex = arguments[0].page;
+  console.log('picChangeRequested');
+  this.changePic(picIndex);
+};
+
+/**
+ * [changePic description]
+ * @return {[type]} [description]
+ */
+MultiPic.prototype.changePic = function(idx) {
+  console.log('changePic');
+  this.current.parentNode.style.display = 'none';
+  this.current = this.pics[idx];
+  this.current.parentNode.style.display = 'block';
 }
 
 module.exports = MultiPic;

@@ -45,6 +45,27 @@ module.exports = (function() {
     return u.toArray(context.querySelectorAll(selector));
   };
 
+  /**
+   * Extend an object.
+   * @param  {Object} )    {               var obj [description]
+   * @param  {[type]} args [description]
+   * @return {[type]}      [description]
+   */
+  Utility.prototype.extend = function() {
+    var obj = {},
+      args = this.toArray(arguments).reverse();
+
+    if (args.length == 1) {
+      return args[0];
+    } else if (args.length > 1) {
+      return args.forEach(function(arg) {
+        for (var key in arg) {
+          obj[key] = arg[key];
+        }
+      });
+    }
+  };
+
   // Module is implemented as a singleton with no public access to the Utility
   // class istself, only a pre-existing instance.
   return {

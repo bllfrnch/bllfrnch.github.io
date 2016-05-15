@@ -1,5 +1,5 @@
-{{~it :imgs:index}}
+{{~it.imgs :value:index}}
 <li>
-  <a href="#/0" title="" class="page-link"><span>LiveCase home page</span></a>
+  <a href="#/{{=index}}" title="" class="page-link"><span>LiveCase home page</span></a>
 </li>
 {{~}}

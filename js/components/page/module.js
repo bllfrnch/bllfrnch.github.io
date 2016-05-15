@@ -2,14 +2,14 @@
 
 var Pagination = require('../pagination/module.js');
 var Lightbox = require('../lightbox/module.js');
-var Slideshow = require('../multipic/module.js');
+var MultiPic = require('../multipic/module.js');
 var Utility = require('../../utility.js');
 
 function Page() {
   var components = {
       pagination: Pagination,
       lightbox: Lightbox,
-      slideshow: Slideshow
+      multipic: MultiPic
     },
     util = Utility.getInstance(),
     $ = util.$,
