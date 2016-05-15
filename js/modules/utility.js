@@ -4,48 +4,53 @@ module.exports = (function() {
   var instance;
 
   /**
-   * [init description]
-   * @return {[type]} [description]
+   * Returns a new Utility object.
+   * @return {Utility}
    */
   function init() {
     return new Utility();
   }
 
   /**
-   * [Utility description]
+   * Utility class.
+   * @constructor
    */
   function Utility() {};
 
   /**
-   * [toArray description]
-   * @param  {[type]} nodeSet [description]
-   * @return {[type]}         [description]
+   * Takes an array-like thing, e.g., a node list, and returns it as a proper
+   * array.
+   * @param  {Array-like} list The array-like list.
+   * @return {Array} The resulting array.
    */
-  Utility.prototype.toArray = function(nodeSet) {
-    return Array.prototype.slice.call(nodeSet, 0);
+  Utility.prototype.toArray = function(list) {
+    return Array.prototype.slice.call(list, 0);
   };
 
   /**
-   * [$ description]
-   * @param  {[type]} selector [description]
-   * @param  {[type]} context  [description]
-   * @return {[type]}          [description]
+   * General purpose query selector function.
+   * @param  {String} selector A string with one or more selectors separated by
+   * commas.
+   * @param  {[type]} context The context elements from which to begin searching
+   * for child elements. Defaults to the document element if nothing is passed.
+   * @return {Array<Element>} Returns an array of element nodes.
    */
   Utility.prototype.$ = function(selector, context) {
+    var u = Utility.prototype;
     if (!context) {
       context = document;
     }
-    return this.toArray(context.querySelectorAll(selector));
+    // use the prototype so util.$ can be aliased.
+    // TODO: clean this up.
+    return u.toArray(context.querySelectorAll(selector));
   };
 
-  Utility.prototype.$$ = function() {
-    return this.$.bind(this);
-  };
-
+  // Module is implemented as a singleton with no public access to the Utility
+  // class istself, only a pre-existing instance.
   return {
     /**
-     * [getInstance description]
-     * @return {[type]} [description]
+     * Return a singleton instance of the Utility class.
+     * @return {Utility} Utility object.
      */
     getInstance: function() {
       if (!instance) {
