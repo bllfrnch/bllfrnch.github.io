@@ -21,7 +21,8 @@
     "clean": "npm run clean:css && npm run clean:js"
   },
   "devDependencies": {
-    "css-loader": "^0.23.1",
-    "style-loader": "^0.13.1"
+    "dot": "^1.0.3",
+    "dot-loader": "^0.1.1",
+    "radio": "^0.2.0"
   }
 }
