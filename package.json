@@ -4,13 +4,26 @@
   "description": "Bill French's personal website",
   "author": "Bill French <bllfrnch@gmail.com>",
   "license": "ISC",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-critical": "^0.1.5",
-    "grunt-sass": "^1.0.0"
+  "scripts": {
+    "start": "npm run build && http-server -p 5555",
+    "info": "echo 'billf.org build v 0.0.1'",
+    "compile:css": "sassc --sourcemap css/scss/style.scss css/style-src.css",
+    "compile:js": "browserify app.js > bundled-src.js",
+    "minify:css": "uglifycss css/style-src.css > css/style.css",
+    "minify:js": "uglifyjs js/bundled-src.js > js/bundle.js",
+    "build:css": "npm run compile:css && npm run minify:css",
+    "build:js": "webpack --progress --colors -d",
+    "clean:css": "rm css/style-src.css",
+    "build": "npm run build:css && npm run build:js && npm run clean:css",
+    "watch:css": "npm run build:css && fswatch --recursive --follow-links -o css/scss | xargs -n1 -I{} npm run build:css",
+    "watch:js": "webpack --progress --colors --watch -d",
+    "watch": "npm run watch:css & npm run watch:js",
+    "clean": "npm run clean:css && npm run clean:js"
   },
-  "dependencies": {
-    "critical": "^0.6.0"
+  "devDependencies": {
+    "dot": "^1.0.3",
+    "dot-loader": "^0.1.1",
+    "node-uuid": "^1.4.7",
+    "radio": "^0.2.0"
   }
 }

@@ -1,0 +1,5 @@
+{{~it.imgs :value:index}}
+<li>
+  <a href="#/{{=index}}" title="" class="page-link"><span>LiveCase home page</span></a>
+</li>
+{{~}}

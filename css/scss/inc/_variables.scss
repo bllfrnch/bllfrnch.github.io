@@ -1,6 +1,24 @@
-// Neat Overrides
-$column: 90px;
-$gutter: 30px;
-$grid-columns: 12;
+$white: #fff;
+$huge-magenta: #ec008c;
 
-// colors
+$primary-bg-color: material-color('grey', '100');
+$secondary-bg-color: material-color('grey', '50');
+
+$primary-media-bg-color: material-color('blue-grey', '50');
+$secondary-media-bg-color: material-color('blue-grey', '100');
+
+$pagination-bg-color: material-color('blue-grey', '800');
+$pagination-bg-color-hover: material-color('blue-grey', '700');
+
+$primary-text-color: material-color('grey', '600');
+$secondary-text-color: material-color('grey', '500');
+
+$primary-header-color: material-color('grey', '700');
+
+$primary-link-color: material-color('blue', '500');
+$primary-link-color-hover: material-color('blue', '200');
+
+$primary-shadow-color: material-color('grey', '300');
+
+$primary-border-color: material-color('grey', '700');
+$secondary-border-color: material-color('grey', '200');

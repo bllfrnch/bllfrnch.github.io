@@ -1,0 +1,26 @@
+.portfolio {
+  h2 {
+    margin: 0;
+  }
+
+  article {
+    margin-bottom: 2em;
+  }
+
+  .media-wrapper {
+    .media-video {
+      position: relative;
+      padding-bottom: 62.5%; /* 16:9 */
+      height: 0;
+      @include media($small-screen-down) {
+        padding-bottom: 62.5%;
+      }
+    }
+
+    iframe {
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+  }
+}

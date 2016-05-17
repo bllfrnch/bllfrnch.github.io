@@ -16,19 +16,20 @@ module.exports = function(grunt) {
       },
       main: {
         files: config.scssLib.concat(['Gruntfile.js', 'css/scss/**/*.scss']),
-        tasks: ['sass', 'critical:atf']
+        // tasks: ['sass', 'critical:atf']
+        tasks: ['sass']
       }
     },
 
-    critical: {
-      atf: {
-        base: './',
-        src: 'index.html',
-        dest: 'index.html',
-        width: 1300,
-        height: 900
-      }
-    },
+    // critical: {
+    //   atf: {
+    //     base: './',
+    //     src: 'index.html',
+    //     dest: 'index.html',
+    //     width: 1300,
+    //     height: 900
+    //   }
+    // },
 
     sass: {
       options: {
@@ -45,7 +46,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
-  grunt.loadNpmTasks('grunt-critical');
+  // grunt.loadNpmTasks('grunt-critical');
 
   grunt.registerTask('default', ['watch']);
 };

@@ -1,34 +1,84 @@
 body {
   font-family: "source-sans-pro", sans-serif;
-  color: material-color('grey', '600');
+  color: $primary-text-color;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  color: material-color('blue-grey', '700');
-  a {
-    color: material-color('blue-grey', '700');
+.wf-loading {
+  .page-container {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    li,
+    .text,
+    figcaption,
+    p,
+     {
+      visibility: hidden;
+    }
   }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $primary-header-color;
+  a {
+    color: $primary-header-color;
+  }
+}
+
+h1 {
+  font-size: 2em;
+}
+
 h2 {
+  font-size: 1.5em;
+}
+
+h3 {
   font-size: 1.25em;
 }
 
 a {
-  color: material-color('orange');
+  color: $primary-link-color;
+  //font-weight: bold;
   text-decoration: none;
+  transition: all 0.3s;
+
+  &:hover {
+    color: $primary-link-color-hover;
+    transition: color 0.2s;
+  }
 }
 
-header .internal-nav, 
+header .internal-nav,
 header .external-nav {
   a.active {
-    color: material-color('orange');
+    color: $primary-link-color-hover;
   }
 }
 
 a.huge {
-  color: #ec008c;
+  background-color: $white;
+  color: $huge-magenta;
   font-weight: bold;
+
+  &:hover {
+    background-color: $huge-magenta;
+    color: $white;
+  }
 }
 
+.small {
+  font-size: 0.83em;
+}
 
+.tiny {
+
+}

@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bill French</title>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <script src="js/bundle.js"></script>
   <script src="//use.typekit.net/wec1uwe.js"></script>
   <script>try{Typekit.load();}catch(e){}</script>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/style.css" type="text/css"></link>
 </head>
 <body>
   <div class="page-container">
@@ -15,65 +16,121 @@
       <h1 role="banner">Bill French</h1>
       <nav>
         <ul class="internal-nav" role="navigation" aria-label="Site navigation">
-          <li><a href="/index.html">Home</a></li><li><a href="#" class="active">Portfolio</a></li><li><a href="/music.html">Music</a></li><li><a href="/blog.html">Blog</a></li>
+          <li><a href="/index.html">Home</a></li><li><a href="#" class="active">Portfolio</a></li><li><a href="/music.html">Music</a></li><li><a href="/blog.html">Blog</a></li><!--li><a href="#snake">Snake</a></li-->
         </ul>
         <ul class="external-nav" role="navigation" aria-label="External navigation">
           <li><a href="https://www.linkedin.com/pub/bill-french/4/28/418" title="LinkedIn profile" class="fa fa-linkedin"><span>LinkedIn</span></a></li><li><a href="https://github.com/bllfrnch/" title="GitHub" class="fa fa-github"><span>GitHub</span></a></li><li><a href="http://instagram.com/billfff" title="Instagram feed" class="fa fa-instagram"><span>Instagram</span></a></li>
         </ul>
       </nav>
     </header>
-    <main role="main">
-      <section class="portfolio">
-        <article>
-          <p>Below are links to some of the major projects I've worked on over the past four or so years.</p>
-          <figure>
-            <div class="image">
-              <a href="//thinkwithgoogle.com/"><img src="/img/twg.jpg"></a>
-            </div>
-            <figcaption>
-              <h2><a href="//thinkwithgoogle.com/">thinkwithgoogle.com</a></h2>
-              <ul>
-                <li><strong>Technologies: </strong> Closure Javascript library, Bourbon, Neat, semantic markup optimized for SEO.</li>
-                <li><strong>Notable features: </strong> Localized for three markets, fully responsive design, based heavily on <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> guidelines.</li>
-                <li><strong>Accolades: </strong> Winner of the 2015 <a href="http://www.webbyawards.com/winners/2015/advertising-media/websites-micro-sites-and-rich-media/business-products-services/think-with-google/">People's Voice Webby</a> award for business products &amp; services.</li>
-                <li><strong>See it in action: </strong> <a href="//thinkwithgoogle.com/">thinkwithgoogle.com</a></li>
-              </ul>
-            </figcaption>
-          </figure>
-        </article>
-        
-        <article>
-          <figure>
-            <div class="video">
-              <iframe src="https://www.youtube.com/embed/YgdXIpRiQx4" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <figcaption>
-              <h2>Recommind User Interface Toolkit</h2>
-              <ul>
-                <li><strong>Technologies: </strong> Backbone, Marionette, jQuery, Require, Compass.</li>
-                <li><strong>Notable features: </strong> User interface components used across the organization by different engineering departments, including modal dialogs, notifications, hierarchical lists, grid views, tooltips, etc. Components were written in so they were easily extensible.</li>
-                <li><strong>See it in action: </strong> The UITK is used extensively in Axcelerate 5, the product featured in the video at left.</li>
-              </ul>
-            </figcaption>
-          </figure>
-        </article>
+    <main role="main" class="main portfolio">
+      <article>
+        <p>Below are links to some of the major projects I've worked on over the past five years.</p>
+        <section class="feature">
+          <div class="media-wrapper" data-component="MultiPic" data-params="{}">
+            <figure class="media media-image">
+              <picture>
+                <a href=""><img src="/img/livecase-places-landing.jpg" alt="LiveCase Places landing page"></a>
+                <a href=""><img src="/img/livecase-menu.jpg" alt="LiveCase menu"></a>
+                <a href=""><img src="/img/livecase-photos-style.jpg" alt="LiveCase Photos style page"></a>
+              </picture>
+              <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">Google Live Case</a> screenshots. Use the pagination to see other screens, and click the screenhost itself for a larger view.</figcaption>
+              <nav class="pagination">
+                <ul></ul>
+              </nav>
+            </figure>
+          </div>
+          <div class="text">
+            <h2>Google Live Case</h2>
+            <p>Smart, snappy site that allows users to design custom cases for their Nexus phones using either maps or photos from their desktop computer or mobile device.</p>
+            <ul>
+              <li><strong>Technologies:</strong> Angular 1.3, WebGL, ThreeJS, Browserify, Python-based AppEngine back end.</li>
+              <li><strong>Notable features:</strong> Interactive 3D model, fully responsive design, based heavily on <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> guidelines, several third-party integrations.</li>
+              <li><strong>See it in action:</strong> <a href="https://livecase.withgoogle.com/">Google Live Case</a></li>
+            </ul>
+          </div>
+        </section>
 
-        <article>
-          <figure>
-            <div class="video">
+        <section class="feature">
+          <div class="media-wrapper" data-component="MultiPic" data-params="{}">
+            <figure class="media media-image">
+              <picture>
+                <a href=""><img src="/img/youtube-playbook-home.jpg" alt="YouTube Creator Playbook home page"></a>
+                <a href=""><img src="/img/youtube-playbook-page.jpg" alt="YouTube Creator Playbook home page"></a>
+              </picture>
+              <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">YouTube Creator Playbook</a> home page.</figcaption>
+              <nav class="pagination">
+                <ul></ul>
+              </nav>
+            </figure>
+          </div>
+          <div class="text">
+            <h2>YouTube Creator Playbook</h2>
+            <p>I was the lead developer on this project.</p>
+            <ul>
+              <li><strong>Technologies: </strong> Closure Javascript library, Bourbon, Neat, semantic markup optimized for SEO.</li>
+              <li><strong>Notable features: </strong> Fully responsive design, based heavily on <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> guidelines.</li>
+              <li><strong>See it in action: </strong> <a href="https://thinkwithgoogle.com/playbooks/youtube.html">YouTube Creator Playbook</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="feature">
+          <div class="media-wrapper">
+            <figure class="media media-image">
+              <picture>
+                <img src="/img/twg.jpg">
+              </picture>
+              <figcaption class="caption small"><a href="https://thinkwithgoogle.com/">thinkwithgoogle.com</a> home page.</figcaption>
+            </figure>
+          </div>
+          <div class="text">
+            <h2>Think With Google</h2>
+            <ul>
+              <li><strong>Technologies: </strong> Closure Javascript library, Bourbon, Neat, semantic markup optimized for SEO.</li>
+              <li><strong>Notable features: </strong> Localized for three markets, fully responsive design, based heavily on <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> guidelines.</li>
+              <li><strong>Accolades: </strong> Winner of the 2015 <a href="http://www.webbyawards.com/winners/2015/advertising-media/websites-micro-sites-and-rich-media/business-products-services/think-with-google/">People's Voice Webby</a> award for business products &amp; services.</li>
+              <li><strong>See it in action: </strong> <a href="//thinkwithgoogle.com/">thinkwithgoogle.com</a></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="feature">
+          <div class="media-wrapper">
+            <figure class="media media-video">
+              <iframe src="https://www.youtube.com/embed/YgdXIpRiQx4" frameborder="0" allowfullscreen></iframe>
+              <figcaption class="caption small">
+              </figcaption>
+            </figure>
+          </div>
+          <div class="text">
+            <h2>Recommind User Interface Toolkit</h2>
+            <ul>
+              <li><strong>Technologies: </strong> Backbone, Marionette, jQuery, RequireJS, Compass.</li>
+              <li><strong>Notable features: </strong> User interface components used across the organization by different engineering departments, including modal dialogs, notifications, hierarchical lists, grid views, tooltips, etc. Components were written in so they were easily extensible.</li>
+              <li><strong>See it in action: </strong> The UITK is used extensively in Axcelerate 5, the product featured in the video at left.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="feature">
+          <div class="media-wrapper">
+            <figure class="media media-video">
               <iframe src="https://www.youtube.com/embed/uI-wmVu0vw0" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <figcaption>
-              <h2><a href="//www.recommind.com/products/decisiv-search">Recommind Decisiv Search</a></h2>
+              <figcaption class="caption small"></figcaption>
+            </figure>
+          </div>
+          <div class="text">
+            <h2>Recommind Decisiv Search</h2>
               <ul>
                 <li><strong>Technologies: </strong> XSLT, jQuery, JavascriptMVC, plain ol' CSS. A Java servlet produced XML from a proprietary middle tier and back end.</li>
-                <li><strong>Notable features: </strong> Designed to be fully customizable by professional services staff in the field, targeted IE7+, UI embeddable within other products.</li>
+                <li><strong>Notable features: </strong> Designed to be fully customizable by professional services staff in the field, targeted IE7+ (yeah, I know), UI embeddable within other products.</li>
                 <li><strong>See it in action: </strong> Video at left walks through all major features, 90% of which I wrote.</li>
+                <li><strong>More info:</strong> <a href="//www.recommind.com/products/decisiv-search">Decisiv Search</a></li>
               </ul>
-            </figcaption>
-          </figure>
-        </article>
-      </section>
+          </div>
+        </section>
+      </article>
     </main>
     <footer>
       <p>All content copyright by Bill French, 2015.</p>

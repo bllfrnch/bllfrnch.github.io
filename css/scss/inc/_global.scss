@@ -1,18 +1,7 @@
-@mixin link-hover {
-  a {
-    transition: all 0.3s;
-  }
-
-  a:hover { 
-    color: material-color('orange');
-    transition: color 0.2s;
-  }
-}
-
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fff;
+  background-color: $primary-bg-color;
   font-size: 1em;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
@@ -20,6 +9,7 @@ body {
 
 .page-container {
   @include clearfix;
+  @include outer-container;
   box-sizing: border-box;
   margin: 0 auto;
   max-width: 1200px;
@@ -30,14 +20,15 @@ body {
   }
 }
 
-header, main, footer {
-  @include omega;
+header,
+main,
+footer {
   @include span-columns(12);
 }
 
 header {
   h1 {
-    border-bottom: solid
+    border-bottom: solid $secondary-border-color;
   }
 
   nav {
@@ -45,14 +36,6 @@ header {
     font-weight: bold;
     @include media($small-screen-down) {
       text-align: center;
-    }
-  }
-
-  .internal-nav, .external-nav {
-    @include link-hover;
-    display: inline-block;
-    a {
-      color: material-color('grey', '600');
     }
   }
 
@@ -81,7 +64,6 @@ header {
       top: 0;
     }
 
-    
     li {
       margin-left: 8px;
     }
@@ -96,37 +78,150 @@ header {
   }
 
   .active {
-    border-bottom: solid material-color('orange');
+    border-bottom: solid $primary-link-color-hover;
   }
 }
 
-main {
+.main {
   margin-top: 2em;
 
-  article {
-    @include shift(1);
-    @include span-columns(10);
-    @include media($small-screen-down) {
-      @include shift(0);
-      @include span-columns(12);
+  .feature {
+    @include clearfix();
+    background-color: $secondary-bg-color;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px $primary-shadow-color;
+    display: table;
+    margin-bottom: 2em;
+    overflow: hidden;
+
+    .media-wrapper {
+      @include clearfix;
+      background-color: $primary-media-bg-color;
     }
   }
 
-  .image {
-    img {
-      border: solid material-color('blue-grey', '700');
+  .feature:nth-child(2n) {
+    .media-wrapper {
+      background-color: $secondary-media-bg-color;
+    }
+  }
+
+  .media-wrapper {
+    @include span-columns(5, table);
+    padding: 2em;
+    vertical-align: top;
+
+    img,
+    iframe {
+      border: solid $primary-border-color;
       height: 100%;
       width: 100%;
     }
+
+    @include media($medium-screen-down) {
+      @include span-columns(6, table);
+    }
+
+    @include media($small-screen-down) {
+      @include span-columns(12);
+      padding: 1em;
+    }
+  }
+
+  .media {
+    margin: 0;
+
+    &.media-image > picture > *:nth-child(n + 2) {
+      display: none;
+    }
+  }
+
+  .caption {
+    text-shadow: 0px 1px 2px $white;
   }
 
   .text {
-    @include span-columns(10 of 10);
+    @include span-columns(7, table);
+    margin: 0;
+    padding: 1em 2em;
+    vertical-align: top;
+
+    @include media($small-screen-down) {
+      padding: 1em;
+    }
+  }
+
+  @include media($medium-screen-down) {
+    .text {
+      @include span-columns(6, table);
+    }
+  }
+
+  @include media($small-screen-down) {
+    .text {
+      @include span-columns(12);
+    }
   }
 }
 
+.pagination {
+  @include clearfix;
+  line-height: 1em;
+  margin: 1em 0 auto;
+  text-align: center;
+
+  ul {
+    background-color: $pagination-bg-color;
+    border-radius: 3px;
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  li {
+    display: block;
+    float: left;
+    font-size: 2em;
+    padding: 0;
+  }
+
+  a {
+    background-color: $pagination-bg-color;
+    display: block;
+    line-height: .875em;
+
+    &:hover,
+    &.selected {
+      color: $primary-link-color-hover;
+    }
+
+    &.selected {
+      background-color: $pagination-bg-color-hover;
+      cursor: default;
+    }
+
+    &:before {
+      content: '•';
+      display: block;
+      font-family: sans-serif;
+    }
+
+    &:first-child {
+      padding-left: .25em;
+    }
+
+    &:last-child {
+      padding-right: .25em;
+    }
+
+    span {
+      display: none;
+    }
+  }
+}
+
+
 footer {
-  border-top: solid;
+  border-top: solid $secondary-border-color;
   margin-top: 2em;
   padding: 1em 0;
 }
