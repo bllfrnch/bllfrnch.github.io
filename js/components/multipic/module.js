@@ -1,6 +1,7 @@
 'use strict';
 
 var radio = require('radio');
+var uuid = require('node-uuid');
 var Pagination = require('../pagination/module.js');
 var Utility = require('../../utility.js');
 var util = Utility.getInstance();
@@ -19,6 +20,7 @@ function MultiPic(el, params) {
   var pagination,
       paginationEl;
 
+  this.uuid = uuid.v1();
   this.el = el;
   this.params = params;
   this.pics = $('picture img', this.el);
@@ -26,6 +28,7 @@ function MultiPic(el, params) {
 
   paginationEl = $('.pagination ul', this.el)[0];
   pagination = new Pagination(paginationEl, {
+    uuid: this.uuid,
     imgs: this.pics.map(function(img){ return img.src })
   });
 
@@ -46,7 +49,15 @@ MultiPic.prototype.bindEvents = function() {
  * @return {[type]} [description]
  */
 MultiPic.prototype.picChangeRequested = function() {
-  var picIndex = arguments[0].page;
+  var data = arguments[0],
+    uuid = data.uuid,
+    picIndex;
+
+  if (uuid !== this.uuid) {
+    return;
+  }
+
+  picIndex = data.page;
   console.log('picChangeRequested');
   this.changePic(picIndex);
 };

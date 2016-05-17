@@ -19,6 +19,7 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
  */
 function Pagination(el, params) {
   this.el = el;
+  this.multiPicId = params.uuid;
   this.params = params;
   this.pageLinks = this.createDom();
   this.current = this.toggleSelected(this.pageLinks[0]);
@@ -44,7 +45,8 @@ Pagination.prototype.createDom = function() {
  */
 Pagination.prototype.clickHandler = function(event) {
   var el = event.target,
-      page = this.getRequestedPage(el);
+    page = this.getRequestedPage(el),
+    uuid = this.multiPicId;
 
   event.preventDefault();
 
@@ -58,7 +60,7 @@ Pagination.prototype.clickHandler = function(event) {
 
   this.current = el;
 
-  radio(CLICK_EVENT).broadcast({ el: el, page: page });
+  radio(CLICK_EVENT).broadcast({ el: el, page: page, uuid: uuid});
 };
 
 /**

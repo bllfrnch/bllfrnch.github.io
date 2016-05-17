@@ -13,21 +13,23 @@ function Page() {
     },
     util = Utility.getInstance(),
     $ = util.$,
-    els = $('[data-component]');
+    els = $('[data-component]'),
+    instances = [];
 
   els.forEach(function(el) {
     var key = el.getAttribute('data-component').toLowerCase(),
-        params = JSON.parse(el.getAttribute('data-params').replace(/'/, '"')),
-        constructor = components[key],
-        instance;
+      params = JSON.parse(el.getAttribute('data-params').replace(/'/, '"')),
+      constructor = components[key],
+      instance;
 
     if (constructor) {
-      instance = new constructor(el, params);
+      instances.push(new constructor(el, params));
     }
   });
 
   return {
-    els: els
+    els: els,
+    instances: instances
   };
 }
 
