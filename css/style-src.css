@@ -582,6 +582,8 @@ body {
   font-size: 1em;
   line-height: 1.6;
   text-rendering: optimizeLegibility; }
+  body.lightbox-open {
+    overflow: hidden; }
 
 .page-container {
   max-width: 75em;
@@ -773,7 +775,6 @@ header .active {
       display: none; }
 
 .lightbox {
-  border-radius: 2px;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -794,6 +795,7 @@ header .active {
     z-index: 0; }
   .lightbox .lightbox-modal {
     background-color: #fff;
+    border-radius: 2px;
     bottom: 20%;
     box-shadow: 0 4px 8px #616161;
     left: 10%;

@@ -5,6 +5,10 @@ body {
   font-size: 1em;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
+
+  &.lightbox-open {
+    overflow: hidden;
+  }
 }
 
 .page-container {
@@ -221,7 +225,6 @@ header {
 }
 
 .lightbox {
-  border-radius: 2px;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -249,6 +252,7 @@ header {
 
   .lightbox-modal {
     background-color: $white;
+    border-radius: 2px;
     bottom: 20%;
     box-shadow: 0 4px 8px $secondary-shadow-color;
     left: 10%;
