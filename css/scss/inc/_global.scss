@@ -105,41 +105,9 @@ header {
       background-color: $secondary-media-bg-color;
     }
   }
+}
 
-  .media-wrapper {
-    @include span-columns(5, table);
-    padding: 2em;
-    vertical-align: top;
-
-    img,
-    iframe {
-      border: solid $primary-border-color;
-      height: 100%;
-      width: 100%;
-    }
-
-    @include media($medium-screen-down) {
-      @include span-columns(6, table);
-    }
-
-    @include media($small-screen-down) {
-      @include span-columns(12);
-      padding: 1em;
-    }
-  }
-
-  .media {
-    margin: 0;
-
-    &.media-image > picture > *:nth-child(n + 2) {
-      display: none;
-    }
-  }
-
-  .caption {
-    text-shadow: 0px 1px 2px $white;
-  }
-
+.feature {
   .text {
     @include span-columns(7, table);
     margin: 0;
@@ -161,6 +129,39 @@ header {
     .text {
       @include span-columns(12);
     }
+  }
+}
+
+.media-wrapper {
+  @include span-columns(5, table);
+  padding: 2em;
+  vertical-align: top;
+
+  img,
+  iframe {
+    border: solid $primary-border-color;
+    height: 100%;
+    width: 100%;
+  }
+
+  @include media($medium-screen-down) {
+    @include span-columns(6, table);
+  }
+
+  @include media($small-screen-down) {
+    @include span-columns(12);
+    padding: 1em;
+  }
+
+  .media {
+    margin: 0;
+    &.media-image > picture > *:nth-child(n + 2) {
+      display: none;
+    }
+  }
+
+  .caption {
+    text-shadow: 0px 1px 2px $white;
   }
 }
 
@@ -218,6 +219,59 @@ header {
     }
   }
 }
+
+.lightbox {
+  border-radius: 2px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  &.closed {
+    display: none;
+  }
+
+  &.open {
+    display: block;
+  }
+
+  .lightbox-mask {
+    background-color: $lightbox-mask-bg-color;
+    bottom: 0;
+    left: 0;
+    opacity: .6;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 0;
+  }
+
+  .lightbox-modal {
+    background-color: $white;
+    bottom: 20%;
+    box-shadow: 0 4px 8px $secondary-shadow-color;
+    left: 10%;
+    position: absolute;
+    right: 10%;
+    top: 10%;
+
+    > * {
+      overflow: hidden;
+    }
+  }
+
+  .lightbox-header {
+    background-color: $tertiary-bg-color;
+    padding: 0.5em 1em
+  }
+
+  .media-wrapper {
+    @include shift(2);
+    @include span-columns(8);
+  }
+}
+
 
 
 footer {

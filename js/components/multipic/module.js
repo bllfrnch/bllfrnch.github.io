@@ -2,11 +2,13 @@
 
 var radio = require('radio');
 var uuid = require('node-uuid');
-var Pagination = require('../pagination/module.js');
 var Utility = require('../../utility.js');
+var Pagination = require('../pagination/module.js');
+var Lightbox = require('../lightbox/module.js');
 var util = Utility.getInstance();
 var $ = util.$;
 
+var LIGHTBOX_DESTROY_EVENT = 'lightbox:closeButtonClicked';
 var CLICK_EVENT = 'pagination:pageLinkClicked';
 
 /**
@@ -41,7 +43,17 @@ function MultiPic(el, params) {
  * @return {[type]} [description]
  */
 MultiPic.prototype.bindEvents = function() {
+  this.bindImgEvent();
   radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+};
+
+
+/**
+ *
+ */
+MultiPic.prototype.bindImgEvent = function() {
+  this.current.parentNode.addEventListener('click',
+      this.lightboxRequested.bind(this));
 };
 
 /**
@@ -61,6 +73,23 @@ MultiPic.prototype.picChangeRequested = function() {
   console.log('picChangeRequested');
   this.changePic(picIndex);
 };
+
+MultiPic.prototype.lightboxRequested = function(ev) {
+  ev.preventDefault();
+  var wrapper = $('.lightbox')[0],
+    modal = $('.lightbox-modal', wrapper)[0],
+    clone = this.el.cloneNode(true),
+    lightbox = new Lightbox(wrapper, { clone: clone });
+};
+
+/**
+ * [lightboxDestroyRequested description]
+ * @return {[type]} [description]
+ */
+MultiPic.prototype.lightboxDestroyRequested = function() {
+
+};
+
 
 /**
  * [changePic description]

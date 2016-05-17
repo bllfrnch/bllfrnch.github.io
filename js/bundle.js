@@ -474,17 +474,38 @@
 /*!******************************************!*\
   !*** ./js/components/lightbox/module.js ***!
   \******************************************/
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	function init() {
-	  console.log('Lightbox init');
-	}
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var util = Utility.getInstance();
+	var $ = util.$;
 	
-	module.exports = {
-	
+	function Lightbox(el, params) {
+	  this.el = el;
+	  this.params = params;
+	  this.modal = $('.lightbox-modal', this.el)[0];
+	  this.modal.appendChild(params.clone);
+	  this.open();
+	  this.bindEvents();
 	};
+	
+	Lightbox.prototype.bindEvents = function() {
+	  //$('close-button', this.el);
+	};
+	
+	Lightbox.prototype.open = function() {
+	  this.el.classList.remove('closed');
+	  this.el.classList.add('open');
+	};
+	
+	Lightbox.prototype.close = function() {
+	  this.el.classList.remove('open');
+	  this.el.classList.add('closed');
+	};
+	
+	module.exports = Lightbox;
 
 
 /***/ },
@@ -498,11 +519,13 @@
 	
 	var radio = __webpack_require__(/*! radio */ 4);
 	var uuid = __webpack_require__(/*! node-uuid */ 10);
-	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
 	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
+	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 5);
 	var util = Utility.getInstance();
 	var $ = util.$;
 	
+	var LIGHTBOX_DESTROY_EVENT = 'lightbox:closeButtonClicked';
 	var CLICK_EVENT = 'pagination:pageLinkClicked';
 	
 	/**
@@ -537,7 +560,17 @@
 	 * @return {[type]} [description]
 	 */
 	MultiPic.prototype.bindEvents = function() {
+	  this.bindImgEvent();
 	  radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+	};
+	
+	
+	/**
+	 *
+	 */
+	MultiPic.prototype.bindImgEvent = function() {
+	  this.current.parentNode.addEventListener('click',
+	      this.lightboxRequested.bind(this));
 	};
 	
 	/**
@@ -557,6 +590,23 @@
 	  console.log('picChangeRequested');
 	  this.changePic(picIndex);
 	};
+	
+	MultiPic.prototype.lightboxRequested = function(ev) {
+	  ev.preventDefault();
+	  var wrapper = $('.lightbox')[0],
+	    modal = $('.lightbox-modal', wrapper)[0],
+	    clone = this.el.cloneNode(true),
+	    lightbox = new Lightbox(wrapper, { clone: clone });
+	};
+	
+	/**
+	 * [lightboxDestroyRequested description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.lightboxDestroyRequested = function() {
+	
+	};
+	
 	
 	/**
 	 * [changePic description]
