@@ -29,7 +29,7 @@ function MultiPic(el, params) {
 
   paginationEl = $('.pagination ul', this.el)[0];
   pagination = new Pagination(paginationEl, {
-    uuid: this.uuid,
+    id: this.id,
     imgs: this.pics.map(function(img){ return img.src; })
   });
 
@@ -44,7 +44,7 @@ util.inherit(MultiPic, Component);
  * @return {[type]} [description]
  */
 MultiPic.prototype.bindEvents = function() {
-  this.params.disableLightbox && this.bindImgEvent();
+  this.bindImgEvent();
   this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
 };
 
@@ -68,10 +68,10 @@ MultiPic.prototype.bindImgEvent = function() {
  */
 MultiPic.prototype.picChangeRequested = function() {
   var data = arguments[0],
-    uuid = data.uuid,
+    id = data.id,
     picIndex;
 
-  if (uuid !== this.uuid) {
+  if (id !== this.id) {
     return;
   }
 

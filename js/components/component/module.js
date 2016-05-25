@@ -1,12 +1,12 @@
 var Utility = require('../../utility.js');
 var util = Utility.getInstance();
 var radio = require('radio');
-var uuid = require('node-uuid');
+var shortid = require('shortid');
 
 var COMPONENT_INITIALIZED_EVENT;
 
 function Component(el, params) {
-  this.uuid = uuid.v1();
+  this.id = shortid.generate();
   this.radio = radio;
   this.el = el;
   this.params = params;
@@ -23,7 +23,7 @@ Component.prototype.initialize = function() {
 };
 
 /**
- * [bindEvents description]
+ * An abstract method that is meant to be overridden but subclasses.
  * @return {[type]} [description]
  */
 Component.prototype.bindEvents = function() {};

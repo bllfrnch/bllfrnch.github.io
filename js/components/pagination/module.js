@@ -21,7 +21,7 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
 function Pagination(el, params) {
   Component.call(this, el, params);
 
-  this.multiPicId = params.uuid;
+  this.multiPicId = params.id;
   this.pageLinks = this.createDom();
   this.current = this.toggleSelected(this.pageLinks[0]);
   this.initialize();
@@ -53,7 +53,7 @@ Pagination.prototype.createDom = function() {
 Pagination.prototype.clickHandler = function(event) {
   var el = event.target,
     page = this.getRequestedPage(el),
-    uuid = this.multiPicId;
+    id = this.multiPicId;
 
   event.preventDefault();
 
@@ -67,7 +67,7 @@ Pagination.prototype.clickHandler = function(event) {
 
   this.current = el;
 
-  this.radio(CLICK_EVENT).broadcast({ el: el, page: page, uuid: uuid});
+  this.radio(CLICK_EVENT).broadcast({ el: el, page: page, id: id});
 };
 
 /**
