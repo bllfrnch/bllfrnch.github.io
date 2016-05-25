@@ -66,6 +66,21 @@ module.exports = (function() {
     }
   };
 
+
+  /**
+   * [inherit description]
+   * @param  {[type]} Child  [description]
+   * @param  {[type]} Parent [description]
+   * @return {[type]}        [description]
+   */
+  Utility.prototype.inherit = function(Child, Parent) {
+    var F = function() {};
+    F.prototype = Parent.prototype;
+    Child.prototype = new F();
+    Child.prototype.constructor = Child;
+    Child.super = Parent.prototype;
+  };
+
   // Module is implemented as a singleton with no public access to the Utility
   // class istself, only a pre-existing instance.
   return {

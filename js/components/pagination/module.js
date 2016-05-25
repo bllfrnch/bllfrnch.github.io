@@ -1,8 +1,8 @@
 'use strict';
 
 var Utility = require('../../utility.js');
+var Component = require('../component/module.js');
 var render = require('./template.dot');
-var radio = require('radio');
 var util = Utility.getInstance();
 var $ = util.$;
 
@@ -14,19 +14,26 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
  * Pagination class. Creates a pagination component. Publishes events when page
  * link elements are clicked and updates classes.
  * @constructor
+ * @extends {Component}
  * @param {Element} el     The container element for the pagination.
  * @param {[type]} params Parameters for the pagination class.
  */
 function Pagination(el, params) {
-  this.el = el;
+  Component.call(this, el, params);
+
   this.multiPicId = params.uuid;
-  this.params = params;
   this.pageLinks = this.createDom();
   this.current = this.toggleSelected(this.pageLinks[0]);
+  this.initialize();
+}
+
+util.inherit(Pagination, Component);
+
+Pagination.prototype.bindEvents = function() {
   this.pageLinks.forEach(function(link) {
     link.addEventListener('click', this.clickHandler.bind(this));
   }, this);
-}
+};
 
 /**
  * [createDom description]
@@ -60,7 +67,7 @@ Pagination.prototype.clickHandler = function(event) {
 
   this.current = el;
 
-  radio(CLICK_EVENT).broadcast({ el: el, page: page, uuid: uuid});
+  this.radio(CLICK_EVENT).broadcast({ el: el, page: page, uuid: uuid});
 };
 
 /**

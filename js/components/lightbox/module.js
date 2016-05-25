@@ -1,19 +1,22 @@
 'use strict';
 
 var Utility = require('../../utility.js');
+var Component = require('../component/module.js');
 var util = Utility.getInstance();
 var $ = util.$;
 
+var body, frag;
+
 function Lightbox(el, params) {
-  this.el = el;
-  this.clone = el.clone;
-  this.body = $('body')[0];
-  this.params = params;
+  Component.call(this, el, params);
+  body = $('body')[0];
   this.modal = $('.lightbox-modal', this.el)[0];
-  this.modal.appendChild(params.clone);
+  this.frag = this.modal.appendChild(params.frag);
   this.open();
-  this.bindEvents();
+  this.initialize();
 };
+
+util.inherit(Lightbox, Component);
 
 Lightbox.prototype.bindEvents = function() {
   var button = $('.lightbox-close', this.el)[0];
@@ -28,9 +31,9 @@ Lightbox.prototype.bindEvents = function() {
 };
 
 Lightbox.prototype.unbindEvents = function() {
-  [button, document].forEach(function(el) {
-    el.removeEventListener('click', this.closeLightboxRequested);
-  }, this);
+  var button = $('.lightbox-close', this.el)[0];
+  button.removeEventListener('click');
+  document.removeEventListener('keyup');
 };
 
 
@@ -40,16 +43,17 @@ Lightbox.prototype.closeLightboxRequested = function() {
 
 
 Lightbox.prototype.open = function() {
+  body.classList.add('lightbox-open');
   this.el.classList.remove('closed');
   this.el.classList.add('open');
-  this.body.classList.add('lightbox-open');
 };
 
 Lightbox.prototype.close = function(ev) {
+  body.classList.add('lightbox-closed');
   this.el.classList.remove('open');
   this.el.classList.add('closed');
-  this.body.classList.add('lightbox-closed');
-  this.el = this.clone;
+  this.unbindEvents();
+  this.modal.removeChild(this.frag);
 };
 
 module.exports = Lightbox;
