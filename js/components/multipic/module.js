@@ -49,17 +49,21 @@ MultiPic.prototype.bindEvents = function() {
 };
 
 
+/**
+ * [unbindImgEvent description]
+ * @return {[type]} [description]
+ */
 MultiPic.prototype.unbindImgEvent = function() {
-  this.current.parentNode.removeEventListener('click',
-      this.lightboxRequested);
+  this.removeListeners(this.current.parentNode, 'click');
 };
 
 /**
  *
  */
 MultiPic.prototype.bindImgEvent = function() {
-  this.current.parentNode.addEventListener('click',
-      this.lightboxRequested.bind(this));
+  this.addListener(this.current.parentNode, 'click', this.lightboxRequested);
+  // this.current.parentNode.addEventListener('click',
+  //     this.lightboxRequested.bind(this));
 };
 
 /**
@@ -76,10 +80,14 @@ MultiPic.prototype.picChangeRequested = function() {
   }
 
   picIndex = data.page;
-  console.log('picChangeRequested');
   this.changePic(picIndex);
 };
 
+/**
+ * [lightboxRequested description]
+ * @param  {[type]} ev [description]
+ * @return {[type]}    [description]
+ */
 MultiPic.prototype.lightboxRequested = function(ev) {
   ev.preventDefault();
   var wrapper = $('.lightbox')[0],
@@ -93,7 +101,7 @@ MultiPic.prototype.lightboxRequested = function(ev) {
  * @return {[type]} [description]
  */
 MultiPic.prototype.lightboxDestroyRequested = function() {
-
+  this.lightbox.finalize();
 };
 
 
@@ -102,7 +110,6 @@ MultiPic.prototype.lightboxDestroyRequested = function() {
  * @return {[type]} [description]
  */
 MultiPic.prototype.changePic = function(idx) {
-  console.log('changePic');
   this.current.parentNode.style.display = 'none';
   this.unbindImgEvent();
   this.current = this.pics[idx];

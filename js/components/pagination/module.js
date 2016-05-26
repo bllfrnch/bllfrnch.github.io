@@ -31,7 +31,8 @@ util.inherit(Pagination, Component);
 
 Pagination.prototype.bindEvents = function() {
   this.pageLinks.forEach(function(link) {
-    link.addEventListener('click', this.clickHandler.bind(this));
+    this.addListener(link, 'click', this.clickHandler);
+    //link.addEventListener('click', this.clickHandler.bind(this));
   }, this);
 };
 
@@ -50,12 +51,12 @@ Pagination.prototype.createDom = function() {
  * @param  {[type]} event [description]
  * @return {[type]}       [description]
  */
-Pagination.prototype.clickHandler = function(event) {
-  var el = event.target,
+Pagination.prototype.clickHandler = function(ev) {
+  var el = ev.target,
     page = this.getRequestedPage(el),
     id = this.multiPicId;
 
-  event.preventDefault();
+  ev.preventDefault();
 
   if (el.classList.contains(SELECTED_CLASS)) {
     return;
