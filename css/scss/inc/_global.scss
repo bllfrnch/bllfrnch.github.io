@@ -253,12 +253,12 @@ header {
   .lightbox-modal {
     background-color: $white;
     border-radius: 2px;
-    bottom: 20%;
+    bottom: 0;
     box-shadow: 0 4px 8px $secondary-shadow-color;
-    left: 10%;
+    left: 20%;
     position: absolute;
-    right: 10%;
-    top: 10%;
+    right: 20%;
+    top: 0;
 
     > * {
       overflow: hidden;
@@ -271,8 +271,8 @@ header {
   }
 
   .media-wrapper {
-    @include shift(2);
-    @include span-columns(8);
+    @include shift(1);
+    @include span-columns(10);
   }
 }
 

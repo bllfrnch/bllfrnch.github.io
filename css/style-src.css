@@ -796,23 +796,23 @@ header .active {
   .lightbox .lightbox-modal {
     background-color: #fff;
     border-radius: 2px;
-    bottom: 20%;
+    bottom: 0;
     box-shadow: 0 4px 8px #616161;
-    left: 10%;
+    left: 20%;
     position: absolute;
-    right: 10%;
-    top: 10%; }
+    right: 20%;
+    top: 0; }
     .lightbox .lightbox-modal > * {
       overflow: hidden; }
   .lightbox .lightbox-header {
     background-color: #616161;
     padding: 0.5em 1em; }
   .lightbox .media-wrapper {
-    margin-left: 17.05961%;
+    margin-left: 8.5298%;
     float: left;
     display: block;
     margin-right: 2.35765%;
-    width: 65.88078%; }
+    width: 82.94039%; }
     .lightbox .media-wrapper:last-child {
       margin-right: 0; }
 
