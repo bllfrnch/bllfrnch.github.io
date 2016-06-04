@@ -354,7 +354,7 @@
 	
 	/**
 	 * If no id exists on the specified element, sets an id attribute
-	 * and returns it, or if the id already exists, returns the id.
+	 * and returns it, or if the id already exists, returns the existing id.
 	 * @param {ELement} el The element on which to set the id attribute.
 	 * @param {Number} id Optional id parameter. If not specified, the method
 	 * generates an id, otherwise, it uses the passed value.
@@ -367,18 +367,9 @@
 	};
 	
 	/**
-	 * Given a component element id, return the element.
-	 * @param  {String} id The id of the element.
-	 * @return {Node}    Return either the document or the HTML element.
-	 */
-	Component.prototype.getEl = function(id) {
-	  return id === 'document' ? document: $('#' + id)[0];
-	};
-	
-	/**
-	 * [getId description]
-	 * @param  {[type]} el [description]
-	 * @return {[type]}    [description]
+	 * Returns the id of the element.
+	 * @param  {Element} el The element whose id will be returned.
+	 * @return {String} The id.
 	 */
 	Component.prototype.getId = function(el) {
 	  var id = el === document? 'document' : el.getAttribute('id');
@@ -386,19 +377,28 @@
 	};
 	
 	/**
-	 * An abstract method that is meant to be overridden but subclasses.
-	 * @return {[type]} [description]
+	 * Given a component element id, return the element.
+	 * @param  {String} id The id of the element.
+	 * @return {Node} Return either the document or the HTML element.
+	 */
+	Component.prototype.getEl = function(id) {
+	  return id === 'document' ? document: $('#' + id)[0];
+	};
+	
+	/**
+	 * An abstract method that is meant to be overridden by subclasses.
 	 */
 	Component.prototype.bindEvents = function() {};
 	
 	/**
-	 * [addListener description]
-	 * @param {[type]}   el      [description]
-	 * @param {[type]}   ev      [description]
-	 * @param {Function} fn      [description]
-	 * @param {[type]}   capture [description]
+	 * Adds an event listener to an element.
+	 * @param {Node} el Element to which listener will be added.
+	 * @param {String} ev Event type, e.g., 'click'.
+	 * @param {Function} fn The function to bind to the event.
+	 * @param {Boolean} capture Whether to use capture. Optional, and defaults to
+	 * false.
 	 */
-	Component.prototype.addListener = function(el, ev, fn, capture) {
+	Component.prototype.addListener = function(el, ev, fn) {
 	  var f = fn.bind(this),
 	    capture = capture || false,
 	    id = this.getId(el) || this.setId(el);
@@ -434,21 +434,23 @@
 	};
 	
 	/**
-	 * [unbindEvents description]
-	 * @return {[type]} [description]
+	 * Unbinds all events for the component.
 	 */
 	Component.prototype.unbindEvents = function() {
 	  var listeners, fn, el;
 	  for (var id in this.listeners) {
 	    listeners = this.listeners[id];
 	    for (var ev in listeners) {
-	      fn = listeners[ev];
+	      fn = listeners[ev][0];
 	      el = this.getEl(id);
 	      el.removeEventListener(ev, fn);
 	    }
 	  }
 	};
 	
+	/**
+	 * Finalize. WIP.
+	 */
 	Component.prototype.finalize = function() {
 	  this.unbindEvents();
 	};
@@ -457,9 +459,9 @@
 	 * [setInitialized description]
 	 */
 	Component.prototype.setInitialized = function() {
-	  radio(COMPONENT_INITIALIZED_EVENT).broadcast({
-	
-	  });
+	  var el = this.el,
+	    id = this.id;
+	  radio(COMPONENT_INITIALIZED_EVENT).broadcast({ el: el, id: id });
 	};
 	
 	module.exports = Component;
