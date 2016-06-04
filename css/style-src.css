@@ -736,6 +736,11 @@ header .active {
   .media-wrapper .caption {
     text-shadow: 0px 1px 2px #fff; }
 
+footer {
+  border-top: solid #eeeeee;
+  margin-top: 2em;
+  padding: 1em 0; }
+
 .pagination {
   line-height: 1em;
   margin: 1em 0 auto;
@@ -777,7 +782,7 @@ header .active {
 .lightbox {
   bottom: 0;
   left: 0;
-  position: absolute;
+  position: fixed;
   right: 0;
   top: 0; }
   .lightbox.closed {
@@ -796,17 +801,19 @@ header .active {
   .lightbox .lightbox-modal {
     background-color: #fff;
     border-radius: 2px;
-    bottom: 0;
+    bottom: 10vh;
     box-shadow: 0 4px 8px #616161;
-    left: 20%;
+    left: 20vw;
     position: absolute;
-    right: 20%;
-    top: 0; }
+    right: 20vw;
+    top: 10vh; }
     .lightbox .lightbox-modal > * {
       overflow: hidden; }
   .lightbox .lightbox-header {
     background-color: #616161;
     padding: 0.5em 1em; }
+  .lightbox .close-button {
+    float: right; }
   .lightbox .media-wrapper {
     margin-left: 8.5298%;
     float: left;
@@ -815,11 +822,6 @@ header .active {
     width: 82.94039%; }
     .lightbox .media-wrapper:last-child {
       margin-right: 0; }
-
-footer {
-  border-top: solid #eeeeee;
-  margin-top: 2em;
-  padding: 1em 0; }
 
 .portfolio h2 {
   margin: 0; }
