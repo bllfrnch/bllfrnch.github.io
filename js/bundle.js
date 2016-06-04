@@ -53,7 +53,7 @@
 	
 	function init() {
 	  document.addEventListener('DOMContentLoaded', function(ev) {
-	    var page = new Page();
+	    var page = new Page.getInstance();
 	  });
 	}
 	
@@ -70,39 +70,95 @@
 	'use strict';
 	
 	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
-	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 6);
-	var MultiPic = __webpack_require__(/*! ../multipic/module.js */ 7);
+	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 16);
+	var MultiPic = __webpack_require__(/*! ../multipic/module.js */ 17);
 	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var util = Utility.getInstance();
+	var $ = util.$
 	
-	function Page() {
-	  var components = {
+	module.exports = (function() {
+	  var instance;
+	
+	  function Page() {
+	    this.initialize();
+	  }
+	
+	  function initSingleton() {
+	    return new Page();
+	  }
+	
+	  Page.prototype.initialize = function() {
+	    this.els = $('[data-component]');
+	    this.instances = {
+	
+	    };
+	    this.bootstrap();
+	  };
+	
+	
+	  // want a hierarchical data structure with instances; this will be where we
+	  // add and remove event listeners and clean stuff up.
+	
+	  // [
+	  //   {
+	  //     '78647tf': [
+	  //       {
+	  //         instance: instance,
+	  //         children: [
+	  //           {
+	
+	  //           }
+	  //         ]
+	  //       }
+	  //     ]
+	  //   },
+	  //   {
+	
+	  //   }
+	  // ];
+	
+	  Page.prototype.bootstrap = function() {
+	    var components = {
 	      pagination: Pagination,
 	      lightbox: Lightbox,
 	      multipic: MultiPic
-	    },
-	    util = Utility.getInstance(),
-	    $ = util.$,
-	    els = $('[data-component]'),
-	    instances = [];
+	    };
 	
-	  els.forEach(function(el) {
-	    var key = el.getAttribute('data-component').toLowerCase(),
-	      params = JSON.parse(el.getAttribute('data-params').replace(/'/, '"')),
-	      constructor = components[key],
-	      instance;
+	    this.els.forEach(function(el) {
+	      var key = el.getAttribute('data-component').toLowerCase(),
+	        params = JSON.parse(el.getAttribute('data-params').replace(/'/, '"')),
+	        constructor = components[key],
+	        instance;
 	
-	    if (constructor) {
-	      instances.push(new constructor(el, params));
-	    }
-	  });
+	      // now we need to add these to a hierarchy rather than a flat list
+	      if (constructor) {
+	        this.instances[key] = new constructor(el, params);
+	      }
+	    }, this);
+	  };
+	
+	  Page.prototype.registerComponent = function(instance, parent) {
+	
+	  };
+	
+	  Page.prototype.getComponent = function(id) {
+	
+	  };
+	
+	  Page.prototype.removeComponent = function(id) {
+	
+	  };
 	
 	  return {
-	    els: els,
-	    instances: instances
+	    getInstance: function() {
+	      if (!instance) {
+	        instance = initSingleton();
+	      }
+	      return instance;
+	    }
 	  };
-	}
-	
-	module.exports = Page;
+	})();
 
 
 /***/ },
@@ -116,7 +172,7 @@
 	
 	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
 	var Component = __webpack_require__(/*! ../component/module.js */ 4);
-	var render = __webpack_require__(/*! ./template.dot */ 5);
+	var render = __webpack_require__(/*! ./template.dot */ 15);
 	var util = Utility.getInstance();
 	var $ = util.$;
 	
@@ -135,7 +191,8 @@
 	function Pagination(el, params) {
 	  Component.call(this, el, params);
 	
-	  this.multiPicId = params.id;
+	  this.targetId = params.id;
+	  this.pageData = params.pageData;
 	  this.pageLinks = this.createDom();
 	  this.current = this.toggleSelected(this.pageLinks[0]);
 	  this.initialize();
@@ -168,7 +225,7 @@
 	Pagination.prototype.clickHandler = function(ev) {
 	  var el = ev.target,
 	    page = this.getRequestedPage(el),
-	    id = this.multiPicId;
+	    id = this.targetId;
 	
 	  ev.preventDefault();
 	
@@ -329,8 +386,8 @@
 	
 	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
 	var util = Utility.getInstance();
-	var radio = __webpack_require__(/*! radio */ 8);
-	var shortid = __webpack_require__(/*! shortid */ 9);
+	var radio = __webpack_require__(/*! radio */ 5);
+	var shortid = __webpack_require__(/*! shortid */ 6);
 	var $ = util.$;
 	
 	var COMPONENT_INITIALIZED_EVENT;
@@ -342,6 +399,10 @@
 	  this.params = params;
 	  this.listeners = {};
 	}
+	
+	function initSingleton() {
+	
+	};
 	
 	/**
 	 * Initializes the component.
@@ -389,6 +450,39 @@
 	 * An abstract method that is meant to be overridden by subclasses.
 	 */
 	Component.prototype.bindEvents = function() {};
+	
+	/**
+	 * [sendUp description]
+	 * @return {[type]} [description]
+	 */
+	Component.prototype.sendUp = function(data) {
+	
+	};
+	
+	/**
+	 * [sendDown description]
+	 * @return {[type]} [description]
+	 */
+	Component.prototype.sendDown = function(data) {
+	
+	};
+	
+	/**
+	 * Sends a message to all components
+	 * @return {[type]} [description]
+	 */
+	Component.prototype.shout = function(data) {
+	
+	};
+	
+	/**
+	 * Sends a message
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
+	Component.prototype.sendMessage = function(data) {
+	
+	}
 	
 	/**
 	 * Adds an event listener to an element.
@@ -469,232 +563,6 @@
 
 /***/ },
 /* 5 */
-/*!***********************************************!*\
-  !*** ./js/components/pagination/template.dot ***!
-  \***********************************************/
-/***/ function(module, exports) {
-
-	module.exports = function anonymous(it
-	/**/) {
-	var out='';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a></li>';} } return out;
-	}
-
-/***/ },
-/* 6 */
-/*!******************************************!*\
-  !*** ./js/components/lightbox/module.js ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 4);
-	var util = Utility.getInstance();
-	var $ = util.$;
-	
-	var body, frag;
-	
-	function Lightbox(el, params) {
-	  Component.call(this, el, params);
-	  body = $('body')[0];
-	  this.modal = $('.lightbox-modal', this.el)[0];
-	  this.frag = this.modal.appendChild(params.frag);
-	  this.open();
-	  this.closeButton = $('.lightbox-close', this.el)[0];
-	  this.initialize();
-	};
-	
-	util.inherit(Lightbox, Component);
-	
-	/**
-	 * [bindEvents description]
-	 * @return {[type]} [description]
-	 */
-	Lightbox.prototype.bindEvents = function() {
-	  this.addListener(this.closeButton, 'click', this.closeLightboxRequested);
-	  this.addListener(document, 'keyup', function(ev) {
-	    if (ev.which && ev.which === 27) {
-	      this.closeLightboxRequested();
-	    }
-	  });
-	};
-	
-	/**
-	 * [unbindEvents description]
-	 * @return {[type]} [description]
-	 */
-	// Lightbox.prototype.unbindEvents = function() {
-	//   var button = $('.lightbox-close', this.el)[0];
-	//   button.removeEventListener('click');
-	//   document.removeEventListener('keyup');
-	// };
-	
-	/**
-	 * [closeLightboxRequested description]
-	 * @return {[type]} [description]
-	 */
-	Lightbox.prototype.closeLightboxRequested = function() {
-	  this.close();
-	};
-	
-	/**
-	 * [open description]
-	 * @return {[type]} [description]
-	 */
-	Lightbox.prototype.open = function() {
-	  body.classList.add('lightbox-open');
-	  this.el.classList.remove('closed');
-	  this.el.classList.add('open');
-	};
-	
-	/**
-	 * [close description]
-	 * @param  {[type]} ev [description]
-	 * @return {[type]}    [description]
-	 */
-	Lightbox.prototype.close = function(ev) {
-	  body.classList.remove('lightbox-open');
-	  this.el.classList.remove('open');
-	  this.el.classList.add('closed');
-	  this.unbindEvents();
-	  this.modal.removeChild(this.frag);
-	};
-	
-	module.exports = Lightbox;
-
-
-/***/ },
-/* 7 */
-/*!******************************************!*\
-  !*** ./js/components/multipic/module.js ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 4);
-	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
-	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 6);
-	var util = Utility.getInstance();
-	var $ = util.$;
-	
-	var LIGHTBOX_DESTROY_EVENT = 'lightbox:closeButtonClicked';
-	var CLICK_EVENT = 'pagination:pageLinkClicked';
-	
-	/**
-	 * MultiPic class. Creates a multipic component. Listens for events from the
-	 * a pagination instance and responds accordingly.
-	 * @constructor
-	 * @extends {Component}
-	 * @param {Element} el     The container element for the pagination.
-	 * @param {[type]} params Parameters for the pagination class.
-	 */
-	function MultiPic(el, params) {
-	  var pagination,
-	      paginationEl;
-	
-	  Component.call(this, el, params);
-	
-	  this.pics = $('picture img', this.el);
-	  this.current = this.pics[0];
-	
-	  paginationEl = $('.pagination ul', this.el)[0];
-	  pagination = new Pagination(paginationEl, {
-	    id: this.id,
-	    imgs: this.pics.map(function(img){ return img.src; })
-	  });
-	
-	  this.initialize();
-	}
-	
-	util.inherit(MultiPic, Component);
-	
-	/**
-	 * [bindEvents description]
-	 * @public
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.bindEvents = function() {
-	  this.bindImgEvent();
-	  this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
-	};
-	
-	
-	/**
-	 * [unbindImgEvent description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.unbindImgEvent = function() {
-	  this.removeListeners(this.current.parentNode, 'click');
-	};
-	
-	/**
-	 *
-	 */
-	MultiPic.prototype.bindImgEvent = function() {
-	  this.addListener(this.current.parentNode, 'click', this.lightboxRequested);
-	  // this.current.parentNode.addEventListener('click',
-	  //     this.lightboxRequested.bind(this));
-	};
-	
-	/**
-	 * [pageChangeRequested description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.picChangeRequested = function() {
-	  var data = arguments[0],
-	    id = data.id,
-	    picIndex;
-	
-	  if (id !== this.id) {
-	    return;
-	  }
-	
-	  picIndex = data.page;
-	  this.changePic(picIndex);
-	};
-	
-	/**
-	 * [lightboxRequested description]
-	 * @param  {[type]} ev [description]
-	 * @return {[type]}    [description]
-	 */
-	MultiPic.prototype.lightboxRequested = function(ev) {
-	  ev.preventDefault();
-	  var wrapper = $('.lightbox')[0],
-	    modal = $('.lightbox-modal', wrapper)[0],
-	    frag = this.el.cloneNode(true),
-	    lightbox = new Lightbox(wrapper, { frag: frag });
-	};
-	
-	/**
-	 * [lightboxDestroyRequested description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.lightboxDestroyRequested = function() {
-	  this.lightbox.finalize();
-	};
-	
-	
-	/**
-	 * [changePic description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.changePic = function(idx) {
-	  this.current.parentNode.style.display = 'none';
-	  this.unbindImgEvent();
-	  this.current = this.pics[idx];
-	  this.current.parentNode.style.display = 'block';
-	  this.bindImgEvent();
-	}
-	
-	module.exports = MultiPic;
-
-
-/***/ },
-/* 8 */
 /*!**************************!*\
   !*** ./~/radio/radio.js ***!
   \**************************/
@@ -868,18 +736,18 @@
 
 
 /***/ },
-/* 9 */
+/* 6 */
 /*!****************************!*\
   !*** ./~/shortid/index.js ***!
   \****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	module.exports = __webpack_require__(/*! ./lib/index */ 10);
+	module.exports = __webpack_require__(/*! ./lib/index */ 7);
 
 
 /***/ },
-/* 10 */
+/* 7 */
 /*!********************************!*\
   !*** ./~/shortid/lib/index.js ***!
   \********************************/
@@ -887,10 +755,10 @@
 
 	'use strict';
 	
-	var alphabet = __webpack_require__(/*! ./alphabet */ 11);
-	var encode = __webpack_require__(/*! ./encode */ 13);
-	var decode = __webpack_require__(/*! ./decode */ 15);
-	var isValid = __webpack_require__(/*! ./is-valid */ 16);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 8);
+	var encode = __webpack_require__(/*! ./encode */ 10);
+	var decode = __webpack_require__(/*! ./decode */ 12);
+	var isValid = __webpack_require__(/*! ./is-valid */ 13);
 	
 	// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
 	// This number should be updated every year or so to keep the generated id short.
@@ -905,7 +773,7 @@
 	// has a unique value for worker
 	// Note: I don't know if this is automatically set when using third
 	// party cluster solutions such as pm2.
-	var clusterWorkerId = __webpack_require__(/*! ./util/cluster-worker-id */ 17) || 0;
+	var clusterWorkerId = __webpack_require__(/*! ./util/cluster-worker-id */ 14) || 0;
 	
 	// Counter is used when shortid is called multiple times in one second.
 	var counter;
@@ -988,7 +856,7 @@
 
 
 /***/ },
-/* 11 */
+/* 8 */
 /*!***********************************!*\
   !*** ./~/shortid/lib/alphabet.js ***!
   \***********************************/
@@ -996,7 +864,7 @@
 
 	'use strict';
 	
-	var randomFromSeed = __webpack_require__(/*! ./random/random-from-seed */ 12);
+	var randomFromSeed = __webpack_require__(/*! ./random/random-from-seed */ 9);
 	
 	var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
 	var alphabet;
@@ -1095,7 +963,7 @@
 
 
 /***/ },
-/* 12 */
+/* 9 */
 /*!**************************************************!*\
   !*** ./~/shortid/lib/random/random-from-seed.js ***!
   \**************************************************/
@@ -1129,7 +997,7 @@
 
 
 /***/ },
-/* 13 */
+/* 10 */
 /*!*********************************!*\
   !*** ./~/shortid/lib/encode.js ***!
   \*********************************/
@@ -1137,7 +1005,7 @@
 
 	'use strict';
 	
-	var randomByte = __webpack_require__(/*! ./random/random-byte */ 14);
+	var randomByte = __webpack_require__(/*! ./random/random-byte */ 11);
 	
 	function encode(lookup, number) {
 	    var loopCounter = 0;
@@ -1157,7 +1025,7 @@
 
 
 /***/ },
-/* 14 */
+/* 11 */
 /*!*****************************************************!*\
   !*** ./~/shortid/lib/random/random-byte-browser.js ***!
   \*****************************************************/
@@ -1180,14 +1048,14 @@
 
 
 /***/ },
-/* 15 */
+/* 12 */
 /*!*********************************!*\
   !*** ./~/shortid/lib/decode.js ***!
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var alphabet = __webpack_require__(/*! ./alphabet */ 11);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 8);
 	
 	/**
 	 * Decode the id to get the version and worker
@@ -1206,14 +1074,14 @@
 
 
 /***/ },
-/* 16 */
+/* 13 */
 /*!***********************************!*\
   !*** ./~/shortid/lib/is-valid.js ***!
   \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var alphabet = __webpack_require__(/*! ./alphabet */ 11);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 8);
 	
 	function isShortId(id) {
 	    if (!id || typeof id !== 'string' || id.length < 6 ) {
@@ -1234,7 +1102,7 @@
 
 
 /***/ },
-/* 17 */
+/* 14 */
 /*!*********************************************************!*\
   !*** ./~/shortid/lib/util/cluster-worker-id-browser.js ***!
   \*********************************************************/
@@ -1243,6 +1111,256 @@
 	'use strict';
 	
 	module.exports = 0;
+
+
+/***/ },
+/* 15 */
+/*!***********************************************!*\
+  !*** ./js/components/pagination/template.dot ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	module.exports = function anonymous(it
+	/**/) {
+	var out='';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a></li>';} } return out;
+	}
+
+/***/ },
+/* 16 */
+/*!******************************************!*\
+  !*** ./js/components/lightbox/module.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
+	var util = Utility.getInstance();
+	var $ = util.$;
+	
+	var body, frag;
+	
+	function Lightbox(el, params) {
+	  var frag = params.frag;
+	  Component.call(this, el, params);
+	  body = $('body')[0];
+	  this.modal = $('.lightbox-modal', this.el)[0];
+	  this.scrub(frag);
+	  this.frag = this.modal.appendChild(frag);
+	  this.open();
+	  this.closeButton = $('.lightbox-close', this.el)[0];
+	  this.pagination = $('.pagination ul', this.el)[0];
+	  this.initialize();
+	};
+	
+	util.inherit(Lightbox, Component);
+	
+	/**
+	 * [initialize description]
+	 * @return {[type]} [description]
+	 */
+	Lightbox.prototype.initialize = function() {
+	  var context = this.el, id = this.id;
+	  Component.prototype.initialize.call(this);
+	  new Pagination(this.pagination, {
+	    id: id,
+	    imgs: this.params.imgs
+	  });
+	};
+	
+	/**
+	 * [scrub description]
+	 * @param  {[type]} el [description]
+	 * @return {[type]}    [description]
+	 */
+	Lightbox.prototype.scrub = function(el) {
+	  var els = $('[id]', el);
+	  els.forEach(function(el) {
+	    el.removeAttribute('id');
+	  });
+	};
+	
+	/**
+	 * [bindEvents description]
+	 * @return {[type]} [description]
+	 */
+	Lightbox.prototype.bindEvents = function() {
+	  this.addListener(this.closeButton, 'click', this.closeLightboxRequested);
+	  this.addListener(document, 'keyup', function(ev) {
+	    if (ev.which && ev.which === 27) {
+	      this.closeLightboxRequested();
+	    }
+	  });
+	};
+	
+	/**
+	 * [closeLightboxRequested description]
+	 * @return {[type]} [description]
+	 */
+	Lightbox.prototype.closeLightboxRequested = function() {
+	  this.close();
+	};
+	
+	/**
+	 * [open description]
+	 * @return {[type]} [description]
+	 */
+	Lightbox.prototype.open = function() {
+	  body.classList.add('lightbox-open');
+	  this.el.classList.remove('closed');
+	  this.el.classList.add('open');
+	};
+	
+	/**
+	 * [close description]
+	 * @param  {[type]} ev [description]
+	 * @return {[type]}    [description]
+	 */
+	Lightbox.prototype.close = function(ev) {
+	  body.classList.remove('lightbox-open');
+	  this.el.classList.remove('open');
+	  this.el.classList.add('closed');
+	  this.unbindEvents();
+	  this.modal.removeChild(this.frag);
+	};
+	
+	module.exports = Lightbox;
+
+
+/***/ },
+/* 17 */
+/*!******************************************!*\
+  !*** ./js/components/multipic/module.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
+	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 16);
+	// var render = require('./template.dot');
+	var util = Utility.getInstance();
+	var $ = util.$;
+	
+	var CLICK_EVENT = 'pagination:pageLinkClicked';
+	
+	/**
+	 * MultiPic class. Creates a multipic component. Listens for events from the
+	 * a pagination instance and responds accordingly.
+	 * @constructor
+	 * @extends {Component}
+	 * @param {Element} el     The container element for the pagination.
+	 * @param {[type]} params Parameters for the pagination class.
+	 */
+	function MultiPic(el, params) {
+	  var pagination,
+	      paginationEl;
+	
+	  Component.call(this, el, params);
+	
+	  this.current = this.params.imgs[0];
+	
+	  paginationEl = $('.pagination ul', this.el)[0];
+	  pagination = new Pagination(paginationEl, {
+	    id: this.id,
+	    imgs: this.params.imgs.map(function(img){ return img.src; })
+	  });
+	
+	  this.initialize();
+	}
+	
+	util.inherit(MultiPic, Component);
+	
+	/**
+	 * [bindEvents description]
+	 * @public
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.bindEvents = function() {
+	  this.bindImgEvent();
+	  this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+	};
+	
+	/**
+	 * Returns the current image node.
+	 * @return {Element} The image element currently on display.
+	 */
+	MultiPic.prototype.getCurrentImg = function() {
+	  return $('img[src="' + this.current.src + '"]', this.el)[0];
+	};
+	
+	/**
+	 * [unbindImgEvent description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.unbindImgEvent = function() {
+	  this.removeListeners(this.getCurrentImg().parentNode, 'click');
+	};
+	
+	/**
+	 *
+	 */
+	MultiPic.prototype.bindImgEvent = function() {
+	  this.addListener(this.getCurrentImg().parentNode, 'click',
+	      this.lightboxRequested);
+	};
+	
+	/**
+	 * [pageChangeRequested description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.picChangeRequested = function() {
+	  var data = arguments[0],
+	    id = data.id,
+	    picIndex;
+	
+	  if (id !== this.id) {
+	    return;
+	  }
+	
+	  picIndex = data.page;
+	  this.changePic(picIndex);
+	};
+	
+	/**
+	 * [lightboxRequested description]
+	 * @param  {[type]} ev [description]
+	 * @return {[type]}    [description]
+	 */
+	MultiPic.prototype.lightboxRequested = function(ev) {
+	  ev.preventDefault();
+	  var wrapper = $('.lightbox')[0],
+	    modal = $('.lightbox-modal', wrapper)[0],
+	    frag = this.el.cloneNode(true),
+	    lightbox = new Lightbox(wrapper, { frag: frag });
+	};
+	
+	/**
+	 * [lightboxDestroyRequested description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.lightboxDestroyRequested = function() {
+	  this.lightbox.finalize();
+	};
+	
+	
+	/**
+	 * [changePic description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.changePic = function(idx) {
+	  this.getCurrentImg().parentNode.style.display = 'none';
+	  this.unbindImgEvent();
+	  this.current = this.params.imgs[idx];
+	  this.getCurrentImg().parentNode.style.display = 'block';
+	  this.bindImgEvent();
+	}
+	
+	module.exports = MultiPic;
 
 
 /***/ }

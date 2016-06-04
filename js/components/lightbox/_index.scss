@@ -7,10 +7,18 @@
 
   &.closed {
     display: none;
+
+    .lightbox-modal {
+      opacity: 0;
+    }
   }
 
   &.open {
     display: block;
+
+    .lightbox-modal {
+      opacity: 1;
+    }
   }
 
   .lightbox-mask {
@@ -33,6 +41,7 @@
     position: absolute;
     right: 20vw;
     top: 10vh;
+    transition: opacity 0.3s ease-in-out;
 
     > * {
       overflow: hidden;
@@ -41,15 +50,25 @@
 
   .lightbox-header {
     background-color: $tertiary-bg-color;
-    padding: 0.5em 1em
+    overflow: hidden;
+    padding: 0.5em 1em;
   }
 
-  .close-button {
+  .lightbox-close {
+    color: $primary-link-color-hover;
     float: right;
+
+    &:hover {
+      color: white;
+    }
   }
 
   .media-wrapper {
     @include shift(1);
     @include span-columns(10);
+  }
+
+  .media-image a {
+    cursor: default;
   }
 }

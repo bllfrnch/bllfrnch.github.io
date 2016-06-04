@@ -4,10 +4,10 @@ var Utility = require('../../utility.js');
 var Component = require('../component/module.js');
 var Pagination = require('../pagination/module.js');
 var Lightbox = require('../lightbox/module.js');
+// var render = require('./template.dot');
 var util = Utility.getInstance();
 var $ = util.$;
 
-var LIGHTBOX_DESTROY_EVENT = 'lightbox:closeButtonClicked';
 var CLICK_EVENT = 'pagination:pageLinkClicked';
 
 /**
@@ -24,13 +24,12 @@ function MultiPic(el, params) {
 
   Component.call(this, el, params);
 
-  this.pics = $('picture img', this.el);
-  this.current = this.pics[0];
+  this.current = this.params.imgs[0];
 
   paginationEl = $('.pagination ul', this.el)[0];
   pagination = new Pagination(paginationEl, {
     id: this.id,
-    imgs: this.pics.map(function(img){ return img.src; })
+    imgs: this.params.imgs.map(function(img){ return img.src; })
   });
 
   this.initialize();
@@ -48,22 +47,28 @@ MultiPic.prototype.bindEvents = function() {
   this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
 };
 
+/**
+ * Returns the current image node.
+ * @return {Element} The image element currently on display.
+ */
+MultiPic.prototype.getCurrentImg = function() {
+  return $('img[src="' + this.current.src + '"]', this.el)[0];
+};
 
 /**
  * [unbindImgEvent description]
  * @return {[type]} [description]
  */
 MultiPic.prototype.unbindImgEvent = function() {
-  this.removeListeners(this.current.parentNode, 'click');
+  this.removeListeners(this.getCurrentImg().parentNode, 'click');
 };
 
 /**
  *
  */
 MultiPic.prototype.bindImgEvent = function() {
-  this.addListener(this.current.parentNode, 'click', this.lightboxRequested);
-  // this.current.parentNode.addEventListener('click',
-  //     this.lightboxRequested.bind(this));
+  this.addListener(this.getCurrentImg().parentNode, 'click',
+      this.lightboxRequested);
 };
 
 /**
@@ -110,10 +115,10 @@ MultiPic.prototype.lightboxDestroyRequested = function() {
  * @return {[type]} [description]
  */
 MultiPic.prototype.changePic = function(idx) {
-  this.current.parentNode.style.display = 'none';
+  this.getCurrentImg().parentNode.style.display = 'none';
   this.unbindImgEvent();
-  this.current = this.pics[idx];
-  this.current.parentNode.style.display = 'block';
+  this.current = this.params.imgs[idx];
+  this.getCurrentImg().parentNode.style.display = 'block';
   this.bindImgEvent();
 }
 

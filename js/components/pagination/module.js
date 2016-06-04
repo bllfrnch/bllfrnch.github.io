@@ -21,7 +21,8 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
 function Pagination(el, params) {
   Component.call(this, el, params);
 
-  this.multiPicId = params.id;
+  this.targetId = params.id;
+  this.pageData = params.pageData;
   this.pageLinks = this.createDom();
   this.current = this.toggleSelected(this.pageLinks[0]);
   this.initialize();
@@ -54,7 +55,7 @@ Pagination.prototype.createDom = function() {
 Pagination.prototype.clickHandler = function(ev) {
   var el = ev.target,
     page = this.getRequestedPage(el),
-    id = this.multiPicId;
+    id = this.targetId;
 
   ev.preventDefault();
 

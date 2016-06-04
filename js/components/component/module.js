@@ -16,6 +16,10 @@ function Component(el, params) {
   this.listeners = {};
 }
 
+function initSingleton() {
+
+};
+
 /**
  * Initializes the component.
  */
@@ -62,6 +66,39 @@ Component.prototype.getEl = function(id) {
  * An abstract method that is meant to be overridden by subclasses.
  */
 Component.prototype.bindEvents = function() {};
+
+/**
+ * [sendUp description]
+ * @return {[type]} [description]
+ */
+Component.prototype.sendUp = function(data) {
+
+};
+
+/**
+ * [sendDown description]
+ * @return {[type]} [description]
+ */
+Component.prototype.sendDown = function(data) {
+
+};
+
+/**
+ * Sends a message to all components
+ * @return {[type]} [description]
+ */
+Component.prototype.shout = function(data) {
+
+};
+
+/**
+ * Sends a message
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
+ */
+Component.prototype.sendMessage = function(data) {
+
+}
 
 /**
  * Adds an event listener to an element.
