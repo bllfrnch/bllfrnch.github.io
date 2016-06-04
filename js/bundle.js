@@ -70,8 +70,8 @@
 	'use strict';
 	
 	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
-	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 5);
-	var MultiPic = __webpack_require__(/*! ../multipic/module.js */ 6);
+	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 6);
+	var MultiPic = __webpack_require__(/*! ../multipic/module.js */ 7);
 	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
 	
 	function Page() {
@@ -115,8 +115,8 @@
 	'use strict';
 	
 	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 34);
-	var render = __webpack_require__(/*! ./template.dot */ 8);
+	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var render = __webpack_require__(/*! ./template.dot */ 5);
 	var util = Utility.getInstance();
 	var $ = util.$;
 	
@@ -320,6 +320,379 @@
 
 /***/ },
 /* 4 */
+/*!*******************************************!*\
+  !*** ./js/components/component/module.js ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var util = Utility.getInstance();
+	var radio = __webpack_require__(/*! radio */ 8);
+	var shortid = __webpack_require__(/*! shortid */ 9);
+	var $ = util.$;
+	
+	var COMPONENT_INITIALIZED_EVENT;
+	
+	function Component(el, params) {
+	  this.id = shortid.generate();
+	  this.radio = radio;
+	  this.el = el;
+	  this.params = params;
+	  this.listeners = {};
+	}
+	
+	/**
+	 * Initializes the component.
+	 */
+	Component.prototype.initialize = function() {
+	  this.setId(this.el, this.id);
+	  this.bindEvents();
+	  this.setInitialized();
+	};
+	
+	/**
+	 * If no id exists on the specified element, sets an id attribute
+	 * and returns it, or if the id already exists, returns the id.
+	 * @param {ELement} el The element on which to set the id attribute.
+	 * @param {Number} id Optional id parameter. If not specified, the method
+	 * generates an id, otherwise, it uses the passed value.
+	 * @return {[type]} The id.
+	 */
+	Component.prototype.setId = function(el, id) {
+	  id = id? id: shortid.generate();
+	  el.setAttribute('id', id);
+	  return id;
+	};
+	
+	/**
+	 * Given a component element id, return the element.
+	 * @param  {String} id The id of the element.
+	 * @return {Node}    Return either the document or the HTML element.
+	 */
+	Component.prototype.getEl = function(id) {
+	  return id === 'document' ? document: $('#' + id)[0];
+	};
+	
+	/**
+	 * [getId description]
+	 * @param  {[type]} el [description]
+	 * @return {[type]}    [description]
+	 */
+	Component.prototype.getId = function(el) {
+	  var id = el === document? 'document' : el.getAttribute('id');
+	  return id;
+	};
+	
+	/**
+	 * An abstract method that is meant to be overridden but subclasses.
+	 * @return {[type]} [description]
+	 */
+	Component.prototype.bindEvents = function() {};
+	
+	/**
+	 * [addListener description]
+	 * @param {[type]}   el      [description]
+	 * @param {[type]}   ev      [description]
+	 * @param {Function} fn      [description]
+	 * @param {[type]}   capture [description]
+	 */
+	Component.prototype.addListener = function(el, ev, fn, capture) {
+	  var f = fn.bind(this),
+	    capture = capture || false,
+	    id = this.getId(el) || this.setId(el);
+	
+	  if (this.listeners[id] === undefined) {
+	    this.listeners[id] = {};
+	  }
+	
+	  if (this.listeners[id][ev] === undefined) {
+	    this.listeners[id][ev] = [];
+	  }
+	
+	  this.listeners[id][ev].push(f, capture);
+	  el.addEventListener(ev, f, capture);
+	};
+	
+	
+	/**
+	 * Removes all listeners for a given element of a specific type.
+	 * @param  {Element} el The element from which events will be removed.
+	 * @param  {String} ev The event type, e.g., 'click'.
+	 */
+	Component.prototype.removeListeners = function(el, ev) {
+	  var id = this.getId(el);
+	
+	  if (!id) throw new Error('No id set for element ', el);
+	
+	  if (id in this.listeners && ev in this.listeners[id]) {
+	    this.listeners[id][ev].forEach(function(listener) {
+	      el.removeEventListener(ev, listener);
+	    });
+	  }
+	};
+	
+	/**
+	 * [unbindEvents description]
+	 * @return {[type]} [description]
+	 */
+	Component.prototype.unbindEvents = function() {
+	  var listeners, fn, el;
+	  for (var id in this.listeners) {
+	    listeners = this.listeners[id];
+	    for (var ev in listeners) {
+	      fn = listeners[ev];
+	      el = this.getEl(id);
+	      el.removeEventListener(ev, fn);
+	    }
+	  }
+	};
+	
+	Component.prototype.finalize = function() {
+	  this.unbindEvents();
+	};
+	
+	/**
+	 * [setInitialized description]
+	 */
+	Component.prototype.setInitialized = function() {
+	  radio(COMPONENT_INITIALIZED_EVENT).broadcast({
+	
+	  });
+	};
+	
+	module.exports = Component;
+
+
+/***/ },
+/* 5 */
+/*!***********************************************!*\
+  !*** ./js/components/pagination/template.dot ***!
+  \***********************************************/
+/***/ function(module, exports) {
+
+	module.exports = function anonymous(it
+	/**/) {
+	var out='';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a></li>';} } return out;
+	}
+
+/***/ },
+/* 6 */
+/*!******************************************!*\
+  !*** ./js/components/lightbox/module.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var util = Utility.getInstance();
+	var $ = util.$;
+	
+	var body, frag;
+	
+	function Lightbox(el, params) {
+	  Component.call(this, el, params);
+	  body = $('body')[0];
+	  this.modal = $('.lightbox-modal', this.el)[0];
+	  this.frag = this.modal.appendChild(params.frag);
+	  this.open();
+	  this.closeButton = $('.lightbox-close', this.el)[0];
+	  this.initialize();
+	};
+	
+	util.inherit(Lightbox, Component);
+	
+	/**
+	 * [bindEvents description]
+	 * @return {[type]} [description]
+	 */
+	Lightbox.prototype.bindEvents = function() {
+	  this.addListener(this.closeButton, 'click', this.closeLightboxRequested);
+	  this.addListener(document, 'keyup', function(ev) {
+	    if (ev.which && ev.which === 27) {
+	      this.closeLightboxRequested();
+	    }
+	  });
+	};
+	
+	/**
+	 * [unbindEvents description]
+	 * @return {[type]} [description]
+	 */
+	// Lightbox.prototype.unbindEvents = function() {
+	//   var button = $('.lightbox-close', this.el)[0];
+	//   button.removeEventListener('click');
+	//   document.removeEventListener('keyup');
+	// };
+	
+	/**
+	 * [closeLightboxRequested description]
+	 * @return {[type]} [description]
+	 */
+	Lightbox.prototype.closeLightboxRequested = function() {
+	  this.close();
+	};
+	
+	/**
+	 * [open description]
+	 * @return {[type]} [description]
+	 */
+	Lightbox.prototype.open = function() {
+	  body.classList.add('lightbox-open');
+	  this.el.classList.remove('closed');
+	  this.el.classList.add('open');
+	};
+	
+	/**
+	 * [close description]
+	 * @param  {[type]} ev [description]
+	 * @return {[type]}    [description]
+	 */
+	Lightbox.prototype.close = function(ev) {
+	  body.classList.remove('lightbox-open');
+	  this.el.classList.remove('open');
+	  this.el.classList.add('closed');
+	  this.unbindEvents();
+	  this.modal.removeChild(this.frag);
+	};
+	
+	module.exports = Lightbox;
+
+
+/***/ },
+/* 7 */
+/*!******************************************!*\
+  !*** ./js/components/multipic/module.js ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
+	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 6);
+	var util = Utility.getInstance();
+	var $ = util.$;
+	
+	var LIGHTBOX_DESTROY_EVENT = 'lightbox:closeButtonClicked';
+	var CLICK_EVENT = 'pagination:pageLinkClicked';
+	
+	/**
+	 * MultiPic class. Creates a multipic component. Listens for events from the
+	 * a pagination instance and responds accordingly.
+	 * @constructor
+	 * @extends {Component}
+	 * @param {Element} el     The container element for the pagination.
+	 * @param {[type]} params Parameters for the pagination class.
+	 */
+	function MultiPic(el, params) {
+	  var pagination,
+	      paginationEl;
+	
+	  Component.call(this, el, params);
+	
+	  this.pics = $('picture img', this.el);
+	  this.current = this.pics[0];
+	
+	  paginationEl = $('.pagination ul', this.el)[0];
+	  pagination = new Pagination(paginationEl, {
+	    id: this.id,
+	    imgs: this.pics.map(function(img){ return img.src; })
+	  });
+	
+	  this.initialize();
+	}
+	
+	util.inherit(MultiPic, Component);
+	
+	/**
+	 * [bindEvents description]
+	 * @public
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.bindEvents = function() {
+	  this.bindImgEvent();
+	  this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+	};
+	
+	
+	/**
+	 * [unbindImgEvent description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.unbindImgEvent = function() {
+	  this.removeListeners(this.current.parentNode, 'click');
+	};
+	
+	/**
+	 *
+	 */
+	MultiPic.prototype.bindImgEvent = function() {
+	  this.addListener(this.current.parentNode, 'click', this.lightboxRequested);
+	  // this.current.parentNode.addEventListener('click',
+	  //     this.lightboxRequested.bind(this));
+	};
+	
+	/**
+	 * [pageChangeRequested description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.picChangeRequested = function() {
+	  var data = arguments[0],
+	    id = data.id,
+	    picIndex;
+	
+	  if (id !== this.id) {
+	    return;
+	  }
+	
+	  picIndex = data.page;
+	  this.changePic(picIndex);
+	};
+	
+	/**
+	 * [lightboxRequested description]
+	 * @param  {[type]} ev [description]
+	 * @return {[type]}    [description]
+	 */
+	MultiPic.prototype.lightboxRequested = function(ev) {
+	  ev.preventDefault();
+	  var wrapper = $('.lightbox')[0],
+	    modal = $('.lightbox-modal', wrapper)[0],
+	    frag = this.el.cloneNode(true),
+	    lightbox = new Lightbox(wrapper, { frag: frag });
+	};
+	
+	/**
+	 * [lightboxDestroyRequested description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.lightboxDestroyRequested = function() {
+	  this.lightbox.finalize();
+	};
+	
+	
+	/**
+	 * [changePic description]
+	 * @return {[type]} [description]
+	 */
+	MultiPic.prototype.changePic = function(idx) {
+	  this.current.parentNode.style.display = 'none';
+	  this.unbindImgEvent();
+	  this.current = this.pics[idx];
+	  this.current.parentNode.style.display = 'block';
+	  this.bindImgEvent();
+	}
+	
+	module.exports = MultiPic;
+
+
+/***/ },
+/* 8 */
 /*!**************************!*\
   !*** ./~/radio/radio.js ***!
   \**************************/
@@ -493,375 +866,18 @@
 
 
 /***/ },
-/* 5 */
-/*!******************************************!*\
-  !*** ./js/components/lightbox/module.js ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 34);
-	var util = Utility.getInstance();
-	var $ = util.$;
-	
-	var body, frag;
-	
-	function Lightbox(el, params) {
-	  Component.call(this, el, params);
-	  body = $('body')[0];
-	  this.modal = $('.lightbox-modal', this.el)[0];
-	  this.frag = this.modal.appendChild(params.frag);
-	  this.open();
-	  this.closeButton = $('.lightbox-close', this.el)[0];
-	  this.initialize();
-	};
-	
-	util.inherit(Lightbox, Component);
-	
-	/**
-	 * [bindEvents description]
-	 * @return {[type]} [description]
-	 */
-	Lightbox.prototype.bindEvents = function() {
-	  this.addListener(this.closeButton, 'click', this.closeLightboxRequested);
-	  this.addListener(document, 'keyup', function(ev) {
-	    if (ev.which && ev.which === 27) {
-	      this.closeLightboxRequested();
-	    }
-	  });
-	};
-	
-	/**
-	 * [unbindEvents description]
-	 * @return {[type]} [description]
-	 */
-	// Lightbox.prototype.unbindEvents = function() {
-	//   var button = $('.lightbox-close', this.el)[0];
-	//   button.removeEventListener('click');
-	//   document.removeEventListener('keyup');
-	// };
-	
-	/**
-	 * [closeLightboxRequested description]
-	 * @return {[type]} [description]
-	 */
-	Lightbox.prototype.closeLightboxRequested = function() {
-	  this.close();
-	};
-	
-	/**
-	 * [open description]
-	 * @return {[type]} [description]
-	 */
-	Lightbox.prototype.open = function() {
-	  body.classList.add('lightbox-open');
-	  this.el.classList.remove('closed');
-	  this.el.classList.add('open');
-	};
-	
-	/**
-	 * [close description]
-	 * @param  {[type]} ev [description]
-	 * @return {[type]}    [description]
-	 */
-	Lightbox.prototype.close = function(ev) {
-	  body.classList.remove('lightbox-open');
-	  this.el.classList.remove('open');
-	  this.el.classList.add('closed');
-	  this.unbindEvents();
-	  this.modal.removeChild(this.frag);
-	};
-	
-	module.exports = Lightbox;
-
-
-/***/ },
-/* 6 */
-/*!******************************************!*\
-  !*** ./js/components/multipic/module.js ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 34);
-	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
-	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 5);
-	var util = Utility.getInstance();
-	var $ = util.$;
-	
-	var LIGHTBOX_DESTROY_EVENT = 'lightbox:closeButtonClicked';
-	var CLICK_EVENT = 'pagination:pageLinkClicked';
-	
-	/**
-	 * MultiPic class. Creates a multipic component. Listens for events from the
-	 * a pagination instance and responds accordingly.
-	 * @constructor
-	 * @extends {Component}
-	 * @param {Element} el     The container element for the pagination.
-	 * @param {[type]} params Parameters for the pagination class.
-	 */
-	function MultiPic(el, params) {
-	  var pagination,
-	      paginationEl;
-	
-	  Component.call(this, el, params);
-	
-	  this.pics = $('picture img', this.el);
-	  this.current = this.pics[0];
-	
-	  paginationEl = $('.pagination ul', this.el)[0];
-	  pagination = new Pagination(paginationEl, {
-	    id: this.id,
-	    imgs: this.pics.map(function(img){ return img.src; })
-	  });
-	
-	  this.initialize();
-	}
-	
-	util.inherit(MultiPic, Component);
-	
-	/**
-	 * [bindEvents description]
-	 * @public
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.bindEvents = function() {
-	  this.bindImgEvent();
-	  this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
-	};
-	
-	
-	/**
-	 * [unbindImgEvent description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.unbindImgEvent = function() {
-	  this.removeListeners(this.current.parentNode, 'click');
-	};
-	
-	/**
-	 *
-	 */
-	MultiPic.prototype.bindImgEvent = function() {
-	  this.addListener(this.current.parentNode, 'click', this.lightboxRequested);
-	  // this.current.parentNode.addEventListener('click',
-	  //     this.lightboxRequested.bind(this));
-	};
-	
-	/**
-	 * [pageChangeRequested description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.picChangeRequested = function() {
-	  var data = arguments[0],
-	    id = data.id,
-	    picIndex;
-	
-	  if (id !== this.id) {
-	    return;
-	  }
-	
-	  picIndex = data.page;
-	  this.changePic(picIndex);
-	};
-	
-	/**
-	 * [lightboxRequested description]
-	 * @param  {[type]} ev [description]
-	 * @return {[type]}    [description]
-	 */
-	MultiPic.prototype.lightboxRequested = function(ev) {
-	  ev.preventDefault();
-	  var wrapper = $('.lightbox')[0],
-	    modal = $('.lightbox-modal', wrapper)[0],
-	    frag = this.el.cloneNode(true),
-	    lightbox = new Lightbox(wrapper, { frag: frag });
-	};
-	
-	/**
-	 * [lightboxDestroyRequested description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.lightboxDestroyRequested = function() {
-	  this.lightbox.finalize();
-	};
-	
-	
-	/**
-	 * [changePic description]
-	 * @return {[type]} [description]
-	 */
-	MultiPic.prototype.changePic = function(idx) {
-	  this.current.parentNode.style.display = 'none';
-	  this.unbindImgEvent();
-	  this.current = this.pics[idx];
-	  this.current.parentNode.style.display = 'block';
-	  this.bindImgEvent();
-	}
-	
-	module.exports = MultiPic;
-
-
-/***/ },
-/* 7 */,
-/* 8 */
-/*!***********************************************!*\
-  !*** ./js/components/pagination/template.dot ***!
-  \***********************************************/
-/***/ function(module, exports) {
-
-	module.exports = function anonymous(it
-	/**/) {
-	var out='';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a></li>';} } return out;
-	}
-
-/***/ },
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */
-/*!*******************************************!*\
-  !*** ./js/components/component/module.js ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var util = Utility.getInstance();
-	var radio = __webpack_require__(/*! radio */ 4);
-	var shortid = __webpack_require__(/*! shortid */ 35);
-	
-	var COMPONENT_INITIALIZED_EVENT;
-	
-	function Component(el, params) {
-	  this.id = shortid.generate();
-	  this.radio = radio;
-	  this.el = el;
-	  this.params = params;
-	  this.listeners = {};
-	}
-	
-	/**
-	 * [initialize description]
-	 * @return {[type]} [description]
-	 */
-	Component.prototype.initialize = function() {
-	  this.bindEvents();
-	  this.setInitialized();
-	};
-	
-	/**
-	 * An abstract method that is meant to be overridden but subclasses.
-	 * @return {[type]} [description]
-	 */
-	Component.prototype.bindEvents = function() {};
-	
-	/**
-	 * [addListener description]
-	 * @param {[type]}   el      [description]
-	 * @param {[type]}   ev      [description]
-	 * @param {Function} fn      [description]
-	 * @param {[type]}   capture [description]
-	 */
-	Component.prototype.addListener = function(el, ev, fn, capture) {
-	  var f = fn.bind(this);
-	  capture = capture || false;
-	
-	  if (this.listeners[el] === undefined) {
-	    this.listeners[el] = {};
-	  }
-	
-	  if (this.listeners[el][ev] === undefined) {
-	    this.listeners[el][ev] = [];
-	  }
-	
-	  this.listeners[el][ev].push(f, capture);
-	  el.addEventListener(ev, f, capture);
-	};
-	
-	/**
-	 * [removeListeners description]
-	 * @param  {[type]} el [description]
-	 * @param  {[type]} ev [description]
-	 * @return {[type]}    [description]
-	 */
-	Component.prototype.removeListeners = function(el, ev) {
-	  if (el in this.listeners && ev in this.listeners[el]) {
-	    this.listeners[el][ev].forEach(function(listener) {
-	      el.removeEventListener(ev, listener);
-	    });
-	  }
-	};
-	
-	/**
-	 * [unbindEvents description]
-	 * @return {[type]} [description]
-	 */
-	Component.prototype.unbindEvents = function() {
-	  var listeners, fn;
-	  for (var el in this.listeners) {
-	    listeners = this.listeners[el];
-	    for (var ev in listeners) {
-	      fn = listeners[ev];
-	      el.removeEventListener(ev, fn);
-	    }
-	  }
-	};
-	
-	Component.prototype.finalize = function() {
-	  this.unbindEvents();
-	};
-	
-	/**
-	 * [setInitialized description]
-	 */
-	Component.prototype.setInitialized = function() {
-	  radio(COMPONENT_INITIALIZED_EVENT).broadcast({
-	
-	  });
-	};
-	
-	module.exports = Component;
-
-
-/***/ },
-/* 35 */
+/* 9 */
 /*!****************************!*\
   !*** ./~/shortid/index.js ***!
   \****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	module.exports = __webpack_require__(/*! ./lib/index */ 36);
+	module.exports = __webpack_require__(/*! ./lib/index */ 10);
 
 
 /***/ },
-/* 36 */
+/* 10 */
 /*!********************************!*\
   !*** ./~/shortid/lib/index.js ***!
   \********************************/
@@ -869,10 +885,10 @@
 
 	'use strict';
 	
-	var alphabet = __webpack_require__(/*! ./alphabet */ 37);
-	var encode = __webpack_require__(/*! ./encode */ 39);
-	var decode = __webpack_require__(/*! ./decode */ 41);
-	var isValid = __webpack_require__(/*! ./is-valid */ 42);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 11);
+	var encode = __webpack_require__(/*! ./encode */ 13);
+	var decode = __webpack_require__(/*! ./decode */ 15);
+	var isValid = __webpack_require__(/*! ./is-valid */ 16);
 	
 	// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
 	// This number should be updated every year or so to keep the generated id short.
@@ -887,7 +903,7 @@
 	// has a unique value for worker
 	// Note: I don't know if this is automatically set when using third
 	// party cluster solutions such as pm2.
-	var clusterWorkerId = __webpack_require__(/*! ./util/cluster-worker-id */ 43) || 0;
+	var clusterWorkerId = __webpack_require__(/*! ./util/cluster-worker-id */ 17) || 0;
 	
 	// Counter is used when shortid is called multiple times in one second.
 	var counter;
@@ -970,7 +986,7 @@
 
 
 /***/ },
-/* 37 */
+/* 11 */
 /*!***********************************!*\
   !*** ./~/shortid/lib/alphabet.js ***!
   \***********************************/
@@ -978,7 +994,7 @@
 
 	'use strict';
 	
-	var randomFromSeed = __webpack_require__(/*! ./random/random-from-seed */ 38);
+	var randomFromSeed = __webpack_require__(/*! ./random/random-from-seed */ 12);
 	
 	var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
 	var alphabet;
@@ -1077,7 +1093,7 @@
 
 
 /***/ },
-/* 38 */
+/* 12 */
 /*!**************************************************!*\
   !*** ./~/shortid/lib/random/random-from-seed.js ***!
   \**************************************************/
@@ -1111,7 +1127,7 @@
 
 
 /***/ },
-/* 39 */
+/* 13 */
 /*!*********************************!*\
   !*** ./~/shortid/lib/encode.js ***!
   \*********************************/
@@ -1119,7 +1135,7 @@
 
 	'use strict';
 	
-	var randomByte = __webpack_require__(/*! ./random/random-byte */ 40);
+	var randomByte = __webpack_require__(/*! ./random/random-byte */ 14);
 	
 	function encode(lookup, number) {
 	    var loopCounter = 0;
@@ -1139,7 +1155,7 @@
 
 
 /***/ },
-/* 40 */
+/* 14 */
 /*!*****************************************************!*\
   !*** ./~/shortid/lib/random/random-byte-browser.js ***!
   \*****************************************************/
@@ -1162,14 +1178,14 @@
 
 
 /***/ },
-/* 41 */
+/* 15 */
 /*!*********************************!*\
   !*** ./~/shortid/lib/decode.js ***!
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var alphabet = __webpack_require__(/*! ./alphabet */ 37);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 11);
 	
 	/**
 	 * Decode the id to get the version and worker
@@ -1188,14 +1204,14 @@
 
 
 /***/ },
-/* 42 */
+/* 16 */
 /*!***********************************!*\
   !*** ./~/shortid/lib/is-valid.js ***!
   \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var alphabet = __webpack_require__(/*! ./alphabet */ 37);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 11);
 	
 	function isShortId(id) {
 	    if (!id || typeof id !== 'string' || id.length < 6 ) {
@@ -1216,7 +1232,7 @@
 
 
 /***/ },
-/* 43 */
+/* 17 */
 /*!*********************************************************!*\
   !*** ./~/shortid/lib/util/cluster-worker-id-browser.js ***!
   \*********************************************************/
