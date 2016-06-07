@@ -3,6 +3,7 @@
 var Pagination = require('../pagination/module.js');
 var Lightbox = require('../lightbox/module.js');
 var MultiPic = require('../multipic/module.js');
+var StickyHeader = require('../stickyheader/module.js');
 var Utility = require('../../utility.js');
 var Component = require('../component/module.js');
 var util = Utility.getInstance();
@@ -13,7 +14,8 @@ module.exports = (function() {
   var components = {
     pagination: Pagination,
     lightbox: Lightbox,
-    multipic: MultiPic
+    multipic: MultiPic,
+    stickyheader: StickyHeader
   };
 
   /**

@@ -73,6 +73,7 @@
 	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
 	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 16);
 	var MultiPic = __webpack_require__(/*! ../multipic/module.js */ 17);
+	var StickyHeader = __webpack_require__(/*! ../stickyheader/module.js */ 18);
 	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
 	var Component = __webpack_require__(/*! ../component/module.js */ 4);
 	var util = Utility.getInstance();
@@ -83,7 +84,8 @@
 	  var components = {
 	    pagination: Pagination,
 	    lightbox: Lightbox,
-	    multipic: MultiPic
+	    multipic: MultiPic,
+	    stickyheader: StickyHeader
 	  };
 	
 	  /**
@@ -1433,6 +1435,36 @@
 	}
 	
 	module.exports = MultiPic;
+
+
+/***/ },
+/* 18 */
+/*!**********************************************!*\
+  !*** ./js/components/stickyheader/module.js ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var util = Utility.getInstance();
+	var $ = util.$;
+	
+	/**
+	 * StickyHeader class. Creates a sticky header/navigation module for use at top
+	 * of all pages.
+	 * @constructor
+	 * @extends {Component}
+	 * @param {Element} el     The container element for the pagination.
+	 * @param {[type]} params Parameters for the sticky header class.
+	 */
+	function StickyHeader(el, params) {
+	  Component.call(this, el, params);
+	  this.initialize();
+	}
+	
+	util.inherit(StickyHeader, Component);
 
 
 /***/ }
