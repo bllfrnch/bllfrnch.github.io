@@ -54,6 +54,7 @@
 	function init() {
 	  document.addEventListener('DOMContentLoaded', function(ev) {
 	    var page = new Page.getInstance();
+	    document.org = {billf: {page: page}};
 	  });
 	}
 	
@@ -79,10 +80,28 @@
 	
 	module.exports = (function() {
 	  var instance;
+	  var components = {
+	    pagination: Pagination,
+	    lightbox: Lightbox,
+	    multipic: MultiPic
+	  };
 	
-	  function Page() {
+	  /**
+	   * Page class. Creates a page component. Bootstraps and registers all
+	   * components that are declared on the page and provides an API for
+	   * components to register, retrieve, and remove them later. Extends Component,
+	   * and this.el is set to document.
+	   * @constructor
+	   * @extends {Component}
+	   * @param {Element} el     The container element for the pagination.
+	   * @param {[type]} params Parameters for the pagination class.
+	   */
+	  function Page(params) {
+	    Component.call(this, document, params);
 	    this.initialize();
 	  }
+	
+	  util.inherit(Page, Component);
 	
 	  function initSingleton() {
 	    return new Page();
@@ -90,62 +109,116 @@
 	
 	  Page.prototype.initialize = function() {
 	    this.els = $('[data-component]');
-	    this.instances = {
-	
+	    // The registry of component records.
+	    this.registry = {};
+	    this.registry = {
+	      instance: this,
+	      children: {}
 	    };
 	    this.bootstrap();
 	  };
 	
-	
 	  // want a hierarchical data structure with instances; this will be where we
 	  // add and remove event listeners and clean stuff up.
 	
-	  // [
-	  //   {
-	  //     '78647tf': [
-	  //       {
-	  //         instance: instance,
-	  //         children: [
-	  //           {
+	    // {
+	    //   '78647tf': {
+	    //     instance: instance,
+	    //     children: {
+	    //       '23523dd': {
+	    //         instance: instance,
+	    //         children: {}
+	    //       }
+	    //     }
+	    //   }
+	    // };
 	
-	  //           }
-	  //         ]
-	  //       }
-	  //     ]
-	  //   },
-	  //   {
-	
-	  //   }
-	  // ];
 	
 	  Page.prototype.bootstrap = function() {
-	    var components = {
-	      pagination: Pagination,
-	      lightbox: Lightbox,
-	      multipic: MultiPic
-	    };
-	
 	    this.els.forEach(function(el) {
-	      var key = el.getAttribute('data-component').toLowerCase(),
-	        params = JSON.parse(el.getAttribute('data-params').replace(/'/, '"')),
+	      var children = $('[data-component]', el),
+	          comp;
+	      if (!children.length) {
+	        comp = this.instantiateComponent(el);
+	        this.registerComponent(comp, this.id);
+	      }
+	    }, this);
+	
+	
+	
+	    // this.els.forEach(function(el) {
+	    //   var key = el.getAttribute('data-component').toLowerCase(),
+	    //       params = JSON.parse(el.getAttribute('data-params')),
+	    //       constructor = components[key],
+	    //       instance;
+	
+	    //   // now we need to add these to a hierarchy rather than a flat list
+	    //   if (constructor) {
+	    //     //if (x) {}
+	    //     var instance = new constructor(el, params);
+	    //     this.registry[instance.id] = {
+	    //       instance: instance,
+	    //       children: []
+	    //     }
+	    //   }
+	    // }, this);
+	  };
+	
+	  Page.prototype.instantiateComponent = function(el) {
+	    var key = el.getAttribute('data-component').toLowerCase(),
+	        params = JSON.parse(el.getAttribute('data-params')),
 	        constructor = components[key],
 	        instance;
 	
-	      // now we need to add these to a hierarchy rather than a flat list
-	      if (constructor) {
-	        this.instances[key] = new constructor(el, params);
-	      }
-	    }, this);
+	    if (constructor) {
+	      instance = new constructor(el, params);
+	      this.registerComponent(instance)
+	    }
+	
+	    // throw error if no instance could be instantiated.
+	    if (!instance) {
+	      throw new Error('Instance not instantiated for element ', el);
+	    }
+	
+	    return instance;
 	  };
 	
-	  Page.prototype.registerComponent = function(instance, parent) {
+	  /**
+	   * Adds a component record to the components registry. If parent is
+	   * specified, then the component record is added as a child of the parent.
+	   * Otherwise, it's added at the root level.
+	   * @param  {Component} component The component instance to add to the registry.
+	   * @param  {String} parent The id of the component that will be component's
+	   * parent. Optional, if not specified, will be added to the root.
+	   * @return {[type]}          [description]
+	   */
+	  Page.prototype.registerComponent = function(component, parentId) {
+	    var parent = this.getComponent(parentId) || this.registry;
 	
+	    parent.children[component.id] = {
+	      instance: component,
+	      children: {}
+	    }
 	  };
 	
+	  /**
+	   * Given a component id, return the component record (a POJO) from the
+	   * registry.
+	   * @param  {String} id [description]
+	   * @return {Object}    [description]
+	   */
 	  Page.prototype.getComponent = function(id) {
 	
 	  };
 	
+	
+	
+	
+	  /**
+	   * Given a component record id, return the component record (a POJO).
+	   * @param  {String} id The id of the component record.
+	   * @return {Object} The component record.
+	   */
 	  Page.prototype.removeComponent = function(id) {
 	
 	  };
@@ -284,7 +357,7 @@
 	   * Returns a new Utility object.
 	   * @return {Utility}
 	   */
-	  function init() {
+	  function initSingleton() {
 	    return new Utility();
 	  }
 	
@@ -319,14 +392,17 @@
 	    }
 	    // use the prototype so util.$ can be aliased.
 	    // TODO: clean this up.
+	
 	    return u.toArray(context.querySelectorAll(selector));
 	  };
 	
 	  /**
-	   * Extend an object.
-	   * @param  {Object} )    {               var obj [description]
-	   * @param  {[type]} args [description]
-	   * @return {[type]}      [description]
+	   * Extend an object. This function can be called with any number of arguments.
+	   * @param  {Object} obj Arbitrary number of object parameters.
+	   * @return {Object} The object after extension, which is a new object, not a
+	   * reference to any of the passed parameters.
+	   * TODO: revisit this to make sure objects aren't being overwritten
+	   * unwittingly.
 	   */
 	  Utility.prototype.extend = function() {
 	    var obj = {},
@@ -367,7 +443,7 @@
 	     */
 	    getInstance: function() {
 	      if (!instance) {
-	        instance = init();
+	        instance = initSingleton();
 	      }
 	      return instance;
 	    }
@@ -399,10 +475,6 @@
 	  this.params = params;
 	  this.listeners = {};
 	}
-	
-	function initSingleton() {
-	
-	};
 	
 	/**
 	 * Initializes the component.
@@ -468,7 +540,7 @@
 	};
 	
 	/**
-	 * Sends a message to all components
+	 * Sends a message to all components.
 	 * @return {[type]} [description]
 	 */
 	Component.prototype.shout = function(data) {
@@ -482,7 +554,7 @@
 	 */
 	Component.prototype.sendMessage = function(data) {
 	
-	}
+	};
 	
 	/**
 	 * Adds an event listener to an element.

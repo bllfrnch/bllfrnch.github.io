@@ -16,10 +16,6 @@ function Component(el, params) {
   this.listeners = {};
 }
 
-function initSingleton() {
-
-};
-
 /**
  * Initializes the component.
  */
@@ -84,7 +80,7 @@ Component.prototype.sendDown = function(data) {
 };
 
 /**
- * Sends a message to all components
+ * Sends a message to all components.
  * @return {[type]} [description]
  */
 Component.prototype.shout = function(data) {
@@ -98,7 +94,7 @@ Component.prototype.shout = function(data) {
  */
 Component.prototype.sendMessage = function(data) {
 
-}
+};
 
 /**
  * Adds an event listener to an element.

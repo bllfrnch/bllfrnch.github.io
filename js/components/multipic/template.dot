@@ -1,0 +1,19 @@
+<figure class="media media-image">
+  <picture>
+    <a href="#/"><img src="" alt="LiveCase Places landing page"></a>
+    <a href=""><img src="/img/livecase-menu.jpg" alt="LiveCase menu"></a>
+    <a href=""><img src="/img/livecase-photos-style.jpg" alt="LiveCase Photos style page"></a>
+  </picture>
+  <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">Google Live Case</a> screenshots. Use the pagination to see other screens, and click the screenhost itself for a larger view.</figcaption>
+  <nav class="pagination">
+    <ul></ul>
+  </nav>
+</figure>
+
+
+
+{{~it.imgs :value:index}}
+<li>
+  <a href="#/{{=index}}" title="" class="page-link"><span>LiveCase home page</span></a>
+</li>
+{{~}}

@@ -7,7 +7,7 @@ module.exports = (function() {
    * Returns a new Utility object.
    * @return {Utility}
    */
-  function init() {
+  function initSingleton() {
     return new Utility();
   }
 
@@ -42,14 +42,17 @@ module.exports = (function() {
     }
     // use the prototype so util.$ can be aliased.
     // TODO: clean this up.
+
     return u.toArray(context.querySelectorAll(selector));
   };
 
   /**
-   * Extend an object.
-   * @param  {Object} )    {               var obj [description]
-   * @param  {[type]} args [description]
-   * @return {[type]}      [description]
+   * Extend an object. This function can be called with any number of arguments.
+   * @param  {Object} obj Arbitrary number of object parameters.
+   * @return {Object} The object after extension, which is a new object, not a
+   * reference to any of the passed parameters.
+   * TODO: revisit this to make sure objects aren't being overwritten
+   * unwittingly.
    */
   Utility.prototype.extend = function() {
     var obj = {},
@@ -90,7 +93,7 @@ module.exports = (function() {
      */
     getInstance: function() {
       if (!instance) {
-        instance = init();
+        instance = initSingleton();
       }
       return instance;
     }
