@@ -787,8 +787,12 @@ footer {
   top: 0; }
   .lightbox.closed {
     display: none; }
+    .lightbox.closed .lightbox-modal {
+      opacity: 0; }
   .lightbox.open {
     display: block; }
+    .lightbox.open .lightbox-modal {
+      opacity: 1; }
   .lightbox .lightbox-mask {
     background-color: #616161;
     bottom: 0;
@@ -806,14 +810,19 @@ footer {
     left: 20vw;
     position: absolute;
     right: 20vw;
-    top: 10vh; }
+    top: 10vh;
+    transition: opacity 0.3s ease-in-out; }
     .lightbox .lightbox-modal > * {
       overflow: hidden; }
   .lightbox .lightbox-header {
     background-color: #616161;
+    overflow: hidden;
     padding: 0.5em 1em; }
-  .lightbox .close-button {
+  .lightbox .lightbox-close {
+    color: #90caf9;
     float: right; }
+    .lightbox .lightbox-close:hover {
+      color: white; }
   .lightbox .media-wrapper {
     margin-left: 8.5298%;
     float: left;
@@ -822,6 +831,8 @@ footer {
     width: 82.94039%; }
     .lightbox .media-wrapper:last-child {
       margin-right: 0; }
+  .lightbox .media-image a {
+    cursor: default; }
 
 .portfolio h2 {
   margin: 0; }

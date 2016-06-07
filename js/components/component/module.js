@@ -171,3 +171,5 @@ Component.prototype.setInitialized = function() {
 };
 
 module.exports = Component;
+
+var Page = require('../page/module.js');

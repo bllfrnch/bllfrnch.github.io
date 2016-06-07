@@ -109,6 +109,10 @@
 	    return new Page();
 	  }
 	
+	  /**
+	   * [initialize description]
+	   * @return {[type]} [description]
+	   */
 	  Page.prototype.initialize = function() {
 	    this.els = $('[data-component]');
 	    // The registry of component records.
@@ -136,7 +140,12 @@
 	    // };
 	
 	
+	  /**
+	   * [bootstrap description]
+	   * @return {[type]} [description]
+	   */
 	  Page.prototype.bootstrap = function() {
+	    var componentEls = [];
 	    this.els.forEach(function(el) {
 	      var children = $('[data-component]', el),
 	          comp;
@@ -166,6 +175,11 @@
 	    // }, this);
 	  };
 	
+	  /**
+	   * [instantiateComponent description]
+	   * @param  {[type]} el [description]
+	   * @return {[type]}    [description]
+	   */
 	  Page.prototype.instantiateComponent = function(el) {
 	    var key = el.getAttribute('data-component').toLowerCase(),
 	        params = JSON.parse(el.getAttribute('data-params')),
@@ -214,8 +228,6 @@
 	  };
 	
 	
-	
-	
 	  /**
 	   * Given a component record id, return the component record (a POJO).
 	   * @param  {String} id The id of the component record.
@@ -226,6 +238,12 @@
 	  };
 	
 	  return {
+	    /**
+	     * Returns the page singleton.
+	     * @return {Page} An instance of type Page, which inherits from Component,
+	     * but provides other methods for bootstrapping and registering instances
+	     * so they can communicate with each other.
+	     */
 	    getInstance: function() {
 	      if (!instance) {
 	        instance = initSingleton();
@@ -380,7 +398,9 @@
 	  };
 	
 	  /**
-	   * General purpose query selector function.
+	   * General purpose query selector function. Performance boosting optimization
+	   * code lifted from
+	   * http://ryanmorr.com/abstract-away-the-performance-faults-of-queryselectorall/
 	   * @param  {String} selector A string with one or more selectors separated by
 	   * commas.
 	   * @param  {[type]} context The context elements from which to begin searching
@@ -389,9 +409,25 @@
 	   */
 	  Utility.prototype.$ = function(selector, context) {
 	    var u = Utility.prototype;
-	    if (!context) {
-	      context = document;
+	    context = context || document;
+	
+	    if (/^(#?[\w-]+|\.[\w-.]+)$/.test(selector)) {
+	      switch (selector.charAt(0)) {
+	        case '#':
+	            // Handle ID-based selectors
+	            return [context.getElementById(selector.substr(1))];
+	        case '.':
+	          // Handle class-based selectors
+	          // Query by multiple classes by converting the selector
+	          // string into single spaced class names
+	          var classes = selector.substr(1).replace(/\./g, ' ');
+	          return u.toArray(context.getElementsByClassName(classes));
+	        default:
+	          // Handle tag-based selectors
+	          return u.toArray(context.getElementsByTagName(selector));
+	      }
 	    }
+	
 	    // use the prototype so util.$ can be aliased.
 	    // TODO: clean this up.
 	
@@ -633,6 +669,8 @@
 	};
 	
 	module.exports = Component;
+	
+	var Page = __webpack_require__(/*! ../page/module.js */ 1);
 
 
 /***/ },

@@ -6,7 +6,6 @@
   <title>Bill French</title>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
-  <script src="js/bundle.js"></script>
   <script src="//use.typekit.net/wec1uwe.js"></script>
   <script>try{Typekit.load();}catch(e){}</script>
 </head>
@@ -27,7 +26,24 @@
       <article>
         <p>Below are links to some of the major projects I've worked on over the past five years.</p>
         <section class="feature">
-          <div class="media-wrapper" data-component="MultiPic" data-params="{}">
+          <div class="media-wrapper" data-component="MultiPic"
+          data-params='{
+            "imgs": [
+              {
+                "src": "/img/livecase-places-landing.jpg",
+                "alt": "LiveCase Places landing page",
+                "caption": ""
+              }, {
+                "src": "/img/livecase-menu.jpg",
+                "alt": "LiveCase menu",
+                "caption": ""
+              }, {
+                "src": "/img/livecase-photos-style.jpg",
+                "alt": "LiveCase Photos style page",
+                "caption": ""
+              }
+            ]
+          }'>
             <figure class="media media-image">
               <picture>
                 <a href=""><img src="/img/livecase-places-landing.jpg" alt="LiveCase Places landing page"></a>
@@ -52,7 +68,20 @@
         </section>
 
         <section class="feature">
-          <div class="media-wrapper" data-component="MultiPic" data-params="{}">
+          <div class="media-wrapper" data-component="MultiPic"
+            data-params='{
+              "imgs": [
+                {
+                  "src": "/img/youtube-playbook-home.jpg",
+                  "alt": "YouTube Creator Playbook home page",
+                  "caption": ""
+                }, {
+                  "src": "/img/youtube-playbook-page.jpg",
+                  "alt": "YouTube Creator Playbook chapter page",
+                  "caption": ""
+                }
+              ]
+            }'>
             <figure class="media media-image">
               <picture>
                 <a href=""><img src="/img/youtube-playbook-home.jpg" alt="YouTube Creator Playbook home page"></a>
@@ -139,7 +168,9 @@
   <div class="lightbox closed">
     <div class="lightbox-mask"></div>
     <div class="lightbox-modal">
-      <header class="lightbox-header"><a href="#" class="lightbox-close"><span class="#">Close</span></a></header>
+      <header class="lightbox-header">
+        <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a>
+      </header>
     </div>
   </div>
   <script type="text/javascript">
@@ -153,5 +184,6 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
   </script>
+  <script src="js/bundle.js"></script>
 </body>
 </html>

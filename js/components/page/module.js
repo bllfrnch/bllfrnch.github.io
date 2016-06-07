@@ -39,6 +39,10 @@ module.exports = (function() {
     return new Page();
   }
 
+  /**
+   * [initialize description]
+   * @return {[type]} [description]
+   */
   Page.prototype.initialize = function() {
     this.els = $('[data-component]');
     // The registry of component records.
@@ -66,7 +70,12 @@ module.exports = (function() {
     // };
 
 
+  /**
+   * [bootstrap description]
+   * @return {[type]} [description]
+   */
   Page.prototype.bootstrap = function() {
+    var componentEls = [];
     this.els.forEach(function(el) {
       var children = $('[data-component]', el),
           comp;
@@ -96,6 +105,11 @@ module.exports = (function() {
     // }, this);
   };
 
+  /**
+   * [instantiateComponent description]
+   * @param  {[type]} el [description]
+   * @return {[type]}    [description]
+   */
   Page.prototype.instantiateComponent = function(el) {
     var key = el.getAttribute('data-component').toLowerCase(),
         params = JSON.parse(el.getAttribute('data-params')),
@@ -144,8 +158,6 @@ module.exports = (function() {
   };
 
 
-
-
   /**
    * Given a component record id, return the component record (a POJO).
    * @param  {String} id The id of the component record.
@@ -156,6 +168,12 @@ module.exports = (function() {
   };
 
   return {
+    /**
+     * Returns the page singleton.
+     * @return {Page} An instance of type Page, which inherits from Component,
+     * but provides other methods for bootstrapping and registering instances
+     * so they can communicate with each other.
+     */
     getInstance: function() {
       if (!instance) {
         instance = initSingleton();
