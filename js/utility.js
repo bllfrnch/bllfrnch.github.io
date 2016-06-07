@@ -28,7 +28,9 @@ module.exports = (function() {
   };
 
   /**
-   * General purpose query selector function.
+   * General purpose query selector function. Performance boosting optimization
+   * code lifted from
+   * http://ryanmorr.com/abstract-away-the-performance-faults-of-queryselectorall/
    * @param  {String} selector A string with one or more selectors separated by
    * commas.
    * @param  {[type]} context The context elements from which to begin searching
@@ -37,9 +39,26 @@ module.exports = (function() {
    */
   Utility.prototype.$ = function(selector, context) {
     var u = Utility.prototype;
-    if (!context) {
-      context = document;
+    context = context || document;
+
+    if (/^(#?[\w-]+|\.[\w-.]+)$/.test(selector)) {
+      switch (selector.charAt(0)) {
+        case '#':
+            // Handle ID-based selectors
+            return [context.getElementById(selector.substr(1))];
+        case '.':
+          // Handle class-based selectors
+          // Query by multiple classes by converting the selector
+          // string into single spaced class names
+          var classes = selector.substr(1).replace(/\./g, ' ');
+          return u.toArray(context.getElementsByClassName(classes));
+        default:
+          // Handle tag-based selectors
+          return u.toArray(context.getElementsByTagName(selector));
+      }
     }
+
+
     // use the prototype so util.$ can be aliased.
     // TODO: clean this up.
 
