@@ -1,6 +1,6 @@
 'use strict';
 
-var Utility = require('../../utility.js');
+var Utility = require('../../global/utility.js');
 var util = Utility.getInstance();
 var radio = require('radio');
 var shortid = require('shortid');
@@ -171,5 +171,3 @@ Component.prototype.setInitialized = function() {
 };
 
 module.exports = Component;
-
-var Page = require('../page/module.js');

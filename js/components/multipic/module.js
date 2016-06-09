@@ -1,6 +1,6 @@
 'use strict';
 
-var Utility = require('../../utility.js');
+var Utility = require('../../global/utility.js');
 var Component = require('../component/module.js');
 var Pagination = require('../pagination/module.js');
 var Lightbox = require('../lightbox/module.js');

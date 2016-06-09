@@ -1,6 +1,6 @@
 'use strict';
 
-var Utility = require('../../utility.js');
+var Utility = require('../../global/utility.js');
 var Component = require('../component/module.js');
 var render = require('./template.dot');
 var util = Utility.getInstance();

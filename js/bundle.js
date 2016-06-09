@@ -70,23 +70,24 @@
 
 	'use strict';
 	
-	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
-	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 16);
-	var MultiPic = __webpack_require__(/*! ../multipic/module.js */ 17);
-	var StickyHeader = __webpack_require__(/*! ../stickyheader/module.js */ 18);
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	// var Pagination = require('../pagination/module.js');
+	// var Lightbox = require('../lightbox/module.js');
+	// var MultiPic = require('../multipic/module.js');
+	// var StickyHeader = require('../stickyheader/module.js');
+	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
+	var Component = __webpack_require__(/*! ../component/module.js */ 5);
+	var ComponentFactory = __webpack_require__(/*! ../../global/componentfactory.js */ 3);
 	var util = Utility.getInstance();
 	var $ = util.$
 	
 	module.exports = (function() {
 	  var instance;
-	  var components = {
-	    pagination: Pagination,
-	    lightbox: Lightbox,
-	    multipic: MultiPic,
-	    stickyheader: StickyHeader
-	  };
+	  // var components = {
+	  //   pagination: Pagination,
+	  //   lightbox: Lightbox,
+	  //   multipic: MultiPic,
+	  //   stickyheader: StickyHeader
+	  // };
 	
 	  /**
 	   * Page class. Creates a page component. Bootstraps and registers all
@@ -181,13 +182,13 @@
 	   * @return {[type]}    [description]
 	   */
 	  Page.prototype.instantiateComponent = function(el) {
-	    var key = el.getAttribute('data-component').toLowerCase(),
+	    var type = el.getAttribute('data-component').toLowerCase(),
 	        params = JSON.parse(el.getAttribute('data-params')),
-	        constructor = components[key],
+	        componentFactory = ComponentFactory.getInstance(),
 	        instance;
 	
-	    if (constructor) {
-	      instance = new constructor(el, params);
+	    if (type) {
+	      instance = componentFactory.createComponent(type, el, params);
 	      this.registerComponent(instance)
 	    }
 	
@@ -256,116 +257,9 @@
 
 /***/ },
 /* 2 */
-/*!********************************************!*\
-  !*** ./js/components/pagination/module.js ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 4);
-	var render = __webpack_require__(/*! ./template.dot */ 15);
-	var util = Utility.getInstance();
-	var $ = util.$;
-	
-	var SELECTED_CLASS = 'selected';
-	var CLICK_EVENT = 'pagination:pageLinkClicked';
-	
-	
-	/**
-	 * Pagination class. Creates a pagination component. Publishes events when page
-	 * link elements are clicked and updates classes.
-	 * @constructor
-	 * @extends {Component}
-	 * @param {Element} el     The container element for the pagination.
-	 * @param {[type]} params Parameters for the pagination class.
-	 */
-	function Pagination(el, params) {
-	  Component.call(this, el, params);
-	
-	  this.targetId = params.id;
-	  this.pageData = params.pageData;
-	  this.pageLinks = this.createDom();
-	  this.current = this.toggleSelected(this.pageLinks[0]);
-	  this.initialize();
-	}
-	
-	util.inherit(Pagination, Component);
-	
-	Pagination.prototype.bindEvents = function() {
-	  this.pageLinks.forEach(function(link) {
-	    this.addListener(link, 'click', this.clickHandler);
-	    //link.addEventListener('click', this.clickHandler.bind(this));
-	  }, this);
-	};
-	
-	/**
-	 * [createDom description]
-	 * @return {[type]} [description]
-	 */
-	Pagination.prototype.createDom = function() {
-	  var html = render(this.params);
-	  this.el.innerHTML = html;
-	  return $('.page-link', this.el);
-	};
-	
-	/**
-	 * [clickHandler description]
-	 * @param  {[type]} event [description]
-	 * @return {[type]}       [description]
-	 */
-	Pagination.prototype.clickHandler = function(ev) {
-	  var el = ev.target,
-	    page = this.getRequestedPage(el),
-	    id = this.targetId;
-	
-	  ev.preventDefault();
-	
-	  if (el.classList.contains(SELECTED_CLASS)) {
-	    return;
-	  }
-	
-	  [this.current, el].forEach(function(el) {
-	    this.toggleSelected(el);
-	  }, this);
-	
-	  this.current = el;
-	
-	  this.radio(CLICK_EVENT).broadcast({ el: el, page: page, id: id});
-	};
-	
-	/**
-	 * [toggleSelected description]
-	 * @param  {[type]} el [description]
-	 * @return {[type]}    [description]
-	 */
-	Pagination.prototype.toggleSelected = function(el) {
-	  el.classList.toggle(SELECTED_CLASS);
-	  return el;
-	};
-	
-	/**
-	 * [getRequestedPage description]
-	 * @param  {[type]} el [description]
-	 * @return {[type]}    [description]
-	 */
-	Pagination.prototype.getRequestedPage = function(el) {
-	  for (var i = 0, len = this.pageLinks.length; i < len; i++) {
-	    if (el === this.pageLinks[i]) {
-	      return i;
-	    }
-	  }
-	};
-	
-	module.exports = Pagination;
-
-
-/***/ },
-/* 3 */
-/*!***********************!*\
-  !*** ./js/utility.js ***!
-  \***********************/
+/*!******************************!*\
+  !*** ./js/global/utility.js ***!
+  \******************************/
 /***/ function(module, exports) {
 
 	'use strict';
@@ -490,7 +384,175 @@
 
 
 /***/ },
+/* 3 */
+/*!***************************************!*\
+  !*** ./js/global/componentfactory.js ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Pagination = __webpack_require__(/*! ../components/pagination/module.js */ 4);
+	var Lightbox = __webpack_require__(/*! ../components/lightbox/module.js */ 17);
+	var MultiPic = __webpack_require__(/*! ../components/multipic/module.js */ 18);
+	var StickyHeader = __webpack_require__(/*! ../components/stickyheader/module.js */ 19);
+	
+	module.exports = (function() {
+	  var instance,
+	    components = {
+	      pagination: Pagination,
+	      lightbox: Lightbox,
+	      multipic: MultiPic,
+	      stickyheader: StickyHeader
+	    };
+	
+	  /**
+	   * Returns a new Utility object.
+	   * @return {Utility}
+	   */
+	  function initSingleton() {
+	    return new ComponentFactory();
+	  }
+	
+	  /**
+	   * Component class.
+	   * @constructor
+	   */
+	  function ComponentFactory() {};
+	
+	  /**
+	   * [createComponent description]
+	   * @param  {[type]} type [description]
+	   * @return {[type]}      [description]
+	   */
+	  ComponentFactory.prototype.createComponent = function(type, el, params) {
+	    return new components[type](el, params);
+	  };
+	
+	  return {
+	    /**
+	     * Return a singleton instance of the Utility class.
+	     * @return {Utility} Utility object.
+	     */
+	    getInstance: function() {
+	      if (!instance) {
+	        instance = initSingleton();
+	      }
+	      return instance;
+	    }
+	  }
+	})();
+
+
+/***/ },
 /* 4 */
+/*!********************************************!*\
+  !*** ./js/components/pagination/module.js ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
+	var Component = __webpack_require__(/*! ../component/module.js */ 5);
+	var render = __webpack_require__(/*! ./template.dot */ 16);
+	var util = Utility.getInstance();
+	var $ = util.$;
+	
+	var SELECTED_CLASS = 'selected';
+	var CLICK_EVENT = 'pagination:pageLinkClicked';
+	
+	
+	/**
+	 * Pagination class. Creates a pagination component. Publishes events when page
+	 * link elements are clicked and updates classes.
+	 * @constructor
+	 * @extends {Component}
+	 * @param {Element} el     The container element for the pagination.
+	 * @param {[type]} params Parameters for the pagination class.
+	 */
+	function Pagination(el, params) {
+	  Component.call(this, el, params);
+	
+	  this.targetId = params.id;
+	  this.pageData = params.pageData;
+	  this.pageLinks = this.createDom();
+	  this.current = this.toggleSelected(this.pageLinks[0]);
+	  this.initialize();
+	}
+	
+	util.inherit(Pagination, Component);
+	
+	Pagination.prototype.bindEvents = function() {
+	  this.pageLinks.forEach(function(link) {
+	    this.addListener(link, 'click', this.clickHandler);
+	    //link.addEventListener('click', this.clickHandler.bind(this));
+	  }, this);
+	};
+	
+	/**
+	 * [createDom description]
+	 * @return {[type]} [description]
+	 */
+	Pagination.prototype.createDom = function() {
+	  var html = render(this.params);
+	  this.el.innerHTML = html;
+	  return $('.page-link', this.el);
+	};
+	
+	/**
+	 * [clickHandler description]
+	 * @param  {[type]} event [description]
+	 * @return {[type]}       [description]
+	 */
+	Pagination.prototype.clickHandler = function(ev) {
+	  var el = ev.target,
+	    page = this.getRequestedPage(el),
+	    id = this.targetId;
+	
+	  ev.preventDefault();
+	
+	  if (el.classList.contains(SELECTED_CLASS)) {
+	    return;
+	  }
+	
+	  [this.current, el].forEach(function(el) {
+	    this.toggleSelected(el);
+	  }, this);
+	
+	  this.current = el;
+	
+	  this.radio(CLICK_EVENT).broadcast({ el: el, page: page, id: id});
+	};
+	
+	/**
+	 * [toggleSelected description]
+	 * @param  {[type]} el [description]
+	 * @return {[type]}    [description]
+	 */
+	Pagination.prototype.toggleSelected = function(el) {
+	  el.classList.toggle(SELECTED_CLASS);
+	  return el;
+	};
+	
+	/**
+	 * [getRequestedPage description]
+	 * @param  {[type]} el [description]
+	 * @return {[type]}    [description]
+	 */
+	Pagination.prototype.getRequestedPage = function(el) {
+	  for (var i = 0, len = this.pageLinks.length; i < len; i++) {
+	    if (el === this.pageLinks[i]) {
+	      return i;
+	    }
+	  }
+	};
+	
+	module.exports = Pagination;
+
+
+/***/ },
+/* 5 */
 /*!*******************************************!*\
   !*** ./js/components/component/module.js ***!
   \*******************************************/
@@ -498,10 +560,10 @@
 
 	'use strict';
 	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
+	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
 	var util = Utility.getInstance();
-	var radio = __webpack_require__(/*! radio */ 5);
-	var shortid = __webpack_require__(/*! shortid */ 6);
+	var radio = __webpack_require__(/*! radio */ 6);
+	var shortid = __webpack_require__(/*! shortid */ 7);
 	var $ = util.$;
 	
 	var COMPONENT_INITIALIZED_EVENT;
@@ -669,12 +731,10 @@
 	};
 	
 	module.exports = Component;
-	
-	var Page = __webpack_require__(/*! ../page/module.js */ 1);
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /*!**************************!*\
   !*** ./~/radio/radio.js ***!
   \**************************/
@@ -848,18 +908,18 @@
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /*!****************************!*\
   !*** ./~/shortid/index.js ***!
   \****************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	module.exports = __webpack_require__(/*! ./lib/index */ 7);
+	module.exports = __webpack_require__(/*! ./lib/index */ 8);
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /*!********************************!*\
   !*** ./~/shortid/lib/index.js ***!
   \********************************/
@@ -867,10 +927,10 @@
 
 	'use strict';
 	
-	var alphabet = __webpack_require__(/*! ./alphabet */ 8);
-	var encode = __webpack_require__(/*! ./encode */ 10);
-	var decode = __webpack_require__(/*! ./decode */ 12);
-	var isValid = __webpack_require__(/*! ./is-valid */ 13);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 9);
+	var encode = __webpack_require__(/*! ./encode */ 11);
+	var decode = __webpack_require__(/*! ./decode */ 13);
+	var isValid = __webpack_require__(/*! ./is-valid */ 14);
 	
 	// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
 	// This number should be updated every year or so to keep the generated id short.
@@ -885,7 +945,7 @@
 	// has a unique value for worker
 	// Note: I don't know if this is automatically set when using third
 	// party cluster solutions such as pm2.
-	var clusterWorkerId = __webpack_require__(/*! ./util/cluster-worker-id */ 14) || 0;
+	var clusterWorkerId = __webpack_require__(/*! ./util/cluster-worker-id */ 15) || 0;
 	
 	// Counter is used when shortid is called multiple times in one second.
 	var counter;
@@ -968,7 +1028,7 @@
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /*!***********************************!*\
   !*** ./~/shortid/lib/alphabet.js ***!
   \***********************************/
@@ -976,7 +1036,7 @@
 
 	'use strict';
 	
-	var randomFromSeed = __webpack_require__(/*! ./random/random-from-seed */ 9);
+	var randomFromSeed = __webpack_require__(/*! ./random/random-from-seed */ 10);
 	
 	var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
 	var alphabet;
@@ -1075,7 +1135,7 @@
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /*!**************************************************!*\
   !*** ./~/shortid/lib/random/random-from-seed.js ***!
   \**************************************************/
@@ -1109,7 +1169,7 @@
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /*!*********************************!*\
   !*** ./~/shortid/lib/encode.js ***!
   \*********************************/
@@ -1117,7 +1177,7 @@
 
 	'use strict';
 	
-	var randomByte = __webpack_require__(/*! ./random/random-byte */ 11);
+	var randomByte = __webpack_require__(/*! ./random/random-byte */ 12);
 	
 	function encode(lookup, number) {
 	    var loopCounter = 0;
@@ -1137,7 +1197,7 @@
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /*!*****************************************************!*\
   !*** ./~/shortid/lib/random/random-byte-browser.js ***!
   \*****************************************************/
@@ -1160,14 +1220,14 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /*!*********************************!*\
   !*** ./~/shortid/lib/decode.js ***!
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var alphabet = __webpack_require__(/*! ./alphabet */ 8);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 9);
 	
 	/**
 	 * Decode the id to get the version and worker
@@ -1186,14 +1246,14 @@
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /*!***********************************!*\
   !*** ./~/shortid/lib/is-valid.js ***!
   \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	var alphabet = __webpack_require__(/*! ./alphabet */ 8);
+	var alphabet = __webpack_require__(/*! ./alphabet */ 9);
 	
 	function isShortId(id) {
 	    if (!id || typeof id !== 'string' || id.length < 6 ) {
@@ -1214,7 +1274,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /*!*********************************************************!*\
   !*** ./~/shortid/lib/util/cluster-worker-id-browser.js ***!
   \*********************************************************/
@@ -1226,7 +1286,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /*!***********************************************!*\
   !*** ./js/components/pagination/template.dot ***!
   \***********************************************/
@@ -1238,7 +1298,7 @@
 	}
 
 /***/ },
-/* 16 */
+/* 17 */
 /*!******************************************!*\
   !*** ./js/components/lightbox/module.js ***!
   \******************************************/
@@ -1246,9 +1306,9 @@
 
 	'use strict';
 	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 4);
-	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
+	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
+	var Component = __webpack_require__(/*! ../component/module.js */ 5);
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 4);
 	var util = Utility.getInstance();
 	var $ = util.$;
 	
@@ -1342,7 +1402,7 @@
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /*!******************************************!*\
   !*** ./js/components/multipic/module.js ***!
   \******************************************/
@@ -1350,10 +1410,10 @@
 
 	'use strict';
 	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 4);
-	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 2);
-	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 16);
+	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
+	var Component = __webpack_require__(/*! ../component/module.js */ 5);
+	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 4);
+	var Lightbox = __webpack_require__(/*! ../lightbox/module.js */ 17);
 	// var render = require('./template.dot');
 	var util = Utility.getInstance();
 	var $ = util.$;
@@ -1476,7 +1536,7 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /*!**********************************************!*\
   !*** ./js/components/stickyheader/module.js ***!
   \**********************************************/
@@ -1484,8 +1544,8 @@
 
 	'use strict';
 	
-	var Utility = __webpack_require__(/*! ../../utility.js */ 3);
-	var Component = __webpack_require__(/*! ../component/module.js */ 4);
+	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
+	var Component = __webpack_require__(/*! ../component/module.js */ 5);
 	var util = Utility.getInstance();
 	var $ = util.$;
 	

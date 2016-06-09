@@ -1,22 +1,23 @@
 'use strict';
 
-var Pagination = require('../pagination/module.js');
-var Lightbox = require('../lightbox/module.js');
-var MultiPic = require('../multipic/module.js');
-var StickyHeader = require('../stickyheader/module.js');
-var Utility = require('../../utility.js');
+// var Pagination = require('../pagination/module.js');
+// var Lightbox = require('../lightbox/module.js');
+// var MultiPic = require('../multipic/module.js');
+// var StickyHeader = require('../stickyheader/module.js');
+var Utility = require('../../global/utility.js');
 var Component = require('../component/module.js');
+var ComponentFactory = require('../../global/componentfactory.js');
 var util = Utility.getInstance();
 var $ = util.$
 
 module.exports = (function() {
   var instance;
-  var components = {
-    pagination: Pagination,
-    lightbox: Lightbox,
-    multipic: MultiPic,
-    stickyheader: StickyHeader
-  };
+  // var components = {
+  //   pagination: Pagination,
+  //   lightbox: Lightbox,
+  //   multipic: MultiPic,
+  //   stickyheader: StickyHeader
+  // };
 
   /**
    * Page class. Creates a page component. Bootstraps and registers all
@@ -111,13 +112,13 @@ module.exports = (function() {
    * @return {[type]}    [description]
    */
   Page.prototype.instantiateComponent = function(el) {
-    var key = el.getAttribute('data-component').toLowerCase(),
+    var type = el.getAttribute('data-component').toLowerCase(),
         params = JSON.parse(el.getAttribute('data-params')),
-        constructor = components[key],
+        componentFactory = ComponentFactory.getInstance(),
         instance;
 
-    if (constructor) {
-      instance = new constructor(el, params);
+    if (type) {
+      instance = componentFactory.createComponent(type, el, params);
       this.registerComponent(instance)
     }
 
