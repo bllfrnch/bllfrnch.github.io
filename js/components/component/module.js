@@ -1,6 +1,7 @@
 'use strict';
 
 var Utility = require('../../global/utility.js');
+var ComponentRegistry = require('../../global/componentregistry.js');
 var util = Utility.getInstance();
 var radio = require('radio');
 var shortid = require('shortid');
@@ -62,6 +63,17 @@ Component.prototype.getEl = function(id) {
  * An abstract method that is meant to be overridden by subclasses.
  */
 Component.prototype.bindEvents = function() {};
+
+/**
+ * [register description]
+ * @param  {[type]} parentId [description]
+ * @return {[type]}          [description]
+ */
+Component.prototype.register = function(parentId) {
+  var componentRegistry = ComponentRegistry.getInstance(),
+    parentId = parentId || this.parentId;
+  componentRegistry.addComponent(this, parentId);
+};
 
 /**
  * [sendUp description]

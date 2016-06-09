@@ -1,23 +1,15 @@
 'use strict';
 
-// var Pagination = require('../pagination/module.js');
-// var Lightbox = require('../lightbox/module.js');
-// var MultiPic = require('../multipic/module.js');
-// var StickyHeader = require('../stickyheader/module.js');
 var Utility = require('../../global/utility.js');
 var Component = require('../component/module.js');
+var ComponentRegistry = require('../../global/componentregistry.js');
 var ComponentFactory = require('../../global/componentfactory.js');
 var util = Utility.getInstance();
 var $ = util.$
 
 module.exports = (function() {
-  var instance;
-  // var components = {
-  //   pagination: Pagination,
-  //   lightbox: Lightbox,
-  //   multipic: MultiPic,
-  //   stickyheader: StickyHeader
-  // };
+  var componentRegistry = ComponentRegistry.getInstance(),
+    instance;
 
   /**
    * Page class. Creates a page component. Bootstraps and registers all
@@ -26,7 +18,7 @@ module.exports = (function() {
    * and this.el is set to document.
    * @constructor
    * @extends {Component}
-   * @param {Element} el     The container element for the pagination.
+   * @param {Element} el The container element for the pagination.
    * @param {[type]} params Parameters for the pagination class.
    */
   function Page(params) {
@@ -46,33 +38,13 @@ module.exports = (function() {
    */
   Page.prototype.initialize = function() {
     this.els = $('[data-component]');
-    // The registry of component records.
-    this.registry = {};
-    this.registry = {
-      instance: this,
-      children: {}
-    };
+    componentRegistry.add(this, null);
     this.bootstrap();
   };
 
-  // want a hierarchical data structure with instances; this will be where we
-  // add and remove event listeners and clean stuff up.
-
-    // {
-    //   '78647tf': {
-    //     instance: instance,
-    //     children: {
-    //       '23523dd': {
-    //         instance: instance,
-    //         children: {}
-    //       }
-    //     }
-    //   }
-    // };
-
-
   /**
    * [bootstrap description]
+   * TODO: Make this hierarchical
    * @return {[type]} [description]
    */
   Page.prototype.bootstrap = function() {
@@ -82,28 +54,9 @@ module.exports = (function() {
           comp;
       if (!children.length) {
         comp = this.instantiateComponent(el);
-        this.registerComponent(comp, this.id);
+        componentRegistry.add(comp, this.id);
       }
     }, this);
-
-
-
-    // this.els.forEach(function(el) {
-    //   var key = el.getAttribute('data-component').toLowerCase(),
-    //       params = JSON.parse(el.getAttribute('data-params')),
-    //       constructor = components[key],
-    //       instance;
-
-    //   // now we need to add these to a hierarchy rather than a flat list
-    //   if (constructor) {
-    //     //if (x) {}
-    //     var instance = new constructor(el, params);
-    //     this.registry[instance.id] = {
-    //       instance: instance,
-    //       children: []
-    //     }
-    //   }
-    // }, this);
   };
 
   /**
@@ -119,7 +72,7 @@ module.exports = (function() {
 
     if (type) {
       instance = componentFactory.createComponent(type, el, params);
-      this.registerComponent(instance)
+      componentRegistry.add(instance, this.id);
     }
 
     // throw error if no instance could be instantiated.
@@ -128,44 +81,6 @@ module.exports = (function() {
     }
 
     return instance;
-  };
-
-  /**
-   * Adds a component record to the components registry. If parent is
-   * specified, then the component record is added as a child of the parent.
-   * Otherwise, it's added at the root level.
-   * @param  {Component} component The component instance to add to the registry.
-   * @param  {String} parent The id of the component that will be component's
-   * parent. Optional, if not specified, will be added to the root.
-   * @return {[type]}          [description]
-   */
-  Page.prototype.registerComponent = function(component, parentId) {
-    var parent = this.getComponent(parentId) || this.registry;
-
-    parent.children[component.id] = {
-      instance: component,
-      children: {}
-    }
-  };
-
-  /**
-   * Given a component id, return the component record (a POJO) from the
-   * registry.
-   * @param  {String} id [description]
-   * @return {Object}    [description]
-   */
-  Page.prototype.getComponent = function(id) {
-
-  };
-
-
-  /**
-   * Given a component record id, return the component record (a POJO).
-   * @param  {String} id The id of the component record.
-   * @return {Object} The component record.
-   */
-  Page.prototype.removeComponent = function(id) {
-
   };
 
   return {
