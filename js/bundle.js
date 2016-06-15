@@ -1590,7 +1590,7 @@
 /***/ function(module, exports) {
 
 	module.exports = function anonymous(it) {
-	var out='<div class="media-wrapper"> <figure class="media media-image"> <picture> <img src="/img/alf-and-me-600x443.jpg" alt="…"> </picture> <figcaption class="caption small">Here I am hanging my friend Gordon Shumway, who was visiting from Los Angeles. I\'m on the right.</figcaption> <nav class="pagination"> <ul></ul> </nav> </figure></div>';return out;
+	var out='<div class="media-wrapper"> <figure class="media media-image"> <picture> ';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+=' <img src="'+(value.src)+'" alt="'+(value.alt)+'"> ';} } out+=' </picture> <figcaption class="caption small">Here I am hanging my friend Gordon Shumway, who was visiting from Los Angeles. I\'m on the right.</figcaption> <nav class="pagination"> <ul></ul> </nav> </figure></div>';return out;
 	}
 
 /***/ }
