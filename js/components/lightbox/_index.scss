@@ -48,6 +48,7 @@
     }
   }
 
+
   .lightbox-header {
     background-color: $tertiary-bg-color;
     overflow: hidden;
@@ -63,7 +64,16 @@
     }
   }
 
+  .lightbox-body {
+    bottom: 1em;
+    left: 1em;
+    position: absolute;
+    right: 1em;
+    top: 2em;
+  }
+
   .media-wrapper {
+    @include clearfix;
     @include shift(1);
     @include span-columns(10);
   }

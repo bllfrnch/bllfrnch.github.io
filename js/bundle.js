@@ -1224,7 +1224,6 @@
 	 */
 	function Pagination(el, params) {
 	  Component.call(this, el, params);
-	
 	  this.targetId = params.id;
 	  this.pageData = params.pageData;
 	  this.pageLinks = this.createDom();
@@ -1309,8 +1308,7 @@
   \***********************************************/
 /***/ function(module, exports) {
 
-	module.exports = function anonymous(it
-	/**/) {
+	module.exports = function anonymous(it) {
 	var out='';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a></li>';} } return out;
 	}
 
@@ -1326,7 +1324,7 @@
 	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
 	var Component = __webpack_require__(/*! ../component/module.js */ 3);
 	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 16);
-	var render = __webpack_require__(/*! ./template.dot */ 22);
+	var render = __webpack_require__(/*! ./template.dot */ 21);
 	var util = Utility.getInstance();
 	var $ = util.$;
 	
@@ -1365,8 +1363,9 @@
 	 */
 	Lightbox.prototype.createDom = function() {
 	  var html = render(this.params);
-	  this.el.innerHTML = html;
-	  return $('.page-link', this.el);
+	  var container = $('.lightbox-body', this.modal)[0];
+	  container.innerHTML = html;
+	  return $('.lightbox-body', this.el);
 	};
 	
 	/**
@@ -1410,7 +1409,6 @@
 	  this.el.classList.remove('open');
 	  this.el.classList.add('closed');
 	  this.unbindEvents();
-	  this.modal.removeChild(this.frag);
 	};
 	
 	module.exports = Lightbox;
@@ -1585,16 +1583,14 @@
 
 
 /***/ },
-/* 21 */,
-/* 22 */
+/* 21 */
 /*!*********************************************!*\
   !*** ./js/components/lightbox/template.dot ***!
   \*********************************************/
 /***/ function(module, exports) {
 
-	module.exports = function anonymous(it
-	/**/) {
-	var out='<figure class="media media-image"> <picture> ';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+=' <a href="#"><img src="'+(value.src)+'" alt="'+(value.alt)+'"></a> ';} } out+=' </picture> <figcaption class="caption small"><a href="https://thinkwithgoogle.com/playbooks/youtube.html">Google Live Case</a> screenshots. Use the pagination to see other screens, and click the screenhost itself for a larger view.</figcaption> <nav class="pagination"> <ul> ';var arr2=it.imgs;if(arr2){var value,index=-1,l2=arr2.length-1;while(index<l2){value=arr2[index+=1];out+=' <li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a> </li> ';} } out+=' </ul> </nav></figure>';return out;
+	module.exports = function anonymous(it) {
+	var out='<div class="media-wrapper"> <figure class="media media-image"> <picture> <img src="/img/alf-and-me-600x443.jpg" alt="…"> </picture> <figcaption class="caption small">Here I am hanging my friend Gordon Shumway, who was visiting from Los Angeles. I\'m on the right.</figcaption> <nav class="pagination"> <ul></ul> </nav> </figure></div>';return out;
 	}
 
 /***/ }

@@ -20,7 +20,6 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
  */
 function Pagination(el, params) {
   Component.call(this, el, params);
-
   this.targetId = params.id;
   this.pageData = params.pageData;
   this.pageLinks = this.createDom();

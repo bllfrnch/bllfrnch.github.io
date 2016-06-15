@@ -823,12 +823,22 @@ footer {
     float: right; }
     .lightbox .lightbox-close:hover {
       color: white; }
+  .lightbox .lightbox-body {
+    bottom: 1em;
+    left: 1em;
+    position: absolute;
+    right: 1em;
+    top: 2em; }
   .lightbox .media-wrapper {
     margin-left: 8.5298%;
     float: left;
     display: block;
     margin-right: 2.35765%;
     width: 82.94039%; }
+    .lightbox .media-wrapper::after {
+      clear: both;
+      content: "";
+      display: table; }
     .lightbox .media-wrapper:last-child {
       margin-right: 0; }
   .lightbox .media-image a {

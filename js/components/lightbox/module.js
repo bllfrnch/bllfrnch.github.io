@@ -42,8 +42,9 @@ Lightbox.prototype.initialize = function() {
  */
 Lightbox.prototype.createDom = function() {
   var html = render(this.params);
-  this.el.innerHTML = html;
-  return $('.page-link', this.el);
+  var container = $('.lightbox-body', this.modal)[0];
+  container.innerHTML = html;
+  return $('.lightbox-body', this.el);
 };
 
 /**
@@ -87,7 +88,6 @@ Lightbox.prototype.close = function(ev) {
   this.el.classList.remove('open');
   this.el.classList.add('closed');
   this.unbindEvents();
-  this.modal.removeChild(this.frag);
 };
 
 module.exports = Lightbox;
