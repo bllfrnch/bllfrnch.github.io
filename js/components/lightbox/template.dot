@@ -1,0 +1,13 @@
+<div class="media-wrapper">
+  <figure class="media media-image">
+    <picture>
+      {{~it.imgs :value:index}}
+        <img src="{{=value.src}}" alt="{{=value.alt}}">
+      {{~}}
+    </picture>
+    <figcaption class="caption small">Here I am hanging my friend Gordon Shumway, who was visiting from Los Angeles. I'm on the right.</figcaption>
+    <nav class="pagination">
+      <ul></ul>
+    </nav>
+  </figure>
+</div>
