@@ -3,18 +3,17 @@
 var Utility = require('../../global/utility.js');
 var Component = require('../component/module.js');
 var Pagination = require('../pagination/module.js');
+var render = require('./template.dot');
 var util = Utility.getInstance();
 var $ = util.$;
 
 var body, frag;
 
 function Lightbox(el, params) {
-  var frag = params.frag;
   Component.call(this, el, params);
   body = $('body')[0];
   this.modal = $('.lightbox-modal', this.el)[0];
-  this.scrub(frag);
-  this.frag = this.modal.appendChild(frag);
+  this.content = this.createDom();
   this.open();
   this.closeButton = $('.lightbox-close', this.el)[0];
   this.pagination = $('.pagination ul', this.el)[0];
@@ -41,11 +40,10 @@ Lightbox.prototype.initialize = function() {
  * @param  {[type]} el [description]
  * @return {[type]}    [description]
  */
-Lightbox.prototype.scrub = function(el) {
-  var els = $('[id]', el);
-  els.forEach(function(el) {
-    el.removeAttribute('id');
-  });
+Lightbox.prototype.createDom = function() {
+  var html = render(this.params);
+  this.el.innerHTML = html;
+  return $('.page-link', this.el);
 };
 
 /**

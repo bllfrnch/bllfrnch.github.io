@@ -46,7 +46,10 @@ Component.prototype.setId = function(el, id) {
  * @return {String} The id.
  */
 Component.prototype.getId = function(el) {
-  var id = el === document? 'document' : el.getAttribute('id');
+  var id;
+
+  if (!el) return false;
+  id = el === document? 'document' : el.getAttribute('id');
   return id;
 };
 

@@ -23,8 +23,8 @@ module.exports = (function() {
     var parent;
 
     if (parentId === undefined) {
-      throw new Error('Components can not be added to the registry without a ' +
-        'parentId.');
+      throw new Error(
+          'Components can not be added to the registry without a parentId.');
     }
 
     parent = this.get(parentId) || this._registry;

@@ -47,6 +47,7 @@ MultiPic.prototype.bindEvents = function() {
   this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
 };
 
+
 /**
  * Returns the current image node.
  * @return {Element} The image element currently on display.
@@ -95,10 +96,13 @@ MultiPic.prototype.picChangeRequested = function() {
  */
 MultiPic.prototype.lightboxRequested = function(ev) {
   ev.preventDefault();
-  var wrapper = $('.lightbox')[0],
-    modal = $('.lightbox-modal', wrapper)[0],
-    frag = this.el.cloneNode(true),
-    lightbox = new Lightbox(wrapper, { frag: frag });
+  var imgs = this.params.imgs,
+    current = this.current,
+    wrapper = $('.lightbox')[0],
+    lightbox = new Lightbox(wrapper, {
+      imgs: imgs,
+      current: current
+    });
 };
 
 /**
