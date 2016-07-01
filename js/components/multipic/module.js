@@ -96,13 +96,7 @@ MultiPic.prototype.picChangeRequested = function() {
  */
 MultiPic.prototype.lightboxRequested = function(ev) {
   ev.preventDefault();
-  var imgs = this.params.imgs,
-    current = this.current,
-    wrapper = $('.lightbox')[0],
-    lightbox = new Lightbox(wrapper, {
-      imgs: imgs,
-      current: current
-    });
+
 };
 
 /**

@@ -13,10 +13,10 @@ function Lightbox(el, params) {
   Component.call(this, el, params);
   body = $('body')[0];
   this.modal = $('.lightbox-modal', this.el)[0];
+  this.mask = $('.lightbox-mask', this.el)[0];
   this.content = this.createDom();
   this.open();
   this.closeButton = $('.lightbox-close', this.el)[0];
-  this.pagination = $('.pagination ul', this.el)[0];
   this.initialize();
 };
 
@@ -29,10 +29,6 @@ util.inherit(Lightbox, Component);
 Lightbox.prototype.initialize = function() {
   var context = this.el, id = this.id;
   Component.prototype.initialize.call(this);
-  new Pagination(this.pagination, {
-    id: id,
-    imgs: this.params.imgs
-  });
 };
 
 /**
@@ -44,7 +40,7 @@ Lightbox.prototype.createDom = function() {
   var html = render(this.params);
   var container = $('.lightbox-body', this.modal)[0];
   container.innerHTML = html;
-  return $('.lightbox-body', this.el);
+  return $('.lightbox', this.el);
 };
 
 /**

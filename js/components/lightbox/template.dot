@@ -1,13 +1,17 @@
-<div class="media-wrapper">
-  <figure class="media media-image">
-    <picture>
-      {{~it.imgs :value:index}}
-        <img src="{{=value.src}}" alt="{{=value.alt}}">
-      {{~}}
-    </picture>
-    <figcaption class="caption small">Here I am hanging my friend Gordon Shumway, who was visiting from Los Angeles. I'm on the right.</figcaption>
-    <nav class="pagination">
-      <ul></ul>
-    </nav>
-  </figure>
+<div class="lightbox closed">
+  <div class="lightbox-mask"></div>
+  <div class="lightbox-modal">
+    <header class="lightbox-header">
+      <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a>
+    </header>
+    <div class="lightbox-body">
+      <div class="media-wrapper">
+        <figure class="media media-image">
+          <picture>
+            <img src="{{=it.image.src}}" alt="{{=it.image.alt}}">
+          </picture>
+        </figure>
+      </div>
+    </div>
+  </div>
 </div>

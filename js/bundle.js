@@ -520,51 +520,24 @@
 	   * TODO: maintain a data structure for fast access to members aside from just
 	   * the registry
 	   * @param {[type]} component [description]
-	   * @param {[type]} parentId  [description]
-	   * @throws {Error} If component is of type Page and no parentId is passed.
 	   */
-	  ComponentRegistry.prototype.add = function(component, parentId) {
-	    var parent;
-	
-	    if (parentId === undefined) {
-	      throw new Error(
-	          'Components can not be added to the registry without a parentId.');
-	    }
-	
-	    parent = this.get(parentId) || this._registry;
-	
-	    if (parentId === null) {
-	      parent['instance'] = component;
-	      parent['children'] = {};
-	    } else {
-	      parent.children[component.id] = {
-	        instance: component,
-	        children: {}
-	      };
-	    }
+	  ComponentRegistry.prototype.add = function(component) {
+	    var id = component.id;
+	    this._registry[id] = component;
 	  };
 	
 	  ComponentRegistry.prototype.update = function(component, oldId) {
 	
 	  };
 	
-	  ComponentRegistry.prototype.get = function(id, contextObject) {
-	    var current = this._registry || contextObject,
-	      result;
-	
-	    for (var key in current) {
-	      if (current.hasOwnProperty(key) && key === id) {
-	        return current[id];
-	      }
-	    }
-	
-	    for (var obj in current.children) {
-	      result = this.get(id, obj);
-	      if (result) {
-	        break;
-	      }
-	    }
-	    return result;
+	  /**
+	   * [get description]
+	   * @param  {[type]} id            [description]
+	   * @param  {[type]} contextObject [description]
+	   * @return {[type]}               [description]
+	   */
+	  ComponentRegistry.prototype.get = function(id) {
+	    return this._registry[id];
 	  };
 	
 	  ComponentRegistry.prototype.remove = function(id) {
@@ -1145,8 +1118,8 @@
 	
 	var Pagination = __webpack_require__(/*! ../components/pagination/module.js */ 16);
 	var Lightbox = __webpack_require__(/*! ../components/lightbox/module.js */ 18);
-	var MultiPic = __webpack_require__(/*! ../components/multipic/module.js */ 19);
-	var StickyHeader = __webpack_require__(/*! ../components/stickyheader/module.js */ 20);
+	var MultiPic = __webpack_require__(/*! ../components/multipic/module.js */ 20);
+	var StickyHeader = __webpack_require__(/*! ../components/stickyheader/module.js */ 21);
 	
 	module.exports = (function() {
 	  var instance,
@@ -1308,7 +1281,8 @@
   \***********************************************/
 /***/ function(module, exports) {
 
-	module.exports = function anonymous(it) {
+	module.exports = function anonymous(it
+	/**/) {
 	var out='';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li> <a href="#/'+(index)+'" title="" class="page-link"><span>LiveCase home page</span></a></li>';} } return out;
 	}
 
@@ -1324,7 +1298,7 @@
 	var Utility = __webpack_require__(/*! ../../global/utility.js */ 2);
 	var Component = __webpack_require__(/*! ../component/module.js */ 3);
 	var Pagination = __webpack_require__(/*! ../pagination/module.js */ 16);
-	var render = __webpack_require__(/*! ./template.dot */ 21);
+	var render = __webpack_require__(/*! ./template.dot */ 19);
 	var util = Utility.getInstance();
 	var $ = util.$;
 	
@@ -1334,10 +1308,10 @@
 	  Component.call(this, el, params);
 	  body = $('body')[0];
 	  this.modal = $('.lightbox-modal', this.el)[0];
+	  this.mask = $('.lightbox-mask', this.el)[0];
 	  this.content = this.createDom();
 	  this.open();
 	  this.closeButton = $('.lightbox-close', this.el)[0];
-	  this.pagination = $('.pagination ul', this.el)[0];
 	  this.initialize();
 	};
 	
@@ -1350,10 +1324,6 @@
 	Lightbox.prototype.initialize = function() {
 	  var context = this.el, id = this.id;
 	  Component.prototype.initialize.call(this);
-	  new Pagination(this.pagination, {
-	    id: id,
-	    imgs: this.params.imgs
-	  });
 	};
 	
 	/**
@@ -1365,7 +1335,7 @@
 	  var html = render(this.params);
 	  var container = $('.lightbox-body', this.modal)[0];
 	  container.innerHTML = html;
-	  return $('.lightbox-body', this.el);
+	  return $('.lightbox', this.el);
 	};
 	
 	/**
@@ -1416,6 +1386,18 @@
 
 /***/ },
 /* 19 */
+/*!*********************************************!*\
+  !*** ./js/components/lightbox/template.dot ***!
+  \*********************************************/
+/***/ function(module, exports) {
+
+	module.exports = function anonymous(it
+	/**/) {
+	var out='<div class="lightbox closed"> <div class="lightbox-mask"></div> <div class="lightbox-modal"> <header class="lightbox-header"> <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a> </header> <div class="lightbox-body"> <div class="media-wrapper"> <figure class="media media-image"> <picture> <img src="'+(it.image.src)+'" alt="'+(it.image.alt)+'"> </picture> </figure> </div> </div> </div></div>';return out;
+	}
+
+/***/ },
+/* 20 */
 /*!******************************************!*\
   !*** ./js/components/multipic/module.js ***!
   \******************************************/
@@ -1519,13 +1501,7 @@
 	 */
 	MultiPic.prototype.lightboxRequested = function(ev) {
 	  ev.preventDefault();
-	  var imgs = this.params.imgs,
-	    current = this.current,
-	    wrapper = $('.lightbox')[0],
-	    lightbox = new Lightbox(wrapper, {
-	      imgs: imgs,
-	      current: current
-	    });
+	
 	};
 	
 	/**
@@ -1553,7 +1529,7 @@
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /*!**********************************************!*\
   !*** ./js/components/stickyheader/module.js ***!
   \**********************************************/
@@ -1581,17 +1557,6 @@
 	
 	util.inherit(StickyHeader, Component);
 
-
-/***/ },
-/* 21 */
-/*!*********************************************!*\
-  !*** ./js/components/lightbox/template.dot ***!
-  \*********************************************/
-/***/ function(module, exports) {
-
-	module.exports = function anonymous(it) {
-	var out='<div class="media-wrapper"> <figure class="media media-image"> <picture> ';var arr1=it.imgs;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+=' <img src="'+(value.src)+'" alt="'+(value.alt)+'"> ';} } out+=' </picture> <figcaption class="caption small">Here I am hanging my friend Gordon Shumway, who was visiting from Los Angeles. I\'m on the right.</figcaption> <nav class="pagination"> <ul></ul> </nav> </figure></div>';return out;
-	}
 
 /***/ }
 /******/ ]);

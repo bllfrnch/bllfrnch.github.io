@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -15,9 +19,11 @@ body {
   @include clearfix;
   @include outer-container;
   box-sizing: border-box;
+  height: 100vh;
   margin: 0 auto;
   max-width: 1200px;
   padding: 0 2em;
+  width: 100vw;
 
   @include media($small-screen-down) {
     padding: 0 1em;
