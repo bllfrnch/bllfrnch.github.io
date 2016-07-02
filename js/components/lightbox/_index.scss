@@ -6,7 +6,6 @@
 .lightbox {
   left: 0px;
   position: relative;
-  text-align: center;
 
   &.hidden {
     left: -9999px;
@@ -25,15 +24,23 @@
 
   .lightbox-modal {
     background-color: $white;
+    border-radius: 3px;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, .4);
     margin: 0 15vw;
     opacity: 1.0;
     position: fixed;
-    top: 10vh;
+    top: 1em;
     transition: opacity 0.3s 0.2s ease-in-out;
     width: 70vw;
   }
 
   .lightbox-header {
+    background-color: $tertiary-bg-color;
+    padding: 0.5em 0;
+  }
 
+  .lightbox-close {
+    float: right;
+    margin-right: 1em;
   }
 }

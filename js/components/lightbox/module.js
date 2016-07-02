@@ -7,6 +7,8 @@ var render = require('./template.dot');
 var util = Utility.getInstance();
 var $ = util.$;
 
+var body = $('body')[0];
+
 function Lightbox(el, params) {
   Component.call(this, el, params);
   this.createDom();
@@ -66,7 +68,6 @@ Lightbox.prototype.closeLightboxRequested = function() {
  * @return {[type]} [description]
  */
 Lightbox.prototype.open = function() {
-  var body = $('body')[0];
   body.classList.add('prevent-scroll');
   this.wrapper.classList.remove('hidden');
 };
@@ -78,6 +79,7 @@ Lightbox.prototype.open = function() {
  */
 Lightbox.prototype.close = function(ev) {
   this.unbindEvents();
+  body.classList.remove('prevent-scroll');
   this.el.removeChild(this.wrapper);
 };
 
