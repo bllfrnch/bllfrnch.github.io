@@ -1,4 +1,4 @@
-<div class="lightbox closed">
+<div class="lightbox hidden">
   <div class="lightbox-mask"></div>
   <div class="lightbox-modal">
     <header class="lightbox-header">

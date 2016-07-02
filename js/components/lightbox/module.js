@@ -7,14 +7,12 @@ var render = require('./template.dot');
 var util = Utility.getInstance();
 var $ = util.$;
 
-var body, frag;
-
 function Lightbox(el, params) {
   Component.call(this, el, params);
-  body = $('body')[0];
+  this.createDom();
+  this.wrapper = $('.lightbox', this.el)[0];
   this.modal = $('.lightbox-modal', this.el)[0];
   this.mask = $('.lightbox-mask', this.el)[0];
-  this.content = this.createDom();
   this.open();
   this.closeButton = $('.lightbox-close', this.el)[0];
   this.initialize();
@@ -38,8 +36,7 @@ Lightbox.prototype.initialize = function() {
  */
 Lightbox.prototype.createDom = function() {
   var html = render(this.params);
-  var container = $('.lightbox-body', this.modal)[0];
-  container.innerHTML = html;
+  this.el.innerHTML = html;
   return $('.lightbox', this.el);
 };
 
@@ -69,9 +66,9 @@ Lightbox.prototype.closeLightboxRequested = function() {
  * @return {[type]} [description]
  */
 Lightbox.prototype.open = function() {
-  body.classList.add('lightbox-open');
-  this.el.classList.remove('closed');
-  this.el.classList.add('open');
+  var body = $('body')[0];
+  body.classList.add('prevent-scroll');
+  this.wrapper.classList.remove('hidden');
 };
 
 /**
@@ -80,10 +77,8 @@ Lightbox.prototype.open = function() {
  * @return {[type]}    [description]
  */
 Lightbox.prototype.close = function(ev) {
-  body.classList.remove('lightbox-open');
-  this.el.classList.remove('open');
-  this.el.classList.add('closed');
   this.unbindEvents();
+  this.el.removeChild(this.wrapper);
 };
 
 module.exports = Lightbox;

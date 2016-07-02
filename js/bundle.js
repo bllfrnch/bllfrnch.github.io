@@ -50,11 +50,18 @@
 	'use strict';
 	
 	var Page = __webpack_require__(/*! ./components/page/module.js */ 1);
+	var ComponentRegistry = __webpack_require__(/*! ./global/componentregistry.js */ 4);
 	
 	function init() {
+	  var registry = ComponentRegistry.getInstance();
+	
 	  document.addEventListener('DOMContentLoaded', function(ev) {
 	    var page = new Page.getInstance();
-	    document.org = {billf: {page: page}};
+	    document['org'] = {
+	      billf: {
+	        registry: registry
+	      }
+	    };
 	  });
 	}
 	
@@ -330,6 +337,7 @@
 	Component.prototype.initialize = function() {
 	  this.setId(this.el, this.id);
 	  this.bindEvents();
+	  this.register();
 	  this.setInitialized();
 	};
 	
@@ -354,8 +362,7 @@
 	 */
 	Component.prototype.getId = function(el) {
 	  var id;
-	
-	  if (!el) return false;
+	  if (!el) throw new Error('getId called without value for element parameter.');
 	  id = el === document? 'document' : el.getAttribute('id');
 	  return id;
 	};
@@ -366,6 +373,7 @@
 	 * @return {Node} Return either the document or the HTML element.
 	 */
 	Component.prototype.getEl = function(id) {
+	  if (!id) throw new Error('getEl called without value for id parameter.');
 	  return id === 'document' ? document: $('#' + id)[0];
 	};
 	
@@ -379,10 +387,9 @@
 	 * @param  {[type]} parentId [description]
 	 * @return {[type]}          [description]
 	 */
-	Component.prototype.register = function(parentId) {
-	  var componentRegistry = ComponentRegistry.getInstance(),
-	    parentId = parentId || this.parentId;
-	  componentRegistry.addComponent(this, parentId);
+	Component.prototype.register = function() {
+	  var componentRegistry = ComponentRegistry.getInstance();
+	  componentRegistry.add(this);
 	};
 	
 	/**
@@ -489,6 +496,7 @@
 	Component.prototype.setInitialized = function() {
 	  var el = this.el,
 	    id = this.id;
+	
 	  radio(COMPONENT_INITIALIZED_EVENT).broadcast({ el: el, id: id });
 	};
 	
@@ -1302,14 +1310,12 @@
 	var util = Utility.getInstance();
 	var $ = util.$;
 	
-	var body, frag;
-	
 	function Lightbox(el, params) {
 	  Component.call(this, el, params);
-	  body = $('body')[0];
+	  this.createDom();
+	  this.wrapper = $('.lightbox', this.el)[0];
 	  this.modal = $('.lightbox-modal', this.el)[0];
 	  this.mask = $('.lightbox-mask', this.el)[0];
-	  this.content = this.createDom();
 	  this.open();
 	  this.closeButton = $('.lightbox-close', this.el)[0];
 	  this.initialize();
@@ -1333,8 +1339,7 @@
 	 */
 	Lightbox.prototype.createDom = function() {
 	  var html = render(this.params);
-	  var container = $('.lightbox-body', this.modal)[0];
-	  container.innerHTML = html;
+	  this.el.innerHTML = html;
 	  return $('.lightbox', this.el);
 	};
 	
@@ -1364,9 +1369,9 @@
 	 * @return {[type]} [description]
 	 */
 	Lightbox.prototype.open = function() {
-	  body.classList.add('lightbox-open');
-	  this.el.classList.remove('closed');
-	  this.el.classList.add('open');
+	  var body = $('body')[0];
+	  body.classList.add('prevent-scroll');
+	  this.wrapper.classList.remove('hidden');
 	};
 	
 	/**
@@ -1375,10 +1380,8 @@
 	 * @return {[type]}    [description]
 	 */
 	Lightbox.prototype.close = function(ev) {
-	  body.classList.remove('lightbox-open');
-	  this.el.classList.remove('open');
-	  this.el.classList.add('closed');
 	  this.unbindEvents();
+	  this.el.removeChild(this.wrapper);
 	};
 	
 	module.exports = Lightbox;
@@ -1393,7 +1396,7 @@
 
 	module.exports = function anonymous(it
 	/**/) {
-	var out='<div class="lightbox closed"> <div class="lightbox-mask"></div> <div class="lightbox-modal"> <header class="lightbox-header"> <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a> </header> <div class="lightbox-body"> <div class="media-wrapper"> <figure class="media media-image"> <picture> <img src="'+(it.image.src)+'" alt="'+(it.image.alt)+'"> </picture> </figure> </div> </div> </div></div>';return out;
+	var out='<div class="lightbox hidden"> <div class="lightbox-mask"></div> <div class="lightbox-modal"> <header class="lightbox-header"> <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a> </header> <div class="lightbox-body"> <div class="media-wrapper"> <figure class="media media-image"> <picture> <img src="'+(it.image.src)+'" alt="'+(it.image.alt)+'"> </picture> </figure> </div> </div> </div></div>';return out;
 	}
 
 /***/ },
@@ -1501,7 +1504,11 @@
 	 */
 	MultiPic.prototype.lightboxRequested = function(ev) {
 	  ev.preventDefault();
-	
+	  var current = this.current,
+	    wrapper = $('.lightbox-container')[0],
+	    lightbox = new Lightbox(wrapper, {
+	      image: current
+	    });
 	};
 	
 	/**

@@ -1,3 +1,39 @@
-.lightbox {
+.lightbox-container {
+  position: absolute;
+  left: 0;
+}
 
+.lightbox {
+  left: 0px;
+  position: relative;
+  text-align: center;
+
+  &.hidden {
+    left: -9999px;
+  }
+
+  .lightbox-mask {
+    background-color: $lightbox-mask-bg-color;
+    left: 0;
+    height: 100vh;
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    transition: opacity 0.2s ease-in-out;
+    width: 100vw;
+  }
+
+  .lightbox-modal {
+    background-color: $white;
+    margin: 0 15vw;
+    opacity: 1.0;
+    position: fixed;
+    top: 10vh;
+    transition: opacity 0.3s 0.2s ease-in-out;
+    width: 70vw;
+  }
+
+  .lightbox-header {
+
+  }
 }

@@ -23,6 +23,7 @@ function Component(el, params) {
 Component.prototype.initialize = function() {
   this.setId(this.el, this.id);
   this.bindEvents();
+  this.register();
   this.setInitialized();
 };
 
@@ -47,8 +48,7 @@ Component.prototype.setId = function(el, id) {
  */
 Component.prototype.getId = function(el) {
   var id;
-
-  if (!el) return false;
+  if (!el) throw new Error('getId called without value for element parameter.');
   id = el === document? 'document' : el.getAttribute('id');
   return id;
 };
@@ -59,6 +59,7 @@ Component.prototype.getId = function(el) {
  * @return {Node} Return either the document or the HTML element.
  */
 Component.prototype.getEl = function(id) {
+  if (!id) throw new Error('getEl called without value for id parameter.');
   return id === 'document' ? document: $('#' + id)[0];
 };
 
@@ -72,10 +73,9 @@ Component.prototype.bindEvents = function() {};
  * @param  {[type]} parentId [description]
  * @return {[type]}          [description]
  */
-Component.prototype.register = function(parentId) {
-  var componentRegistry = ComponentRegistry.getInstance(),
-    parentId = parentId || this.parentId;
-  componentRegistry.addComponent(this, parentId);
+Component.prototype.register = function() {
+  var componentRegistry = ComponentRegistry.getInstance();
+  componentRegistry.add(this);
 };
 
 /**
@@ -182,6 +182,7 @@ Component.prototype.finalize = function() {
 Component.prototype.setInitialized = function() {
   var el = this.el,
     id = this.id;
+
   radio(COMPONENT_INITIALIZED_EVENT).broadcast({ el: el, id: id });
 };
 
