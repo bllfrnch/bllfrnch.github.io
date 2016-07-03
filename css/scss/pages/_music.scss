@@ -1,0 +1,7 @@
+.music {
+  .media-wrapper.media-music {
+    @include span-columns(7, table);
+  }
+
+
+}

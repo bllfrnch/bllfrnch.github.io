@@ -1,0 +1,54 @@
+.pagination {
+  @include clearfix;
+  line-height: 1em;
+  margin: 1em 0 auto;
+  text-align: center;
+
+  ul {
+    background-color: $pagination-bg-color;
+    border-radius: 3px;
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  li {
+    display: block;
+    float: left;
+    font-size: 2em;
+    padding: 0;
+  }
+
+  a {
+    background-color: $pagination-bg-color;
+    display: block;
+    line-height: .875em;
+
+    &:hover,
+    &.selected {
+      color: $primary-link-color-hover;
+    }
+
+    &.selected {
+      background-color: $pagination-bg-color-hover;
+      cursor: default;
+    }
+
+    &:before {
+      content: '•';
+      display: block;
+      font-family: sans-serif;
+    }
+
+    &:first-child {
+      padding-left: .25em;
+    }
+
+    &:last-child {
+      padding-right: .25em;
+    }
+
+    span {
+      display: none;
+    }
+  }
+}

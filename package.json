@@ -15,15 +15,18 @@
     "build:js": "webpack --progress --colors -d",
     "clean:css": "rm css/style-src.css",
     "build": "npm run build:css && npm run build:js && npm run clean:css",
-    "watch:css": "npm run build:css && fswatch --recursive --follow-links -o css/scss | xargs -n1 -I{} npm run build:css",
+    "watch:css": "npm run build:css && fswatch --recursive --follow-links -o css/scss js/components | xargs -n1 -I{} npm run build:css",
     "watch:js": "webpack --progress --colors --watch -d",
-    "watch": "npm run watch:css & npm run watch:js",
+    "watch": "npm run watch:js & npm run watch:css",
     "clean": "npm run clean:css && npm run clean:js"
   },
   "devDependencies": {
     "dot": "^1.0.3",
     "dot-loader": "^0.1.1",
-    "node-uuid": "^1.4.7",
-    "radio": "^0.2.0"
+    "radio": "^0.2.0",
+    "shortid": "^2.2.6"
+  },
+  "dependencies": {
+    "handlebars": "^4.0.5"
   }
 }

@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -5,15 +9,21 @@ body {
   font-size: 1em;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
+
+  &.prevent-scroll {
+    overflow: hidden;
+  }
 }
 
 .page-container {
   @include clearfix;
   @include outer-container;
   box-sizing: border-box;
+  height: 100vh;
   margin: 0 auto;
   max-width: 1200px;
   padding: 0 2em;
+  width: 100vw;
 
   @include media($small-screen-down) {
     padding: 0 1em;
@@ -87,6 +97,7 @@ header {
 
   .feature {
     @include clearfix();
+    @include span-columns(12);
     background-color: $secondary-bg-color;
     border-radius: 3px;
     box-shadow: 0 4px 8px $primary-shadow-color;
@@ -105,46 +116,18 @@ header {
       background-color: $secondary-media-bg-color;
     }
   }
+}
 
-  .media-wrapper {
-    @include span-columns(5, table);
-    padding: 2em;
-    vertical-align: top;
-
-    img,
-    iframe {
-      border: solid $primary-border-color;
-      height: 100%;
-      width: 100%;
-    }
-
-    @include media($medium-screen-down) {
-      @include span-columns(6, table);
-    }
-
-    @include media($small-screen-down) {
-      @include span-columns(12);
-      padding: 1em;
-    }
-  }
-
-  .media {
-    margin: 0;
-
-    &.media-image > picture > *:nth-child(n + 2) {
-      display: none;
-    }
-  }
-
-  .caption {
-    text-shadow: 0px 1px 2px $white;
-  }
-
+.feature {
   .text {
     @include span-columns(7, table);
     margin: 0;
     padding: 1em 2em;
     vertical-align: top;
+
+    &.full-width {
+      @include span-columns(12, table);
+    }
 
     @include media($small-screen-down) {
       padding: 1em;
@@ -164,61 +147,38 @@ header {
   }
 }
 
-.pagination {
-  @include clearfix;
-  line-height: 1em;
-  margin: 1em 0 auto;
-  text-align: center;
+.media-wrapper {
+  @include span-columns(5, table);
+  padding: 2em;
+  vertical-align: top;
 
-  ul {
-    background-color: $pagination-bg-color;
-    border-radius: 3px;
-    display: inline-block;
-    overflow: hidden;
+  img,
+  iframe {
+    border: solid $primary-border-color;
+    height: 100%;
+    width: 100%;
   }
 
-  li {
-    display: block;
-    float: left;
-    font-size: 2em;
-    padding: 0;
+  @include media($medium-screen-down) {
+    @include span-columns(6, table);
   }
 
-  a {
-    background-color: $pagination-bg-color;
-    display: block;
-    line-height: .875em;
+  @include media($small-screen-down) {
+    @include span-columns(12);
+    padding: 1em;
+  }
 
-    &:hover,
-    &.selected {
-      color: $primary-link-color-hover;
-    }
-
-    &.selected {
-      background-color: $pagination-bg-color-hover;
-      cursor: default;
-    }
-
-    &:before {
-      content: '•';
-      display: block;
-      font-family: sans-serif;
-    }
-
-    &:first-child {
-      padding-left: .25em;
-    }
-
-    &:last-child {
-      padding-right: .25em;
-    }
-
-    span {
+  .media {
+    margin: 0;
+    &.media-image > picture > *:nth-child(n + 2) {
       display: none;
     }
   }
-}
 
+  .caption {
+    text-shadow: 0px 1px 2px $white;
+  }
+}
 
 footer {
   border-top: solid $secondary-border-color;

@@ -1,0 +1,65 @@
+.lightbox-container {
+  position: absolute;
+  left: 0;
+}
+
+.lightbox {
+  left: 0px;
+  position: relative;
+
+  &.hidden {
+    left: -9999px;
+
+    .lightbox-mask {
+      opacity: 0;
+    }
+
+    .lightbox-modal {
+      opacity: 0;
+    }
+  }
+
+  .lightbox-mask {
+    background-color: $lightbox-mask-bg-color;
+    left: 0;
+    height: 100vh;
+    opacity: 0.6;
+    position: fixed;
+    top: 0;
+    transition: opacity 0.5s ease-in-out;
+    width: 100vw;
+  }
+
+  .lightbox-modal {
+    background-color: $white;
+    border-radius: 3px;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, .4);
+    margin: 0 20vw;
+    opacity: 1.0;
+    position: fixed;
+    top: 1em;
+    transition: opacity 0.5s 0.5s ease-in-out;
+    width: 60vw;
+
+    @include media($medium-screen-down) {
+      margin: 0 12.5vw;
+      width: 75vw;
+    }
+
+    @include media($small-screen-down) {
+      margin: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+  .lightbox-header {
+    background-color: $tertiary-bg-color;
+    padding: 0.5em 0;
+  }
+
+  .lightbox-close {
+    float: right;
+    margin-right: 1em;
+  }
+}

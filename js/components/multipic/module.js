@@ -1,9 +1,10 @@
 'use strict';
 
-var radio = require('radio');
-var uuid = require('node-uuid');
+var Utility = require('../../global/utility.js');
+var Component = require('../component/module.js');
 var Pagination = require('../pagination/module.js');
-var Utility = require('../../utility.js');
+var Lightbox = require('../lightbox/module.js');
+// var render = require('./template.dot');
 var util = Utility.getInstance();
 var $ = util.$;
 
@@ -13,6 +14,7 @@ var CLICK_EVENT = 'pagination:pageLinkClicked';
  * MultiPic class. Creates a multipic component. Listens for events from the
  * a pagination instance and responds accordingly.
  * @constructor
+ * @extends {Component}
  * @param {Element} el     The container element for the pagination.
  * @param {[type]} params Parameters for the pagination class.
  */
@@ -20,28 +22,58 @@ function MultiPic(el, params) {
   var pagination,
       paginationEl;
 
-  this.uuid = uuid.v1();
-  this.el = el;
-  this.params = params;
-  this.pics = $('picture img', this.el);
-  this.current = this.pics[0];
+  Component.call(this, el, params);
+
+  this.current = this.params.imgs[0];
 
   paginationEl = $('.pagination ul', this.el)[0];
-  pagination = new Pagination(paginationEl, {
-    uuid: this.uuid,
-    imgs: this.pics.map(function(img){ return img.src })
-  });
 
-  this.bindEvents()
+  // Only initialize pagination if we need it.
+  if (this.params.imgs.length > 1) {
+    pagination = new Pagination(paginationEl, {
+      id: this.id,
+      imgs: this.params.imgs.map(function(img){ return img.src; })
+    });
+  }
+
+  this.initialize();
 }
 
+util.inherit(MultiPic, Component);
+
 /**
- * [bindEvents description]
+ * Binds DOM events and sets up radio pub/sub.
  * @public
- * @return {[type]} [description]
  */
 MultiPic.prototype.bindEvents = function() {
-  radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+  this.bindImgEvent();
+  this.radio(CLICK_EVENT).subscribe(this.picChangeRequested.bind(this));
+};
+
+
+/**
+ * Returns the current image node.
+ * @public
+ * @return {Element} The image element currently on display.
+ */
+MultiPic.prototype.getCurrentImg = function() {
+  return $('img[src="' + this.current.src + '"]', this.el)[0];
+};
+
+/**
+ * [unbindImgEvent description]
+ * @return {[type]} [description]
+ */
+MultiPic.prototype.unbindImgEvent = function() {
+  this.removeListeners(this.getCurrentImg().parentNode, 'click');
+};
+
+/**
+ *
+ */
+MultiPic.prototype.bindImgEvent = function() {
+  this.addListener(this.getCurrentImg().parentNode, 'click',
+      this.lightboxRequested);
 };
 
 /**
@@ -50,27 +82,52 @@ MultiPic.prototype.bindEvents = function() {
  */
 MultiPic.prototype.picChangeRequested = function() {
   var data = arguments[0],
-    uuid = data.uuid,
+    id = data.id,
     picIndex;
 
-  if (uuid !== this.uuid) {
+  if (id !== this.id) {
     return;
   }
 
   picIndex = data.page;
-  console.log('picChangeRequested');
   this.changePic(picIndex);
 };
+
+/**
+ * [lightboxRequested description]
+ * @param  {[type]} ev [description]
+ * @return {[type]}    [description]
+ */
+MultiPic.prototype.lightboxRequested = function(ev) {
+  ev.preventDefault();
+  var current = this.current,
+    orientation = this.params.lightboxOrientation || "landscape",
+    wrapper = $('.lightbox-container')[0],
+    lightbox = new Lightbox(wrapper, {
+      orientation: orientation,
+      image: current
+    });
+};
+
+/**
+ * [lightboxDestroyRequested description]
+ * @return {[type]} [description]
+ */
+MultiPic.prototype.lightboxDestroyRequested = function() {
+  this.lightbox.finalize();
+};
+
 
 /**
  * [changePic description]
  * @return {[type]} [description]
  */
 MultiPic.prototype.changePic = function(idx) {
-  console.log('changePic');
-  this.current.parentNode.style.display = 'none';
-  this.current = this.pics[idx];
-  this.current.parentNode.style.display = 'block';
+  this.getCurrentImg().parentNode.style.display = 'none';
+  this.unbindImgEvent();
+  this.current = this.params.imgs[idx];
+  this.getCurrentImg().parentNode.style.display = 'block';
+  this.bindImgEvent();
 }
 
 module.exports = MultiPic;

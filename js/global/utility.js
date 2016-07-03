@@ -7,7 +7,7 @@ module.exports = (function() {
    * Returns a new Utility object.
    * @return {Utility}
    */
-  function init() {
+  function initSingleton() {
     return new Utility();
   }
 
@@ -28,7 +28,9 @@ module.exports = (function() {
   };
 
   /**
-   * General purpose query selector function.
+   * General purpose query selector function. Performance boosting optimization
+   * code lifted from
+   * http://ryanmorr.com/abstract-away-the-performance-faults-of-queryselectorall/
    * @param  {String} selector A string with one or more selectors separated by
    * commas.
    * @param  {[type]} context The context elements from which to begin searching
@@ -37,19 +39,38 @@ module.exports = (function() {
    */
   Utility.prototype.$ = function(selector, context) {
     var u = Utility.prototype;
-    if (!context) {
-      context = document;
+    context = context || document;
+
+    if (/^(#?[\w-]+|\.[\w-.]+)$/.test(selector)) {
+      switch (selector.charAt(0)) {
+        case '#':
+            // Handle ID-based selectors
+            return [context.getElementById(selector.substr(1))];
+        case '.':
+          // Handle class-based selectors
+          // Query by multiple classes by converting the selector
+          // string into single spaced class names
+          var classes = selector.substr(1).replace(/\./g, ' ');
+          return u.toArray(context.getElementsByClassName(classes));
+        default:
+          // Handle tag-based selectors
+          return u.toArray(context.getElementsByTagName(selector));
+      }
     }
+
     // use the prototype so util.$ can be aliased.
     // TODO: clean this up.
+
     return u.toArray(context.querySelectorAll(selector));
   };
 
   /**
-   * Extend an object.
-   * @param  {Object} )    {               var obj [description]
-   * @param  {[type]} args [description]
-   * @return {[type]}      [description]
+   * Extend an object. This function can be called with any number of arguments.
+   * @param  {Object} obj Arbitrary number of object parameters.
+   * @return {Object} The object after extension, which is a new object, not a
+   * reference to any of the passed parameters.
+   * TODO: revisit this to make sure objects aren't being overwritten
+   * unwittingly.
    */
   Utility.prototype.extend = function() {
     var obj = {},
@@ -66,6 +87,21 @@ module.exports = (function() {
     }
   };
 
+
+  /**
+   * [inherit description]
+   * @param  {[type]} Child  [description]
+   * @param  {[type]} Parent [description]
+   * @return {[type]}        [description]
+   */
+  Utility.prototype.inherit = function(Child, Parent) {
+    var F = function() {};
+    F.prototype = Parent.prototype;
+    Child.prototype = new F();
+    Child.prototype.constructor = Child;
+    Child.super = Parent.prototype;
+  };
+
   // Module is implemented as a singleton with no public access to the Utility
   // class istself, only a pre-existing instance.
   return {
@@ -75,7 +111,7 @@ module.exports = (function() {
      */
     getInstance: function() {
       if (!instance) {
-        instance = init();
+        instance = initSingleton();
       }
       return instance;
     }
