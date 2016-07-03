@@ -27,10 +27,14 @@ function MultiPic(el, params) {
   this.current = this.params.imgs[0];
 
   paginationEl = $('.pagination ul', this.el)[0];
-  pagination = new Pagination(paginationEl, {
-    id: this.id,
-    imgs: this.params.imgs.map(function(img){ return img.src; })
-  });
+
+  // Only initialize pagination if we need it.
+  if (this.params.imgs.length > 1) {
+    pagination = new Pagination(paginationEl, {
+      id: this.id,
+      imgs: this.params.imgs.map(function(img){ return img.src; })
+    });
+  }
 
   this.initialize();
 }
@@ -38,9 +42,8 @@ function MultiPic(el, params) {
 util.inherit(MultiPic, Component);
 
 /**
- * [bindEvents description]
+ * Binds DOM events and sets up radio pub/sub.
  * @public
- * @return {[type]} [description]
  */
 MultiPic.prototype.bindEvents = function() {
   this.bindImgEvent();
@@ -50,6 +53,7 @@ MultiPic.prototype.bindEvents = function() {
 
 /**
  * Returns the current image node.
+ * @public
  * @return {Element} The image element currently on display.
  */
 MultiPic.prototype.getCurrentImg = function() {
@@ -97,8 +101,10 @@ MultiPic.prototype.picChangeRequested = function() {
 MultiPic.prototype.lightboxRequested = function(ev) {
   ev.preventDefault();
   var current = this.current,
+    orientation = this.params.lightboxOrientation || "landscape",
     wrapper = $('.lightbox-container')[0],
     lightbox = new Lightbox(wrapper, {
+      orientation: orientation,
       image: current
     });
 };

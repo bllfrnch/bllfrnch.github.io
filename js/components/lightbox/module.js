@@ -15,9 +15,9 @@ function Lightbox(el, params) {
   this.wrapper = $('.lightbox', this.el)[0];
   this.modal = $('.lightbox-modal', this.el)[0];
   this.mask = $('.lightbox-mask', this.el)[0];
-  this.open();
   this.closeButton = $('.lightbox-close', this.el)[0];
   this.initialize();
+  this.open();
 };
 
 util.inherit(Lightbox, Component);

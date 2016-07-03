@@ -327,7 +327,7 @@
 	  this.id = shortid.generate();
 	  this.radio = radio;
 	  this.el = el;
-	  this.params = params;
+	  this.params = params || {};
 	  this.listeners = {};
 	}
 	
@@ -1318,9 +1318,9 @@
 	  this.wrapper = $('.lightbox', this.el)[0];
 	  this.modal = $('.lightbox-modal', this.el)[0];
 	  this.mask = $('.lightbox-mask', this.el)[0];
-	  this.open();
 	  this.closeButton = $('.lightbox-close', this.el)[0];
 	  this.initialize();
+	  this.open();
 	};
 	
 	util.inherit(Lightbox, Component);
@@ -1398,7 +1398,7 @@
 
 	module.exports = function anonymous(it
 	/**/) {
-	var out='<div class="lightbox hidden"> <div class="lightbox-mask"></div> <div class="lightbox-modal"> <header class="lightbox-header"> <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a> </header> <div class="lightbox-body"> <div class="media-wrapper"> <figure class="media media-image"> <picture> <img src="'+(it.image.src)+'" alt="'+(it.image.alt)+'"> </picture> </figure> </div> </div> </div></div>';return out;
+	var out='<div class="lightbox hidden"> <div class="lightbox-mask"></div> <div class="lightbox-modal '+(it.orientation)+'"> <header class="lightbox-header"> <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a> </header> <div class="lightbox-body"> <div class="media-wrapper"> <figure class="media media-image"> <picture> <img src="'+(it.image.src)+'" alt="'+(it.image.alt)+'"> </picture> </figure> </div> </div> </div></div>';return out;
 	}
 
 /***/ },
@@ -1437,10 +1437,14 @@
 	  this.current = this.params.imgs[0];
 	
 	  paginationEl = $('.pagination ul', this.el)[0];
-	  pagination = new Pagination(paginationEl, {
-	    id: this.id,
-	    imgs: this.params.imgs.map(function(img){ return img.src; })
-	  });
+	
+	  // Only initialize pagination if we need it.
+	  if (this.params.imgs.length > 1) {
+	    pagination = new Pagination(paginationEl, {
+	      id: this.id,
+	      imgs: this.params.imgs.map(function(img){ return img.src; })
+	    });
+	  }
 	
 	  this.initialize();
 	}
@@ -1448,9 +1452,8 @@
 	util.inherit(MultiPic, Component);
 	
 	/**
-	 * [bindEvents description]
+	 * Binds DOM events and sets up radio pub/sub.
 	 * @public
-	 * @return {[type]} [description]
 	 */
 	MultiPic.prototype.bindEvents = function() {
 	  this.bindImgEvent();
@@ -1460,6 +1463,7 @@
 	
 	/**
 	 * Returns the current image node.
+	 * @public
 	 * @return {Element} The image element currently on display.
 	 */
 	MultiPic.prototype.getCurrentImg = function() {
@@ -1507,8 +1511,10 @@
 	MultiPic.prototype.lightboxRequested = function(ev) {
 	  ev.preventDefault();
 	  var current = this.current,
+	    orientation = this.params.lightboxOrientation || "landscape",
 	    wrapper = $('.lightbox-container')[0],
 	    lightbox = new Lightbox(wrapper, {
+	      orientation: orientation,
 	      image: current
 	    });
 	};

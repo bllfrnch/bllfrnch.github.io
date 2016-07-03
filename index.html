@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bill French</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <script type="text/javascript" src="//use.typekit.net/wec1uwe.js"></script>
   <script type="text/javascript">
   // ADOBE TYPEKIT
@@ -32,72 +32,64 @@
       </nav>
     </header>
     <main role="main" class="main home">
-      <article>
-        <section class="feature">
-          <div class="media-wrapper">
-            <figure class="media media-image">
-              <picture>
-                <img src="/img/alf-and-me-600x443.jpg" alt="…">
-              </picture>
-              <figcaption class="caption small">Here I am hanging my friend Gordon Shumway, who was visiting from Los Angeles. I'm on the right.</figcaption>
-            </figure>
-          </div>
-          <div class="text">
-            <h2>Hey Willy!</h2>
-            <p>Bill French here. I'm medium in size, a big ALF fan, and have hair like a Lego person. I'm currently a senior web engineer at <a href="http://hugeinc.com/" class="huge">HUGE</a>, where I spend my days typing, making the Internet, mostly in Javascript and Python. Check out recent work on the <a href="/portfolio.html">portfolio</a> page. I find myself wishing Joe Walsh would re-materialize as his young self and start busting out <a href="http://www.youtube.com/watch?v=WRfsfNP7wFc">jams like this one</a> again.</p>
-
-          </div>
-        </section>
-<!--         <section class="feature">
-          <div class="media-wrapper">
-            <figure class="media media-image">
-              <picture>
-                <img srcset="/img/bedbugz-600x800.jpg" alt="…" width="600" height="800">
-              </picture>
-              <figcaption class="caption small">We're coming for you. Click pic for more.</figcaption>
-            </figure>
-          </div>
-          <div class="text">
-            <h2>Work the Web</h2>
-            <p>I've been developing software for the web since 1997. Check out my <a href="/portfolio.html">portfolio</a> for details on recent work.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque veritatis, temporibus. Eligendi veritatis vero dolore officiis excepturi ea! Recusandae repellat laudantium fugit, culpa sint aliquam? Nesciunt, fugiat, minima. Facere, optio!</p>
-          </div>
-        </section> -->
-        <section class="feature">
-          <div class="media-wrapper">
-            <figure class="media media-image">
-              <picture>
-                <img srcset="/img/rock-and-roll-532x800.jpg" alt="…">
-              </picture>
-              <figcaption class="caption small">Photo credit: <a href="http://www.katalips.com/">Kata Lips</a>.</figcaption>
-            </figure>
-          </div>
-          <div class="text">
-            <h2>Kick Out the Jams</h2>
-            <p>I've played drums for a bunch of bands over the years, some of which are featured on the <a href="/music.html">music page</a>. I'm not currently playing with anyone, but am always happy to entertain the idea. I've got a 1976 Ludwig Vistalite kit, 14x24, 9x13, 16x16, that I'm looking to sell or trade, too. You know someone who's looking to get rid of a silver or champagne sparkle kit? 60's/70's Ludwig or Gretsch are both cool with me.</p>
-          </div>
-        </section>
-        <section class="feature">
-          <div class="media-wrapper">
-            <figure class="media media-image">
-              <picture>
-                <img srcset="/img/bedbugz-600x800.jpg" alt="…">
-              </picture>
-              <figcaption class="caption small">We're coming for you. Click pic for more.</figcaption>
-            </figure>
-          </div>
-          <div class="text">
-            <h2>Drawing at the Kitchen Table</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis deserunt nostrum commodi, voluptates iusto sapiente temporibus illo quo pariatur suscipit nulla incidunt. Reiciendis quasi assumenda, blanditiis praesentium tenetur non modi.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque veritatis, temporibus. Eligendi veritatis vero dolore officiis excepturi ea! Recusandae repellat laudantium fugit, culpa sint aliquam? Nesciunt, fugiat, minima. Facere, optio!</p>
-          </div>
-        </section>
+      <article class="feature">
+        <div class="media-wrapper" data-component="MultiPic"
+          data-params='{
+            "imgs": [
+              {
+                "src": "/img/alf-and-me-1000x739.jpg"
+              }
+            ]
+          }'>
+          <figure class="media media-image">
+            <picture>
+              <a href="#"><img src="/img/alf-and-me-1000x739.jpg" alt="…"></a>
+            </picture>
+            <figcaption class="caption small">Here I am with my friend Gordon Shumway. That's me on the right. (Click for more pixels.)</figcaption>
+          </figure>
+        </div>
+        <div class="text">
+          <h2>Greetings, Earthling</h2>
+          <p>Bill French here. I'm medium in size, a big ALF fan, and have hair like a Lego person. I'm currently a senior web engineer at <a href="http://hugeinc.com/" class="huge">HUGE</a>, where I spend my days making the Internet, mostly in Javascript and Python. Check out recent work on the <a href="/portfolio.html">portfolio</a> page. I wish Joe Walsh would re-materialize as his young self and start busting out <a href="http://www.youtube.com/watch?v=WRfsfNP7wFc">jams like this one</a> again.</p>
+        </div>
       </article>
+
+      <article class="feature">
+        <div class="media-wrapper">
+          <figure class="media media-image">
+            <picture>
+              <img src="/img/rock-and-roll-532x800.jpg" alt="…">
+            </picture>
+            <figcaption class="caption small">Photo credit: <a href="http://www.katalips.com/">Kata Lips</a>.</figcaption>
+          </figure>
+        </div>
+        <div class="text">
+          <h2>Kicks Out the Jams</h2>
+          <p>I've played drums for a bunch of bands over the years, some of which are featured on the <a href="/music.html">music page</a>. Not currently involved in any projects, but am always happy to entertain the idea. I've got a totally clear 1976 Ludwig Vistalite kit (pictured here, sizes 14x24, 9x13, 16x16) that I'm looking to trade for a silver, gold, or champagne sparkle kit. Any vintage 60's/70's Ludwig or Gretsch are both cool with me. Prefer a 22" kick.</p>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="media-wrapper">
+          <figure class="media media-image">
+            <picture>
+              <img srcset="/img/bedbugz-600x800.jpg" alt="…">
+            </picture>
+            <figcaption class="caption small">We're coming for you.</figcaption>
+          </figure>
+        </div>
+        <div class="text">
+          <h2>Loves to Doodle</h2>
+          <p>This is what happens when I sit down at the kitchen table and draw. Well, something like this. I don't always draw pink, sentient, football-sized bedbugs.</p>
+        </div>
+      </article>
+
     </main>
     <footer class="small">
       <p><script>document.write('All content © Bill French ' +
         (new Date()).getFullYear() + '.')</script></p>
     </footer>
+    <div class="lightbox-container"></div>
   </div>
   <script type="text/javascript">
   // GOOGLE ANALYTICS
@@ -111,5 +103,6 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
   </script>
+  <script src="js/bundle.js"></script>
 </body>
 </html>

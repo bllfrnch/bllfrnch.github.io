@@ -97,6 +97,7 @@ header {
 
   .feature {
     @include clearfix();
+    @include span-columns(12);
     background-color: $secondary-bg-color;
     border-radius: 3px;
     box-shadow: 0 4px 8px $primary-shadow-color;
@@ -123,6 +124,10 @@ header {
     margin: 0;
     padding: 1em 2em;
     vertical-align: top;
+
+    &.full-width {
+      @include span-columns(12, table);
+    }
 
     @include media($small-screen-down) {
       padding: 1em;

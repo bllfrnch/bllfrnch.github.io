@@ -1,6 +1,6 @@
 <div class="lightbox hidden">
   <div class="lightbox-mask"></div>
-  <div class="lightbox-modal">
+  <div class="lightbox-modal {{=it.orientation}}">
     <header class="lightbox-header">
       <a href="#" class="lightbox-close"><i class="fa fa-times" aria-hidden="true"></i></a>
     </header>

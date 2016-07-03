@@ -9,6 +9,14 @@
 
   &.hidden {
     left: -9999px;
+
+    .lightbox-mask {
+      opacity: 0;
+    }
+
+    .lightbox-modal {
+      opacity: 0;
+    }
   }
 
   .lightbox-mask {
@@ -18,7 +26,7 @@
     opacity: 0.6;
     position: fixed;
     top: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
     width: 100vw;
   }
 
@@ -26,12 +34,23 @@
     background-color: $white;
     border-radius: 3px;
     box-shadow: 0 12px 20px rgba(0, 0, 0, .4);
-    margin: 0 15vw;
+    margin: 0 20vw;
     opacity: 1.0;
     position: fixed;
     top: 1em;
-    transition: opacity 0.3s 0.2s ease-in-out;
-    width: 70vw;
+    transition: opacity 0.5s 0.5s ease-in-out;
+    width: 60vw;
+
+    @include media($medium-screen-down) {
+      margin: 0 12.5vw;
+      width: 75vw;
+    }
+
+    @include media($small-screen-down) {
+      margin: 0;
+      top: 0;
+      width: 100%;
+    }
   }
 
   .lightbox-header {

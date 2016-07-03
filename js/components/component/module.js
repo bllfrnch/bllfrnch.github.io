@@ -13,7 +13,7 @@ function Component(el, params) {
   this.id = shortid.generate();
   this.radio = radio;
   this.el = el;
-  this.params = params;
+  this.params = params || {};
   this.listeners = {};
 }
 
