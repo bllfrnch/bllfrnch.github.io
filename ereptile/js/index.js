@@ -11,13 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setInterval(function() {
       visible.classList.add('hidden');
-      if (idx < images.length - 1) {
-        idx++;
-        visible = images[idx];
-      } else {
-        idx = 0;
-        visible = images[idx];
-      }
+      idx = (idx < images.length - 1) ? idx++ : 0;
+      visible = images[idx];
       visible.classList.remove('hidden');
     }, timeout);
   });
