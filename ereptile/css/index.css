@@ -1,0 +1,18 @@
+body {
+  font-family: sans-serif;
+  margin: 3em 10%;
+}
+
+.anim:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.anim-image {
+   width: 100%;
+}
+
+.hidden {
+  display: none;
+}
